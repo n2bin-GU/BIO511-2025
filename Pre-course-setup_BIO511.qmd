@@ -3,8 +3,14 @@ title: "Pre-course setup"
 subtitle: "Setup to be completed before the course"
 pagetitle: "Pre-course setup | BIO511"
 description: ""
-date: ""
-format: pdf
+date: today
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
 ---
 
 ## Welcome to the world of bioinformatics :)
@@ -84,4 +90,22 @@ the **Add to PATH** option so you can easily open a folder in WSL using the `cod
 3. Install the [WSL extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl). 
 If you plan to work with other remote extensions in VS Code, you may choose to install 
 the [Remote Development extension pack](https://aka.ms/vscode-remote/download/extension).
+
+## Getting access to the High Performance computing cluster **c3se**
+
+Now you have your local computer setup for bioinformatics. However, for many of the practicals
+we will use a high performance computing cluster, both so that you get familiar with that 
+way of working, to keep a more controlled environment for you in the beginning and to let 
+you perform analyses that require a bit more heavy duty computing power than your local machines.
+
+This setup will be the same regardless of your OS.
+
+1. Register yourself at [SUPR](https://supr.naiss.se/person/register/). SUPR is the database 
+for the National Swedish Infrastructure for Supercomputing (NAISS) and SUPR is used to keep 
+track of persons, projects, project proposals and more. Please register **with** Federated 
+Identity using your GU email address.
+
+2. When you have registered, please send an email to [kaisa.thorell@gu.se](kaisa.thorell@gu.se) 
+and I will add you to the c3se project.
+
 
