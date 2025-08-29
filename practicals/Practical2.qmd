@@ -85,8 +85,8 @@ A link references a file **without copying** the data.
 |---|---|---|
 | Points to | File **data** (same inode) | **Path** (shortcut) |
 | If original is deleted | Data still accessible | Link **breaks** |
-| Cross filesystems? | ❌ No | ✅ Yes |
-| Link directories? | ❌ Usually no | ✅ Yes |
+| Cross filesystems? | No | Yes |
+| Link directories? | Usually no | Yes |
 | Create with | `ln file linkname` | `ln -s target linkname` |
 
 ::: callout-note
