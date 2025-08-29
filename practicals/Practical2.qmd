@@ -1,6 +1,6 @@
 
 ---
-title: "Bioinformatics Command‑Line Essentials (Self‑Contained)"
+title: "Command‑Line Essentials"
 author: "Instructor: Stuti"
 format:
   html:
