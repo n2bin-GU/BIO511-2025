@@ -1,0 +1,351 @@
+---
+title: "Practical 3: Scripts and Advanced Text Manipulation"
+subtitle: "BIO511 Genomics - Scripting in bash"
+author: "Tor Kling, Stuti Jain"
+date: "today"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+# Introduction
+
+Now that you've learned the basics of the command-line, its high time that we start working on making our coding structured and reproducible. While runnning pipes in our command line prompt can be quick and easy, writing our code in structured machine-readable text files called *scripts*, allows us to expand the possibilities of our programming. In genomics, you'll pretty much always need to process massive datasets - think millions of sequences, GWAS data with millions of variants, or annotation files with complex formatting. Typically these files have a standardized structure, which the handling of we can automate by creating generalizable and well-formatted scripts.
+
+::: {.callout-important}
+## REMEMBER: CREATE A SEPARATE PROJECT FOLDER IN YOUR HOME DIRECTORY FOR THIS PRACTICAL
+```bash
+mkdir -p ~/bio511/yourdir/practical_3
+cd ~/bio511/yourdir/practical_3
+
+# When you are working on a practical, remember to always copy the data files you need into your project folder
+cp ~/bio511/P3/data/AF316.* .
+```
+:::
+
+::: {.callout-note}
+## Learning Objectives
+By the end of this practical you should be able to:
+
+- Use `sed` for quick find-and-replace operations on large files
+- Use `awk` to execute short programs for text manipulation
+- Write iterative bash scripts using for loops and if/else statements
+- Debug your scripts using global set-options, traps and custom error messages
+- Be able to write basic flexible shell scripts using OPTARGS
+:::
+
+---
+
+# Advanced text manipulation 
+Before we start introducing scripts, let's learn a few more command-line tools that will be useful for manipulating text files. 
+
+## sed: Stream Editor for Quick Text Edits
+sed is a powerful command-line utility that allows us to perform basic text transformations on an input stream (a file or input from a pipeline). It is commonly used for tasks such as searching, find-and-replacing, inserting, or deleting text in files. It is especially useful for batch processing large files or automating repetitive text editing tasks (such as when there is a repetetive error in a large file that needs to be fixed).
+
+  - `sed` (stream editor): Allows for edits of existing text and replacing/modifying it with new text 
+
+**Exercises**
+```bash
+# sed is most commonly used for find-and-replace operations
+# The syntax is 's/old-text/new-text/g' where 's' stands for substitute and 'g' for global (all instances)
+# start by copying the example input file
+cp __/bio511/data/input_sed.txt input_sed.txt
+cat input_sed.txt
+
+# Now run sed to replace all instances of 'old-text' with 'new-text'
+sed 's/old-text/new-text/g' input_sed.txt > output_sed.txt
+cat output_sed.txt
+
+# Note that sed does not modify the original file unless you use the -i flag (in-place)
+sed -i 's/old-text/new-text/g' input_sed.txt
+cat input_sed.txt
+
+# Lets use it in a more applied manner
+# In cases where we want to merger multiple fasta files, it might be nice to have a prefix for each gene
+sed 's/^>/>AF316_/' __/bio511/data/AF316.ffn > AF316_prefixed.ffn
+
+# Do this for the other two fasta files as well!
+# Rembember to check the data!
+
+# You can also use sed to delete lines containing a specific pattern
+# Remove all gene entries that are hypothetical proteins from a gff file
+cp __/bio511/data/AF316.ffn AF316.ffn
+sed '/{__}/d' AF316.ffn > AF316_cleaned.ffn
+
+# However for special files like fasta files, only deleting the header line is not enough
+# You need to delete the sequence line as well, by increasing the line range by 1
+sed '/{__}/,+1d' AF316.ffn > AF316_cleaned2.ffn
+# Inspect the cleaned file
+head -10 AF316_cleaned2.ffn
+
+```
+
+## awk: Pattern Scanning and Processing Language
+awk can do things that may at first glance remind us of other commands like `grep`, since we can similarly search for patterns in text files and output them into the stdout. However, `awk` is much more powerful text manipulation tool that allows us to do advanced language processing and data extraction not to dissimilar to a programming language. Using awk we can accomplish short programming tasks directly in the command line.
+
+  - `awk` (Aho, Weinberger, and Kernighan): Allows for advanced text processing and file manipulation
+
+Some key commands:
+
+  - `-F`: Specifies the input field separator (default is whitespace)
+  - `BEGIN{}`: Block of programming that runs before processing any input lines (before text is put into $1, $2, etc)
+  - `END{}`: Block that runs after processing all input lines (after all text has been processed)
+  - `{}`: Block that runs for each input line (used for processing)
+  - `$1, $2, ...`: Represents the first, second, etc. fields (eg. columns) in the current line
+  - `OFS`: Output field separator (default is a space, can be set in BEGIN block)
+
+**Exercises**
+```bash
+# awk is great for quick column selection and simple filtering
+# The syntax is 'awk option 'program' input-file' where program is a series of commands
+# Print seqid and type columns of a gff file
+awk -F'\t' 'BEGIN{OFS="\t"} {print $1,$3,$9}' AF316.gff > seqid_type.tsv
+
+# You can also filter rows based on conditions, to retain only specific features (similar to what we can accomplish with grep)
+# Here we can filter for only CDS features
+awk -F'\t' '$3=="CDS"' AF316.gff > cds_features.tsv
+
+# Another thing is performing operations on the data in transit, similar to what would need a pipe and multiple commands otherwise
+# Here we can calculate the length of each CDS feature and output it as a new column
+# Consider which columns should be used to calculate the length
+awk -F'\t' 'BEGIN{OFS="\t"} $3=="CDS"{print $1,$4,$5,$9,(${__}-${__}+1)}' AF316.gff > cds_features_length.tsv
+
+# Lets operate some more on the feature length file
+# Calculate the total number of CDS features and their average length
+awk -F'\t' '{___}{OFS="\t"} {total_length+=${__}; count++} {__}{print "Total_CDS",count,"Average_Length",total_length/count}' cds_features_length.tsv
+```
+
+Awk programs can get quite complex, and we will not cover all its features here. However, it is a very useful tool to have in your toolbox, and I encourage you to explore it further on your own. A good resource is the [GNU Awk User's Guide](https://www.gnu.org/software/gawk/manual/gawk.html).
+
+---
+
+# Scripting 101 (in bash)
+
+Now that we have learned a few more command-line tools, we can start writing our own scripts. A script is simply a text file containing a series of commands that can be executed in sequence. Scripts are useful for automating repetitive tasks, and for creating reproducible workflows.
+
+## Starting a bash script
+We are already familiar with bash, one of the most common shell used in Linux and macOS, and is the default shell on most HPC systems. A bash script is simply a text file containing a series of bash commands that can be executed in sequence.
+
+**Exercises: Starting a script**
+```bash
+# For this practical, we will write a script that processes the AF genome files and looks for genes of a certain type
+# Start by creating a new file called process_AF_genome.sh
+# You can do this either by creating one manually in your vscode editor, or by using the touch command
+touch process_AF_genome.sh
+
+# Open the file in your editor and add the shebang line at the top
+# A shebang line tells the system which interpreter to use to run the script, an interpreter is the program that will read and execute the script
+# Add this line at the top of your script:
+#!/usr/bin/env bash
+
+# Now change the file permissions to make it executable
+chmod +x process_AF_genome.sh
+
+# To run the script, simply run the filename in your terminal
+./process_AF_genome.sh
+```
+
+## Variables, for loops and if/else statements
+Our next step is to add some functionality to our script. We will start by adding **variables** `${VAR_NAME}`, these variables can be used to store values that we can use later in the script. This is useful for storing file names, parameters, or any other values that we want to use multiple times in the script.
+
+**Exercises: Variables**
+```bash
+# Good variables to start with are input and output file names
+# For these variables, we typically use the full path to the file, this makes it easier to run the script from any directory
+# Swap the paths below with the correct paths to your files
+INPUT_DIR="path/to/data"
+OUTPUT_DIR="path/to/output"
+
+# You can also use variables to store parameters, such as the gene name pattern we want to look for in our ffn files
+GENE_NAME_PATTERN="gene_name"
+
+# You can also Initialize variables to store intermediate values, such as the total number of genes matching the pattern found
+TOTAL_GENES_FOR_PATTERN=0
+
+```
+But the ffn files we have contain a multitude of gene sequences and their headers, extracting these genes across multiple files will require repeated parsing setups. This is where **for loops** come in, they allow us to iterate over a list of items and execute a block of code for each item in the list. In our case, we can use a for loop to iterate over a list of input files and process each file in turn.
+
+- `*` (wildcard): A character that can be used to match any string of characters in file names or patterns
+- `for`: A control flow statement that allows us to iterate over a list of items and execute a block of code for each item
+- `do` and `done`: Keywords used to define the start and end of a loop block
+- `basename`: A command that extracts the base name of a file (the file name without the path and extension)
+- `~`: In the context of regex, it represents the matching operator, used to check if a string matches a pattern
+
+**Exercises: For loops**
+```bash
+# In our INPUT_DIR we have multiple ffn files, a good way (if you have a good structured folder) to iterate over all ffn files is to use a for loop with a wildcard
+for ffn_file in ${INPUT_DIR}/*.ffn; do 
+  # putting the wilcard alongside the file extension will match all files with that extension
+  # Inside the loop, we can use the variable ffn_file established in the loop to refer to the current file being processed
+  # Extract the base name of the file (without the path and extension) to use in the output file name
+  base_name=$(basename ${ffn_file} .ffn)
+  
+  # Use awk to extract gene sequences matching the GENE_NAME_PATTERN and save them to an output file
+  # Since we are working on a fasta file, tab-separation is not needed and all data is in one column
+  # In order to pass the pattern variable to awk, you need to figure out the flag for passing variables to awk
+  awk -{__} pattern="${GENE_NAME_PATTERN}" 'BEGIN{OFS="\t"} /^>/{if($0 ~ pattern) {print $0; getline; print $0}}' ${ffn_file} > ${OUTPUT_DIR}/${base_name}_filtered.ffn
+
+  # Count the number of genes found and add it to the total
+  # For this you need to figure out a grep command that counts the number of lines in the output file that match the pattern
+  gene_count=$(grep {___} || true)
+  TOTAL_GENES_FOR_PATTERN=$((TOTAL_GENES_FOR_PATTERN + gene_count))
+
+  # Also store the gene count for the current file in a new file for later use 
+  echo -e "${base_name}\t${gene_count}" >> ${OUTPUT_DIR}/gene_counts.tsv
+  
+  # Echo the number of genes found in the current file to you stdout, to report progress
+  echo "Processed ${ffn_file}, found ${gene_count} genes matching pattern '${GENE_NAME_PATTERN}'"
+done
+
+```
+Lastly, we want to add some conditional logic to our script, so that we can handle different scenarios based on the input data. This is where **if/else statements** come in, they allow us to execute a block of code if a certain condition is met, and another block of code if the condition is not met. We'll also introduce one additional loop to do iterative operation on the lines of a file.
+
+- `if`: A control flow statement that allows us to execute a block of code if a certain condition is met
+- `then`: A keyword used to define the start of an if block
+- `else`: A keyword used to define an alternative block of code if the condition is not met
+- `fi`: A keyword used to define the end of an if block
+- `while`: A control flow statement that allows us to execute a block of code repeatedly as long as a specified condition is true
+- `read`: A command that reads a line of input from a file or stdin
+- `-gt`: A comparison operator that means "greater than"
+
+**Exercises: If/else**
+```bash
+# Conditional logic can be used in multiple ways, we will focus on an example where label our genomes based on the outcome of the for loop 
+# To accomplish this, we will read the gene_counts.tsv file line by line and use an if/else statement to label the genomes based on the gene count
+# Now we can add some conditional logic to label our genomes
+while read -r line; do
+  # Read the genome name and gene count from the file
+  # You will need to figure out the awk commands to extract the genome name and gene count from each line
+  genome_name=$(echo {__} | awk {__})
+  gene_count=$(echo {__} | awk {__})
+
+  # Use an if/else statement to label the genome based on the gene count
+  if [ "${gene_count}" -gt 1 ]; then
+    label="label1"
+  else
+    label="label2"
+  fi
+
+  # Append the label to the metadata file
+  echo -e "${genome_name}\t${gene_count}\t${label}" >> "${OUTPUT_DIR}/genomes_metadata_labeled.tsv"
+done < "${OUTPUT_DIR}/gene_counts.tsv"
+```
+
+---
+
+# Improving your scripts: Adding debugging and flexibility
+
+## Debugging Bash Scripts: When Things Go Wrong
+
+Bash scripts differ a bit from other programming languages (or atleast in the context you learn it, think CLI vs Spyder), in that they without configuration will continue running even if an error occurs. This can be both a blessing and a curse, as it allows for scripts to continue running even if a minor error occurs, but it can also make it difficult to identify and fix errors when they do occur. Finding and catching these errors is the other half of programming, we will now introduce a few tools that can help you debug your bash scripts.
+
+**Exercises: Global script settings**
+```bash
+# At the top your script we typically add set commands to define general behaviour for our script
+# These commands will most likely always be in your scripts
+set -e  # Exit immediately if a command exits with a non-zero status
+set -u  # Treat unset variables as an error when substituting
+set -o pipefail  # Return the exit status of the last command in the pipe that failed
+
+# One additional setting is to add debugging output
+# This will print each command before it is executed, which can be useful for debugging
+# But it can also be very verbose, and clog up your output/logs
+set -x  # Enable debugging output
+```
+
+These settings can be added at the top of your script, after the shebang line (`#!/usr/bin/env bash`).
+However, they wont help with finding the exact spot where the error occurs. For that we can use the `trap` command to catch errors and print useful information.
+
+**Exercises: Error messages**
+```bash
+# The trap command can be used to catch errors and print useful information
+# Here we will print the line number and the command that caused the error
+trap 'echo "Error on line $LINENO: $BASH_COMMAND"' ERR
+
+# However, since you also know how your script logic works, you can also add custom error messages at specific points in your script
+# This a quite common use of if/else statements for bash scripts
+# Here is an example of a custom error message
+if [ ! -f "$INPUT_FILE" ]; then
+  echo "Error: Input file $INPUT_FILE does not exist."
+  exit 1
+fi
+```
+
+**Go ahead and identify stages in the script from before where you think errors might occur, and add custom error messages where appropriate.**
+**Remember to test your script with both valid and invalid inputs to see how it behaves**
+
+---
+
+## OPTARGS - Adding flags to make your scripts flexible 
+Up until now, our scripts have been quite rigid - they expect specific input files and parameters; an occasionally bad habit that coders refer to as "hardcoding". However, in many scenarios, we often want our scripts to be more flexible and adaptable to different inputs and options. This is where OPTARGS comes in - a built-in bash tool that allows us to easily handle command-line options and arguments. You might recognize this from the command-line tools we've used so far, where we can add flags like `-h` for help or `-v` for verbose output. By using OPTARGS in our scripts, we can create flags for our own programs, making them more user-friendly and versatile.
+
+A few key commands that we will use in this section:
+
+- `getopts`: A built-in bash tool for parsing command-line options and arguments
+- `case` statement: A control flow statement that allows us to execute different blocks of code based on the value of a variable
+
+**Exercises**
+```bash
+# To begin using OPTARGS, we need to add a while loop at the top of our script to handle the options
+# the OPTARG variable will hold the value of whatever comes after the flag in the command line
+# A while loop iterates over the options provided to the script, and sets option variables based with the read value from the command line
+while getopts "i:o:h" opt; do
+  case $opt in
+    i) INPUT_FILE="$OPTARG" ;;  # -i flag for input file
+    o) OUTPUT_FILE="$OPTARG" ;; # -o flag for output file
+    h) echo "Usage: $0 -i input_file -o output_file"  # -h flag for help
+       exit 0 ;;
+    *) echo "Invalid option: -$OPTARG" >&2
+       exit 1 ;;
+  esac
+done
+
+# After the while loop, we can add checks to ensure that the required options are provided
+if [ -z "$INPUT_FILE" ] || [ -z "$OUTPUT_FILE" ]; then
+  echo "Error: Input and output files are required."
+  echo "Usage: $0 -i input_file -o output_file"
+  exit 1
+fi
+
+# Its also a good idea to set default values for optional parameters, you do this in the same way as when you set variables normally
+OPTIONAL_PARAM="default_value"
+```
+
+**Now take the script you wrote before, and modify it to use OPTARGS for input and output files (also consider your other variables)**
+**Remember to test your script with different combinations of options and arguments to ensure it behaves as expected**
+
+---
+
+# Additional exercises
+Now that you have a finished script, try to use it to answer the following questions:
+
+1. How many genes in total across all three ffn files match the pattern "hypothetical protein"?
+2. How many genomes can be considered ESBL strains? (You may need to look up what characterizes an ESBL strain)
+
+---
+
+::: {.callout-note}
+## Key Takeaways
+- `sed` is great for quick find-and-replace operations on large files, fix repetitive errors
+- `awk` is a powerful tool for advanced text processing and file manipulation, it can fulfill some roles without needing to write a full script.
+- Writing scripts allows for structured, reproducible, and automated workflows
+- Variables allow for storing values that can be used multiple times in a script, making it easier to modify and maintain
+- For loops allow for iterating over a list of items and executing a block of code for each item, useful for processing multiple files
+- If/else statements allow for conditional logic in scripts, enabling different actions based on input data or parameters
+- Debugging is an essential skill for any programmer - use global settings, traps and custom error messages to help you find and fix errors in your code
+- Using OPTARGS allows you to create flexible scripts that can handle different inputs and options. It also enables other people to use your scripts more easily
+:::
+
+::: {.callout-tip}
+## Pro Tips for Scripting
+- Test your awk commands on the first few lines with `head -5 data.csv | awk ...` before running on huge files!
+- Use meaningful variable names (`RAW_SEQUENCES` not `rs`)
+- Comment your scripts - Others cant read your mind!
+- Test scripts on small datasets first
+:::
+
+---

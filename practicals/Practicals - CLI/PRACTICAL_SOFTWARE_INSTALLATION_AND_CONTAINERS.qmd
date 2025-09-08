@@ -1,0 +1,285 @@
+---
+title: "Practical 4: Software Installation and Containers"
+subtitle: "BIO511 Genomics - Package managers, Conda locally, and Singularity on HPC"
+author: "Tor Kling, Stuti Jain"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+# Introduction
+
+Up until now youve had to make everything by yourself (sort of, at least using base programs that come with your unix distro). This approach, while flexible, defeats one of they key benefits of modern bioinformatics; Open source and collaborative solutions to large data handling. Thanks to a lot of effort, there are countless of free, open-source tools available in various repositiories on the internet. 
+
+However these tools, while saving us a lot of time, may be tricky to find and set up correctly. Different tools require different dependencies, versions, or system libraries. This often leads to complex webs of libraries and packages that act as the backbone of your code, which can be difficult to manage and reproduce on other systems. In this practical, you’ll learn where to find tools, various ways of installing an managing them (conda, apt), cloning repos from GitHub, and—most importantly—how to package tools in a Singularity/Apptainer containers that you can copy to, and run, anywhere (including HPC environments).
+
+::: {.callout-note}
+## Learning Objectives
+By the end of this practical you should be able to:
+
+- Find and identify bioinformatics tools in public repositories
+- Install software locally using package managers (apt, conda)
+- Create and manage conda environments for isolated software setups
+- Write a basic Singularity definition file to create a container from a base image
+- Build and test a Singularity container locally
+- Transfer and run a Singularity container on an HPC using SLURM    
+:::
+
+::: {.callout-important}
+## REMEMBER: Create a separate project folder
+```bash
+mkdir -p ~/bio511/yourdir/practical_4
+cd ~/bio511/yourdir/practical_4
+```
+:::
+
+---
+
+# Finding software: package managers and repositories
+
+While paid licensed software are often hosted on their own websites, and are delivered via installers, open source software are often hosted on public repositories, such as GitHub, CRAN (R language), PyPI (Python language). Downloading and installing software from these sources can in many cases be harder, as you sometimes need to manually resolve *dependencies* (other software or libraries that the tool relies on) and ensure compatibility with your operating system. 
+
+## Exercises: Discover tools
+```bash
+# Explore apt 
+# Find which apt subcommand lists packages for the following queries:
+apt {__} kraken2
+apt {__} singularity
+apt {__} prokka
+
+# Lets look a little closer at prokka:
+apt {__} prokka
+
+# Explore a tool on GitHub:
+#   1) Find the repository for 'BAKTA'
+#   2) Locate the installation methods, what options are available?
+#   3) Identify dependencies and OS requirements
+```
+
+---
+
+# Local installation and package/enviroment management
+
+::: {.callout-important}
+## On the use of sudo
+As you already know, using the `sudo` command allows a permitted user to execute a command as the superuser or another user, elevating your permissions to root on a local system. This is often necessary for installing software system-wide or making changes that affect all users on a system. However, using `sudo` can also pose security risks if not handled carefully, as it grants elevated privileges that can potentially harm the system if misused. Be cautious when using `sudo`, and only run commands you fully understand.
+:::
+
+Local installation means setting up software on your own computer, as opposed to remote servers or HPC clusters. This is often done for development, testing, or when working with smaller datasets that do not require the resources of a cluster. Local installation can be more straightforward, as you have full control over the environment and can easily access files and tools. However, if done incorrectly, it can lead to conflicts between software versions and dependencies, and broken registries that interfere with system stability.
+
+## Setting up Conda
+
+To begin with, we will install Miniconda, a minimal installer for Conda. Conda is an open-source package management system and environment management system that runs on Windows, macOS, and Linux. It quickly installs, runs, and updates packages and their dependencies. Conda also creates, saves, loads, and switches between environments on your local computer. This is particularly useful in bioinformatics, where different projects may require different versions of software and libraries.
+
+```bash
+# Install Miniconda
+# For this we need to fetch files from the internet via wget 
+wget -O Miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda.sh -b -p $HOME/miniconda3
+
+# Initialize shell and set channels
+eval "$($HOME/miniconda3/bin/conda shell.bash hook)"
+conda init
+
+# Open a new shell terminal
+
+# Configure channels for bioconda packages, a specialized repository for bioinformatics software
+conda config --add channels conda-forge
+conda config --add channels bioconda
+conda config --set channel_priority strict
+```
+
+---
+
+## Install fastp locally via apt
+
+Next up, we will install `fastp` locally using apt, the default package manager for Debian-based Linux distributions. You will encounter fastp later in the genomics workflow praticals, its a tool inteded for quality control and preprocessing of FASTQ read files. 
+
+```bash
+# Before we install anything via apt, its always a good idea to update the package lists
+# This ensures you get the latest versions available in the repositories
+sudo apt update
+
+# Search for fastp package in apt repositories
+apt search fastp
+
+# Install fastp
+sudo apt install -y fastp
+
+# Verify installation
+fastp --version
+```
+
+
+## Use Conda to install MultiQC locally
+
+For this segment we will install MultiQC, a tool that aggregates results from bioinformatics analyses across many samples into a single report. This is particularly useful for summarizing the output of tools like FastQC. Our install will be done in a conda enviroment, installing the version hosted on bioconda.
+
+```bash
+# Create a new conda environment named bioinfo with python 3.9
+conda create -n {__} python=3.9
+
+# Activate the environment
+conda activate {__}
+
+# Install MultiQC from bioconda
+conda install multiqc
+
+# Verify installation
+multiqc --version
+
+```
+
+---
+
+# Moving your software to other computers and getting it to run on HPCs
+
+When working on different computers, especially in collaborative environments or on HPC clusters, it's crucial to ensure that your software and its dependencies are consistent across all systems. This is where environment management and containerization come into play.
+
+## Containerization with Singularity
+
+Containers are a way to package software and its dependencies into a single, portable unit that can run consistently across different computing environments. Unlike virtual machines, containers share the host system's kernel, making them more lightweight and efficient. This is particularly useful in bioinformatics, where software often has complex dependencies and needs to run on various systems, including high-performance computing (HPC) clusters.
+
+On HPC you usually cannot sudo and may not be allowed to build images on the login/compute nodes. Best practice is then:
+- Build the image locally (or via a remote builder).
+- Copy the .sif to the HPC.
+- Bind-mount data and databases at runtime.
+
+## A minimal kraken2 Singularity definition file
+
+The first step to creating a singularity container is to write a definition file. This file describes the base image, metadata, and the steps needed to install and configure the software inside the container. In many cases it will be simple, if an already hosted image exists (e.g. on BioContainers), luckily kraken2 is one of those cases. if you want to learn more about writing definition files, check out the [Singularity documentation](https://sylabs.io/guides/3.0/user-guide/definition_files.html).
+
+Create a file named kraken2.def with the contents below. It uses the BioContainers kraken2 image as a base.
+
+```bash
+# kraken2.def
+Bootstrap: docker
+From: quay.io/biocontainers/kraken2:2.1.6--pl5321h077b44d_0
+
+%labels
+    maintainer Y/N
+    org.opencontainers.image.title "kraken2"
+    org.opencontainers.image.source "https://github.com/DerrickWood/kraken2"
+
+%help
+    # Help exists to provide users with information about the container.
+    # Running `singularity run-help kraken2.sif` will display this message.
+    
+    Kraken 2 in a Singularity/Apptainer container.
+    
+    Bind your database at runtime, e.g. --bind /path/to/db:/db and use --db /db.
+
+    Used for the BIO511 Genomics course at Univsersity of Gothenburg.
+
+%post
+  # Here is where you would install additional software if needed and make config changes.
+  # However, the BioContainers image already has kraken2 installed.
+
+  # But for the hell of it, put a little text file in /home
+    echo "This is a kraken2 container built from BioContainers base image." > /home/kraken2_info.txt
+
+    # Echo a message to indicate successful build
+    echo "kraken2 installed. Use --bind to mount a database at runtime."
+
+%environment
+    # Here is where you would usually set environment variables.
+    # However, the BioContainers image already has kraken2 in PATH. so nothing needed here.
+```
+
+## Build, test, and run locally
+
+```bash
+# Build a read-only image from the def file (locally)
+singularity build kraken2.sif kraken2.def
+
+# Test that kraken works by running a version check
+singularity exec kraken2.sif kraken2 --version
+
+# We also made a little text file in /home, lets check that too
+# For this, try to shell into the container and once your in try to print the contents of the file to stdout
+singularity shell kraken2.sif
+```
+
+---
+
+# Transferring to the HPC and running containers under SLURM
+
+Now that we have a working kraken2 container, we can transfer it to the HPC and run it there. Actually running kraken2 is something we'll do in the next practical, so here we will just focus on getting the container to the HPC and making sure it works.
+
+```bash
+# Transfer the image (from local to HPC)
+scp kraken2.sif user@login.hpc.__:/home/user/containers/
+
+# Log into the HPC
+ssh user@login.hpc.__
+
+# (On the HPC)
+module load singularity
+
+# Quick interactive test
+singularity exec /home/user/containers/kraken2.sif kraken2 --version
+```
+
+## SLURM job script to invoke singularity container based software
+
+As you already know, running software in the login node of an HPC is frowned upon. Instead, you should submit jobs to the scheduler (SLURM in this case), which allows you to take up space on one of the production nodes in the cluster. Below is a example of a SLURM job script that i (Tor) have used to run a Roary pangenome analysis on another cluster. **Se if you can configure it to run kraken2 instead**. All HPCs are different, so make sure to adjust paths, partitions, memory, time, etc to fit your HPC. The manual for Vera can be found [here](https://www.c3se.chalmers.se/documentation/submitting_jobs/running_jobs/#writing-a-job-script).
+
+```bash
+#!/bin/bash -l
+#SBATCH -A nbin2-gu               # Project ID
+#SBATCH -J Roary_Pangenome        # Job name
+#SBATCH -t 20:00:00               # Time limit 
+#SBATCH -n 1                      # Number of tasks (processes)
+#SBATCH -p main                   # Partition to submit to
+#SBATCH --mem=200G                # Memory per node
+#SBATCH --output=/cfs/klemming/projects/supr/naiss2024-22-639/05_PANGENOME_ANALYSIS/logs/roary_%j.out  # Standard output
+#SBATCH --error=/cfs/klemming/projects/supr/naiss2024-22-639/05_PANGENOME_ANALYSIS/logs/roary_%j.err   # Standard error
+
+# Load necessary modules (Do you need to load any modules for singularity on your HPC?)
+ml singularity/4.1.1-cpeGNU-23.12
+
+# Define paths to script and container
+SINGULARITY_CONTAINER="/cfs/klemming/projects/supr/naiss2024-22-639/DBGWAS_test""
+
+# Execute script within singularity environment
+srun singularity exec -B /cfs/klemming/projects/supr/nbin2-gu:/mnt/data $SINGULARITY_CONTAINER roary -e --mafft -p 8 -f /mnt/data/05_PANGENOME_ANALYSIS/output/ /mnt/data/05_PANGENOME_ANALYSIS/input/*.gff
+
+```
+Once a jobscript is done, you can submit it to SLURM with the `sbatch` command, monitor its progress with `squeue`, and check the output files once its done.
+
+```bash
+# Submit
+sbatch job_kraken2.slurm
+
+# Monitor
+squeue -u $USER
+# or 
+scontrol show job JOBID
+
+# Check output files
+tail -20 kraken2_12345.out
+```
+
+---
+
+::: {.callout-note}
+## Key Takeaways
+
+- Package managers (apt, conda) simplify software installation and dependency management.
+- Conda environments allow for isolated setups, preventing conflicts between projects.
+- Containers (Singularity/Apptainer) provide portability and reproducibility across different systems.
+- Always bind necessary directories (data, databases) when running containers on HPC.
+:::
+
+::: {.callout-tip}
+## Pro Tips
+
+- Test containers locally before HPC deployment. Run exec, shell, and run commands to ensure functionality.
+- Keep containers minimal; BioContainers images are a quick and reliable base.
+- Use `%help` and labels in your definition file; inspect with `singularity run-help` and `singularity inspect`. This helps reproducibility for other users.
+- Bind data with `--bind host_dir:container_dir`; pass multiple directories with variables
+- In some cases, you may need additional config for your runs. Instead of making complex invokes in the jobscript, consider writing a script to run the analysis, and then invoke that script within the container.
