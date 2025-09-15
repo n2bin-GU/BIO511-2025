@@ -9,7 +9,7 @@
 <meta name="author" content="Tor Kling, Stuti Jain">
 <meta name="dcterms.date" content="2025-09-15">
 
-<title>Practical 4: Software Installation and Containers</title>
+<title>Practical 4: Software Installation and Containers – BIO511 Genomics - Command Line Practicals</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -60,27 +60,161 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS_files/libs/clipboard/clipboard.min.js"></script>
-<script src="PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS_files/libs/quarto-html/popper.min.js"></script>
-<script src="PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS_files/libs/quarto-html/anchor.min.js"></script>
-<link href="PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS_files/libs/bootstrap/bootstrap-4e03dba52163b06ab549f3d7e0f986e6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-b8777e15cfdb48cb8ceaa52da2653a9b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
 
 
 </head>
 
-<body class="quarto-light">
+<body class="nav-sidebar docked nav-fixed quarto-light">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">BIO511 Genomics - Command Line Practicals</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./PRACTICAL_INTRO_TO_COMMAND_LINE.html" aria-current="page"> 
+<span class="menu-text">Practical 1: CLI Basics</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./PRACTICAL_WORKSPACE_MANAGEMENT.html"> 
+<span class="menu-text">Practical 2: Workspace Management</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html"> 
+<span class="menu-text">Practical 3: Scripting</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html"> 
+<span class="menu-text">Practical 4: Software &amp; Containers</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./PRACTICAL_INTRO_TO_COMMAND_LINE.html">Getting Started</a></li><li class="breadcrumb-item"><a href="./PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html">Practical 4: Software Installation and Containers</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Getting Started</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./PRACTICAL_INTRO_TO_COMMAND_LINE.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 1: Introduction to Command Line Interface</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./PRACTICAL_WORKSPACE_MANAGEMENT.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Command‑Line Essentials</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 3: Scripts and Advanced Text Manipulation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Practical 4: Software Installation and Containers</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
@@ -106,10 +240,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   </ul>
 </nav>
-</div>
+    </div>
+<!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./PRACTICAL_INTRO_TO_COMMAND_LINE.html">Getting Started</a></li><li class="breadcrumb-item"><a href="./PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html">Practical 4: Software Installation and Containers</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Practical 4: Software Installation and Containers</h1>
 <p class="subtitle lead">BIO511 Genomics - Package managers, Conda locally, and Singularity on HPC</p>
@@ -414,13 +549,14 @@ Pro Tips
 <li>Bind data with <code>--bind host_dir:container_dir</code>; pass multiple directories with variables</li>
 <li>In some cases, you may need additional config for your runs. Instead of making complex invokes in the jobscript, consider writing a script to run the analysis, and then invoke that script within the container.</li>
 </ul>
+
+
 </div>
 </div>
 </section>
 </section>
 
-</main>
-<!-- /main column -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -507,6 +643,11 @@ Pro Tips
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
