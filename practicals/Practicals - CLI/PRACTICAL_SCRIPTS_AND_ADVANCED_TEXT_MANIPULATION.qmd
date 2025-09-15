@@ -22,8 +22,6 @@ Now that you've learned the basics of the command-line, its high time that we st
 mkdir -p ~/bio511/yourdir/practical_3
 cd ~/bio511/yourdir/practical_3
 
-# When you are working on a practical, remember to always copy the data files you need into your project folder
-cp ~/bio511/P3/data/AF316.* .
 ```
 :::
 
@@ -31,7 +29,6 @@ cp ~/bio511/P3/data/AF316.* .
 ## Learning Objectives
 By the end of this practical you should be able to:
 
-- Use `sed` for quick find-and-replace operations on large files
 - Use `awk` to execute short programs for text manipulation
 - Write iterative bash scripts using for loops and if/else statements
 - Debug your scripts using global set-options, traps and custom error messages
@@ -40,49 +37,7 @@ By the end of this practical you should be able to:
 
 ---
 
-# Advanced text manipulation 
-Before we start introducing scripts, let's learn a few more command-line tools that will be useful for manipulating text files. 
-
-## sed: Stream Editor for Quick Text Edits
-sed is a powerful command-line utility that allows us to perform basic text transformations on an input stream (a file or input from a pipeline). It is commonly used for tasks such as searching, find-and-replacing, inserting, or deleting text in files. It is especially useful for batch processing large files or automating repetitive text editing tasks (such as when there is a repetetive error in a large file that needs to be fixed).
-
-  - `sed` (stream editor): Allows for edits of existing text and replacing/modifying it with new text 
-
-**Exercises**
-```bash
-# sed is most commonly used for find-and-replace operations
-# The syntax is 's/old-text/new-text/g' where 's' stands for substitute and 'g' for global (all instances)
-# start by copying the example input file
-cp __/bio511/data/input_sed.txt input_sed.txt
-cat input_sed.txt
-
-# Now run sed to replace all instances of 'old-text' with 'new-text'
-sed 's/old-text/new-text/g' input_sed.txt > output_sed.txt
-cat output_sed.txt
-
-# Note that sed does not modify the original file unless you use the -i flag (in-place)
-sed -i 's/old-text/new-text/g' input_sed.txt
-cat input_sed.txt
-
-# Lets use it in a more applied manner
-# In cases where we want to merger multiple fasta files, it might be nice to have a prefix for each gene
-sed 's/^>/>AF316_/' __/bio511/data/AF316.ffn > AF316_prefixed.ffn
-
-# Do this for the other two fasta files as well!
-# Rembember to check the data!
-
-# You can also use sed to delete lines containing a specific pattern
-# Remove all gene entries that are hypothetical proteins from a gff file
-cp __/bio511/data/AF316.ffn AF316.ffn
-sed '/{__}/d' AF316.ffn > AF316_cleaned.ffn
-
-# However for special files like fasta files, only deleting the header line is not enough
-# You need to delete the sequence line as well, by increasing the line range by 1
-sed '/{__}/,+1d' AF316.ffn > AF316_cleaned2.ffn
-# Inspect the cleaned file
-head -10 AF316_cleaned2.ffn
-
-```
+# Advanced Text Manipulation
 
 ## awk: Pattern Scanning and Processing Language
 awk can do things that may at first glance remind us of other commands like `grep`, since we can similarly search for patterns in text files and output them into the stdout. However, `awk` is much more powerful text manipulation tool that allows us to do advanced language processing and data extraction not to dissimilar to a programming language. Using awk we can accomplish short programming tasks directly in the command line.
@@ -330,7 +285,6 @@ Now that you have a finished script, try to use it to answer the following quest
 
 ::: {.callout-note}
 ## Key Takeaways
-- `sed` is great for quick find-and-replace operations on large files, fix repetitive errors
 - `awk` is a powerful tool for advanced text processing and file manipulation, it can fulfill some roles without needing to write a full script.
 - Writing scripts allows for structured, reproducible, and automated workflows
 - Variables allow for storing values that can be used multiple times in a script, making it easier to modify and maintain
