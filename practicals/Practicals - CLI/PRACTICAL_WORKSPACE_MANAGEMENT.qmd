@@ -296,7 +296,7 @@ md5sum metadata.tsv
 
 ---
 
-## Guided Practice (copy/paste friendly)
+## Guided Practice
 
 ### Build the workspace and simulate data
 ```bash
