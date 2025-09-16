@@ -1,4 +1,3 @@
-
 ---
 title: "Practical 3 - Workspaces and Data Management"
 author: "Instructor: Stuti Jain"
@@ -189,34 +188,6 @@ cut -f2 metadata.tsv | sort | uniq -c | sort -nr
 
 ---
 
-## Pipes & Redirection (connect the bricks)
-
-### Pipes `|` — send output to the next command
-```bash
-grep -w "SE" metadata.tsv | wc -l
-```
-::: callout-note
-### Explanation
-The **output** of `grep` becomes the **input** of `wc`.  
-This counts how many rows exactly match the word `SE`.
-**When used:** Build end‑to‑end analyses without intermediate files.
-:::
-
-### Redirection `>` / `>>` / `2>`
-```bash
-cut -f2 metadata.tsv | sort | uniq -c | sort -nr > results/country_counts.txt
-head results/country_counts.txt
-```
-::: callout-note
-### Explanation
-- `>` **overwrites** a file with the command’s output.  
-- `>>` **appends** to an existing file.  
-- `2>` writes **errors** (stderr) to a file (useful for logging).  
-**When used:** Save reports, summaries, and logs for later review.
-:::
-
----
-
 ## File Permissions & `chmod` (make scripts runnable; protect data)
 
 ### Understand `ls -l` and permission bits
@@ -357,8 +328,7 @@ Lock raw files to **prevent accidents**; make scripts runnable so you can **exec
 1. In one sentence, why are **symlinks** preferred for references on HPC?  
 2. What does `chmod 755` do, and when would you use it?  
 3. Write a one‑liner to count unique **countries** in `metadata.tsv`.  
-4. What’s the difference between `>` and `>>`? Between `>` and `|`?  
-5. Find all `.tsv` files larger than 1 MB and save the list to `big_tsvs.txt`.
+4. Find all `.tsv` files larger than 1 MB and save the list to `big_tsvs.txt`.
 
 ::: callout-important
 ### Hint

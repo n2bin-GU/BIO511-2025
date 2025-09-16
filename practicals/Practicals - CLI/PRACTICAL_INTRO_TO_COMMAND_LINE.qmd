@@ -66,11 +66,11 @@ pwd
 ls 
 
 # Run the ls help command, then find the option to let you
-# display the directory contents as a list
+# display the directory contents as a list with more details
 ls --help
 
 # Then run that command
-ls -{__}
+ls -la
 
 ```
 
@@ -126,14 +126,14 @@ echo "Hello World!"
 touch test_file
 
 # Then add some text to the file 
-echo "__" > test_file
+echo "Some_text" > test_file
 
 # Now add some more text to the next line in the file
 # To add to a file you simply extend the > operator to >> 
-echo "__" >> test_file
+echo "Some_more_text" >> test_file
 
 # Now lastly, try to wipe the file with some new text 
-echo "__" {__} test_file
+echo "New_text" > test_file
 ```
 
 ## File Manipulation (`cp`, `mv`, `rm`)
@@ -151,7 +151,7 @@ mkdir -p raw_data backups
 # Create some empty mock files for different data types that we'll use later 
 touch sequences.fasta
 touch expression_data.csv
-touch gene_annotation.gff
+touch gene_annotations.csv
 
 # Add some mock sequence data 
 echo ">lacZ_beta-galactosidase" > sequences.fasta
@@ -185,21 +185,21 @@ cp sequences.fasta sequences_backup.fasta
 
 # Move files to organize your project
 mv sequences_backup.fasta backups/
-mv quality_scores.fastq raw_data/
 
 # mv can also be used to rename files, similar to the syntax of cp 
 # You just remembered that these files were E.coli, rename them and think of good informative names
-mv raw_data/gene_annotation.gff raw_data/__.gff
+mv raw_data/gene_annotation.csv raw_data/E_coli_gene_annotations.csv
 
-# We dont need the other genera directories anymore
-# so remove them from our working directory - what flag do you need?
-rm Acinetobacter  # This will fail - figure out the right flag!
-rm -{__} Acinetobacter
+# remove files (be careful, no undo!)
+rm sequences_backup.fasta
+# rm can also be used with flags to remove directories and their contents
+rm -r backups/
 
 # Lastly lets sort a bit in your directories
 # Copy the entire raw_data directory with contents (find the right flag!)
-cp -{__} raw_data/ Escherichia/coli/
+cp -r raw_data/ Escherichia/coli/
 ```
+**Note: After this section is done, remember that you renamed the data files to include the species name (E.coli), rename them back for the subsequent sections if you want. Otherwise, make sure the change doesnt confuse you**
 
 ---
 
@@ -221,27 +221,27 @@ Now let's work with file contents using some mock genomics data.
 cat sequences.fasta
 
 # View only the first 2 sequences (headers + sequences)
-head -{__} sequences.fasta
+head -n 4 sequences.fasta
 
 # View the last 2 lines of expression data
-tail -{__} expression_data.csv
+tail -n 2 expression_data.csv
 
 # Search for specific genes or functions
 grep "lacZ" sequences.fasta
-grep "_" sequences.fasta  # Find all sequence headers
+grep "^>" sequences.fasta  # Find all sequence headers
 
 # Count how many sequences we have (find the counting flag!)
-grep -{__} ">" sequences.fasta
+grep -c ">" sequences.fasta
 
 # Search expression data case-insensitively (what flag makes it ignore case?)
-grep -{__} "PROTEIN" expression_data.csv
+grep -i "PROTEIN" expression_data.csv
 
 # Show line numbers with matches (which flag shows line numbers?)
-grep -{__} ">" sequences.fasta
+grep -n ">" sequences.fasta
 
 # Find all lines that DON'T contain "lacZ", which rows are they on? 
 # (which flag inverts the match? How do you combine flags?)
-grep -{__} "lacZ" expression_data.csv
+grep -v "lacZ" expression_data.csv
 ```
 
 ---
@@ -286,14 +286,14 @@ Chaining commands together will be key later in this course section, when we sta
 cat gene_annotations.csv | grep "beta-galactosidase"
 
 # Skip the header and show only first 2 data rows
-cat gene_annotations.csv | grep -{__} "Gene_ID" | head -{__}
+cat gene_annotations.csv | grep -v "Gene_ID" | head -n 2
 
 # Extract only chromosomal genes, count them
-cat gene_annotations.csv | grep {__} | 
+cat gene_annotations.csv | grep "chr" | wc -l
 
 # We can combine commands to edit specific lines as well 
 # Use it to remove all the underscores from the sequence headers in sequences.fasta
-grep '^>' sequences.fasta | sed {__}
+grep '^>' sequences.fasta | sed 's/_//g'
 
 ```
 ---
