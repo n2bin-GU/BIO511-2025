@@ -1,6 +1,6 @@
 
 ---
-title: "Command‑Line Essentials"
+title: "Practical 3 - Workspaces and Data Management"
 author: "Instructor: Stuti Jain"
 format:
   html:
