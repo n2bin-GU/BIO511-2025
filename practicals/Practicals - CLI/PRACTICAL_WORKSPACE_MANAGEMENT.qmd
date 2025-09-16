@@ -1,6 +1,6 @@
 ---
-title: "Practical 3 - Workspaces and Data Management"
-author: "Instructor: Stuti Jain"
+title: "Command‑Line Essentials"
+author: "Instructor: Stuti Jain, Tor Kling"
 format:
   html:
     theme: cosmo
@@ -18,13 +18,6 @@ execute:
   message: false
 ---
 
-::: callout-note
-### How to use this handout
-This guide is **self‑explanatory** and written for true beginners.  
-Every command is followed by a **plain‑language explanation** (in blue/green callouts) and a short note on **when you’d use it in bioinformatics**.  
-No prior Linux/Unix experience is assumed.
-:::
-
 ## Why the command line for bioinformatics?
 
 - **Scale:** FASTA/FASTQ/BAM/VCF can be huge and numerous—GUIs do not scale.  
@@ -39,7 +32,7 @@ You **snap** bricks together with pipes `|` to build powerful analyses.
 
 ---
 
-## Workspace Setup (your “lab bench” on disk)
+## Workspace Setup
 
 ### Create a clean project layout
 ```bash
@@ -274,7 +267,7 @@ md5sum metadata.tsv
 
 ---
 
-## Guided Practice (copy/paste friendly)
+## Guided Practice
 
 ### Build the workspace and simulate data
 ```bash
