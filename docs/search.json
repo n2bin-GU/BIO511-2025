@@ -1,302 +1,12 @@
 [
   {
-    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html",
-    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html",
-    "title": "Practical 4: Software Installation and Containers",
+    "objectID": "PRACTICAL_SETTING_UP_THE_HPC.html",
+    "href": "PRACTICAL_SETTING_UP_THE_HPC.html",
+    "title": "Practical 2: Connecting to the HPC",
     "section": "",
-    "text": "Up until now youve had to make everything by yourself (sort of, at least using base programs that come with your unix distro). This approach, while flexible, defeats one of they key benefits of modern bioinformatics; Open source and collaborative solutions to large data handling. Thanks to a lot of effort, there are countless of free, open-source tools available in various repositiories on the internet.\nHowever these tools, while saving us a lot of time, may be tricky to find and set up correctly. Different tools require different dependencies, versions, or system libraries. This often leads to complex webs of libraries and packages that act as the backbone of your code, which can be difficult to manage and reproduce on other systems. In this practical, you’ll learn where to find tools, various ways of installing an managing them (conda, apt), cloning repos from GitHub, and—most importantly—how to package tools in a Singularity/Apptainer containers that you can copy to, and run, anywhere (including HPC environments).\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end of this practical you should be able to:\n\nFind and identify bioinformatics tools in public repositories\nInstall software locally using package managers (apt, conda)\nCreate and manage conda environments for isolated software setups\nWrite a basic Singularity definition file to create a container from a base image\nBuild and test a Singularity container locally\nTransfer and run a Singularity container on an HPC using SLURM\n\n\n\n\n\n\n\n\n\n\nREMEMBER: Create a separate project folder\n\n\n\nmkdir -p ~/bio511/yourdir/practical_4\ncd ~/bio511/yourdir/practical_4",
+    "text": "1 Introduction\nThis tutorial is to take you through the final steps of setting up and accessing the c3se High Performance Computing infrastructure. The specific cluster we will use is called Vera. You will be introduced to this cluster in the lecture and here you can find more information about it, including what resources that are available, how to run jobs and other documentation.\nWe will walk you through step by step in this tutorial so that we (hopefully) can assist if there are any problems.\n\n\n\n\n\n\nPre-course setup\n\n\n\nTo be able to follow these steps you first have to have followed the steps of the Pre-course Setup including registration at SUPR and application to the course HPC project.\n\n\n\n\n\n2 Adding Vera/c3se at SUPR\n\nLog in to SUPR\nClick “Accounts” in the left side menu\nRequest access to Vera/c3se\n\n\n\n\n3 Setting up a Chalmers ID\n\nNavigate to https://myaccount.chalmers.se/.\nLog in with your GU account.\nChoose “Activate CID” and follow the instructions to activate your account\n\n\n\n\n\n\n\nRemember your password!\n\n\n\nThe CID username and password are the ones you will use to log in to the cluster\n\n\n\n\n\n4 Setting up Chalmers VPN\nTo be able to access c3se from other networks than in GU or Chalmers, you will need a Chalmers VPN\n\nNavigate to https://chalmers.topdesk.net/tas/public/ssp/content/detail/knowledgeitem?unid=07e6154089a648d09711ccc42a42fc88\nFollow the instructions to set up the Chalmers VPN\n\n\n\n\n5 Connecting to the HPC using ssh in VSCode\nTo be able to connect to the HPC in a manner that will let you use the full suite of tools available (or most of them at least) in VSCode, you will need to install the Remote - SSH extension.\n\nOpen VSCode\nGo to the Extensions view by clicking on the Extensions icon in the Activity Bar on the side of the window or by pressing Ctrl+Shift+X\nSearch for “Remote - SSH” and install the extension by Microsoft (if youre unsure how install extensions, see here)\nAfter installation, you will see a new icon in the Activity Bar on the side of the window. Click on it to open the Remote Explorer view.\n\nIf the SSH Targets are not visible, click on the drop down to expand the view\n\nClick on the + (“New Remote”) icon next to SSH header to add a new SSH host\nIn the input box that appears, enter the SSH connection string for Vera: &lt;your_chalmers_id&gt;@vera1.c3se.chalmers.se (replace &lt;your_chalmers_id&gt; with your actual Chalmers ID)\nPress Enter to confirm\nYou will be prompted to select the SSH configuration file to update. Choose the default option (usually ~/.ssh/config)\n\nOnce you have added the SSH host, you can connect to Vera:\n\nIn the Remote Explorer view, find the Vera entry under SSH Targets (or by clicking on the blue “remote window” icon in the bottom left corner of VSCode)\n\nClick on the “Connect to Host” icon (an arrow if you want the same window, square if you want a new one) next to the Vera entry\nIf you clicked on the blue “remote window” icon, select “Remote-SSH: Connect to Host…” and then select the Vera entry\n\nA new VSCode window will open, and you will be prompted to enter your Chalmers ID password\nAfter entering your password, you should be connected to Vera, and you can start working on the HPC cluster directly from VSCode. Make sure that you open your home folder on Vera to open up a workspace.\nYou can verify that you are connected to Vera by opening a new terminal in VSCode (Terminal &gt; New Terminal) and checking the hostname in the terminal prompt. It should show something like your_chalmers_id@vera:~$",
     "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Practical 4: Software Installation and Containers"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#exercises-discover-tools",
-    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#exercises-discover-tools",
-    "title": "Practical 4: Software Installation and Containers",
-    "section": "2.1 Exercises: Discover tools",
-    "text": "2.1 Exercises: Discover tools\n# Explore apt \n# Find which apt subcommand lists packages for the following queries:\napt {__} kraken2\napt {__} singularity\napt {__} prokka\n\n# Lets look a little closer at prokka:\napt {__} prokka\n\n# Explore a tool on GitHub:\n#   1) Find the repository for 'BAKTA'\n#   2) Locate the installation methods, what options are available?\n#   3) Identify dependencies and OS requirements",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Practical 4: Software Installation and Containers"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#setting-up-conda",
-    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#setting-up-conda",
-    "title": "Practical 4: Software Installation and Containers",
-    "section": "3.1 Setting up Conda",
-    "text": "3.1 Setting up Conda\nTo begin with, we will install Miniconda, a minimal installer for Conda. Conda is an open-source package management system and environment management system that runs on Windows, macOS, and Linux. It quickly installs, runs, and updates packages and their dependencies. Conda also creates, saves, loads, and switches between environments on your local computer. This is particularly useful in bioinformatics, where different projects may require different versions of software and libraries.\n# Install Miniconda\n# For this we need to fetch files from the internet via wget \nwget -O Miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh\nbash Miniconda.sh -b -p $HOME/miniconda3\n\n# Initialize shell and set channels\neval \"$($HOME/miniconda3/bin/conda shell.bash hook)\"\nconda init\n\n# Open a new shell terminal\n\n# Configure channels for bioconda packages, a specialized repository for bioinformatics software\nconda config --add channels conda-forge\nconda config --add channels bioconda\nconda config --set channel_priority strict",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Practical 4: Software Installation and Containers"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#install-fastp-locally-via-apt",
-    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#install-fastp-locally-via-apt",
-    "title": "Practical 4: Software Installation and Containers",
-    "section": "3.2 Install fastp locally via apt",
-    "text": "3.2 Install fastp locally via apt\nNext up, we will install fastp locally using apt, the default package manager for Debian-based Linux distributions. You will encounter fastp later in the genomics workflow praticals, its a tool inteded for quality control and preprocessing of FASTQ read files.\n# Before we install anything via apt, its always a good idea to update the package lists\n# This ensures you get the latest versions available in the repositories\nsudo apt update\n\n# Search for fastp package in apt repositories\napt search fastp\n\n# Install fastp\nsudo apt install -y fastp\n\n# Verify installation\nfastp --version",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Practical 4: Software Installation and Containers"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#use-conda-to-install-multiqc-locally",
-    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#use-conda-to-install-multiqc-locally",
-    "title": "Practical 4: Software Installation and Containers",
-    "section": "3.3 Use Conda to install MultiQC locally",
-    "text": "3.3 Use Conda to install MultiQC locally\nFor this segment we will install MultiQC, a tool that aggregates results from bioinformatics analyses across many samples into a single report. This is particularly useful for summarizing the output of tools like FastQC. Our install will be done in a conda enviroment, installing the version hosted on bioconda.\n# Create a new conda environment named bioinfo with python 3.9\nconda create -n {__} python=3.9\n\n# Activate the environment\nconda activate {__}\n\n# Install MultiQC from bioconda\nconda install multiqc\n\n# Verify installation\nmultiqc --version",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Practical 4: Software Installation and Containers"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#containerization-with-singularity",
-    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#containerization-with-singularity",
-    "title": "Practical 4: Software Installation and Containers",
-    "section": "4.1 Containerization with Singularity",
-    "text": "4.1 Containerization with Singularity\nContainers are a way to package software and its dependencies into a single, portable unit that can run consistently across different computing environments. Unlike virtual machines, containers share the host system’s kernel, making them more lightweight and efficient. This is particularly useful in bioinformatics, where software often has complex dependencies and needs to run on various systems, including high-performance computing (HPC) clusters.\nOn HPC you usually cannot sudo and may not be allowed to build images on the login/compute nodes. Best practice is then: - Build the image locally (or via a remote builder). - Copy the .sif to the HPC. - Bind-mount data and databases at runtime.",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Practical 4: Software Installation and Containers"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#a-minimal-kraken2-singularity-definition-file",
-    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#a-minimal-kraken2-singularity-definition-file",
-    "title": "Practical 4: Software Installation and Containers",
-    "section": "4.2 A minimal kraken2 Singularity definition file",
-    "text": "4.2 A minimal kraken2 Singularity definition file\nThe first step to creating a singularity container is to write a definition file. This file describes the base image, metadata, and the steps needed to install and configure the software inside the container. In many cases it will be simple, if an already hosted image exists (e.g. on BioContainers), luckily kraken2 is one of those cases. if you want to learn more about writing definition files, check out the Singularity documentation.\nCreate a file named kraken2.def with the contents below. It uses the BioContainers kraken2 image as a base.\n# kraken2.def\nBootstrap: docker\nFrom: quay.io/biocontainers/kraken2:2.1.6--pl5321h077b44d_0\n\n%labels\n    maintainer Y/N\n    org.opencontainers.image.title \"kraken2\"\n    org.opencontainers.image.source \"https://github.com/DerrickWood/kraken2\"\n\n%help\n    # Help exists to provide users with information about the container.\n    # Running `singularity run-help kraken2.sif` will display this message.\n    \n    Kraken 2 in a Singularity/Apptainer container.\n    \n    Bind your database at runtime, e.g. --bind /path/to/db:/db and use --db /db.\n\n    Used for the BIO511 Genomics course at Univsersity of Gothenburg.\n\n%post\n  # Here is where you would install additional software if needed and make config changes.\n  # However, the BioContainers image already has kraken2 installed.\n\n  # But for the hell of it, put a little text file in /home\n    echo \"This is a kraken2 container built from BioContainers base image.\" &gt; /home/kraken2_info.txt\n\n    # Echo a message to indicate successful build\n    echo \"kraken2 installed. Use --bind to mount a database at runtime.\"\n\n%environment\n    # Here is where you would usually set environment variables.\n    # However, the BioContainers image already has kraken2 in PATH. so nothing needed here.",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Practical 4: Software Installation and Containers"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#build-test-and-run-locally",
-    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#build-test-and-run-locally",
-    "title": "Practical 4: Software Installation and Containers",
-    "section": "4.3 Build, test, and run locally",
-    "text": "4.3 Build, test, and run locally\n# Build a read-only image from the def file (locally)\nsingularity build kraken2.sif kraken2.def\n\n# Test that kraken works by running a version check\nsingularity exec kraken2.sif kraken2 --version\n\n# We also made a little text file in /home, lets check that too\n# For this, try to shell into the container and once your in try to print the contents of the file to stdout\nsingularity shell kraken2.sif",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Practical 4: Software Installation and Containers"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#slurm-job-script-to-invoke-singularity-container-based-software",
-    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#slurm-job-script-to-invoke-singularity-container-based-software",
-    "title": "Practical 4: Software Installation and Containers",
-    "section": "5.1 SLURM job script to invoke singularity container based software",
-    "text": "5.1 SLURM job script to invoke singularity container based software\nAs you already know, running software in the login node of an HPC is frowned upon. Instead, you should submit jobs to the scheduler (SLURM in this case), which allows you to take up space on one of the production nodes in the cluster. Below is a example of a SLURM job script that i (Tor) have used to run a Roary pangenome analysis on another cluster. Se if you can configure it to run kraken2 instead. All HPCs are different, so make sure to adjust paths, partitions, memory, time, etc to fit your HPC. The manual for Vera can be found here.\n#!/bin/bash -l\n#SBATCH -A nbin2-gu               # Project ID\n#SBATCH -J Roary_Pangenome        # Job name\n#SBATCH -t 20:00:00               # Time limit \n#SBATCH -n 1                      # Number of tasks (processes)\n#SBATCH -p main                   # Partition to submit to\n#SBATCH --mem=200G                # Memory per node\n#SBATCH --output=/cfs/klemming/projects/supr/naiss2024-22-639/05_PANGENOME_ANALYSIS/logs/roary_%j.out  # Standard output\n#SBATCH --error=/cfs/klemming/projects/supr/naiss2024-22-639/05_PANGENOME_ANALYSIS/logs/roary_%j.err   # Standard error\n\n# Load necessary modules (Do you need to load any modules for singularity on your HPC?)\nml singularity/4.1.1-cpeGNU-23.12\n\n# Define paths to script and container\nSINGULARITY_CONTAINER=\"/cfs/klemming/projects/supr/naiss2024-22-639/DBGWAS_test\"\"\n\n# Execute script within singularity environment\nsrun singularity exec -B /cfs/klemming/projects/supr/nbin2-gu:/mnt/data $SINGULARITY_CONTAINER roary -e --mafft -p 8 -f /mnt/data/05_PANGENOME_ANALYSIS/output/ /mnt/data/05_PANGENOME_ANALYSIS/input/*.gff\nOnce a jobscript is done, you can submit it to SLURM with the sbatch command, monitor its progress with squeue, and check the output files once its done.\n# Submit\nsbatch job_kraken2.slurm\n\n# Monitor\nsqueue -u $USER\n# or \nscontrol show job JOBID\n\n# Check output files\ntail -20 kraken2_12345.out\n\n\n\n\n\n\n\nKey Takeaways\n\n\n\n\nPackage managers (apt, conda) simplify software installation and dependency management.\nConda environments allow for isolated setups, preventing conflicts between projects.\nContainers (Singularity/Apptainer) provide portability and reproducibility across different systems.\nAlways bind necessary directories (data, databases) when running containers on HPC.\n\n\n\n\n\n\n\n\n\nPro Tips\n\n\n\n\nTest containers locally before HPC deployment. Run exec, shell, and run commands to ensure functionality.\nKeep containers minimal; BioContainers images are a quick and reliable base.\nUse %help and labels in your definition file; inspect with singularity run-help and singularity inspect. This helps reproducibility for other users.\nBind data with --bind host_dir:container_dir; pass multiple directories with variables\nIn some cases, you may need additional config for your runs. Instead of making complex invokes in the jobscript, consider writing a script to run the analysis, and then invoke that script within the container.",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Practical 4: Software Installation and Containers"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html",
-    "href": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html",
-    "title": "Practical 3: Scripts and Advanced Text Manipulation",
-    "section": "",
-    "text": "Now that you’ve learned the basics of the command-line, its high time that we start working on making our coding structured and reproducible. While runnning pipes in our command line prompt can be quick and easy, writing our code in structured machine-readable text files called scripts, allows us to expand the possibilities of our programming. In genomics, you’ll pretty much always need to process massive datasets - think millions of sequences, GWAS data with millions of variants, or annotation files with complex formatting. Typically these files have a standardized structure, which the handling of we can automate by creating generalizable and well-formatted scripts.\n\n\n\n\n\n\nREMEMBER: CREATE A SEPARATE PROJECT FOLDER IN YOUR HOME DIRECTORY FOR THIS PRACTICAL\n\n\n\nmkdir -p ~/bio511/yourdir/practical_3\ncd ~/bio511/yourdir/practical_3\n\n\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end of this practical you should be able to:\n\nUse awk to execute short programs for text manipulation\nWrite iterative bash scripts using for loops and if/else statements\nDebug your scripts using global set-options, traps and custom error messages\nBe able to write basic flexible shell scripts using OPTARGS",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Practical 3: Scripts and Advanced Text Manipulation"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html#awk-pattern-scanning-and-processing-language",
-    "href": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html#awk-pattern-scanning-and-processing-language",
-    "title": "Practical 3: Scripts and Advanced Text Manipulation",
-    "section": "2.1 awk: Pattern Scanning and Processing Language",
-    "text": "2.1 awk: Pattern Scanning and Processing Language\nawk can do things that may at first glance remind us of other commands like grep, since we can similarly search for patterns in text files and output them into the stdout. However, awk is much more powerful text manipulation tool that allows us to do advanced language processing and data extraction not to dissimilar to a programming language. Using awk we can accomplish short programming tasks directly in the command line.\n\nawk (Aho, Weinberger, and Kernighan): Allows for advanced text processing and file manipulation\n\nSome key commands:\n\n-F: Specifies the input field separator (default is whitespace)\nBEGIN{}: Block of programming that runs before processing any input lines (before text is put into $1, $2, etc)\nEND{}: Block that runs after processing all input lines (after all text has been processed)\n{}: Block that runs for each input line (used for processing)\n$1, $2, ...: Represents the first, second, etc. fields (eg. columns) in the current line\nOFS: Output field separator (default is a space, can be set in BEGIN block)\n\nExercises\n# awk is great for quick column selection and simple filtering\n# The syntax is 'awk option 'program' input-file' where program is a series of commands\n# Print seqid and type columns of a gff file\nawk -F'\\t' 'BEGIN{OFS=\"\\t\"} {print $1,$3,$9}' AF316.gff &gt; seqid_type.tsv\n\n# You can also filter rows based on conditions, to retain only specific features (similar to what we can accomplish with grep)\n# Here we can filter for only CDS features\nawk -F'\\t' '$3==\"CDS\"' AF316.gff &gt; cds_features.tsv\n\n# Another thing is performing operations on the data in transit, similar to what would need a pipe and multiple commands otherwise\n# Here we can calculate the length of each CDS feature and output it as a new column\n# Consider which columns should be used to calculate the length\nawk -F'\\t' 'BEGIN{OFS=\"\\t\"} $3==\"CDS\"{print $1,$4,$5,$9,(${__}-${__}+1)}' AF316.gff &gt; cds_features_length.tsv\n\n# Lets operate some more on the feature length file\n# Calculate the total number of CDS features and their average length\nawk -F'\\t' '{___}{OFS=\"\\t\"} {total_length+=${__}; count++} {__}{print \"Total_CDS\",count,\"Average_Length\",total_length/count}' cds_features_length.tsv\nAwk programs can get quite complex, and we will not cover all its features here. However, it is a very useful tool to have in your toolbox, and I encourage you to explore it further on your own. A good resource is the GNU Awk User’s Guide.",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Practical 3: Scripts and Advanced Text Manipulation"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html#starting-a-bash-script",
-    "href": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html#starting-a-bash-script",
-    "title": "Practical 3: Scripts and Advanced Text Manipulation",
-    "section": "3.1 Starting a bash script",
-    "text": "3.1 Starting a bash script\nWe are already familiar with bash, one of the most common shell used in Linux and macOS, and is the default shell on most HPC systems. A bash script is simply a text file containing a series of bash commands that can be executed in sequence.\nExercises: Starting a script\n# For this practical, we will write a script that processes the AF genome files and looks for genes of a certain type\n# Start by creating a new file called process_AF_genome.sh\n# You can do this either by creating one manually in your vscode editor, or by using the touch command\ntouch process_AF_genome.sh\n\n# Open the file in your editor and add the shebang line at the top\n# A shebang line tells the system which interpreter to use to run the script, an interpreter is the program that will read and execute the script\n# Add this line at the top of your script:\n#!/usr/bin/env bash\n\n# Now change the file permissions to make it executable\nchmod +x process_AF_genome.sh\n\n# To run the script, simply run the filename in your terminal\n./process_AF_genome.sh",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Practical 3: Scripts and Advanced Text Manipulation"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html#variables-for-loops-and-ifelse-statements",
-    "href": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html#variables-for-loops-and-ifelse-statements",
-    "title": "Practical 3: Scripts and Advanced Text Manipulation",
-    "section": "3.2 Variables, for loops and if/else statements",
-    "text": "3.2 Variables, for loops and if/else statements\nOur next step is to add some functionality to our script. We will start by adding variables ${VAR_NAME}, these variables can be used to store values that we can use later in the script. This is useful for storing file names, parameters, or any other values that we want to use multiple times in the script.\nExercises: Variables\n# Good variables to start with are input and output file names\n# For these variables, we typically use the full path to the file, this makes it easier to run the script from any directory\n# Swap the paths below with the correct paths to your files\nINPUT_DIR=\"path/to/data\"\nOUTPUT_DIR=\"path/to/output\"\n\n# You can also use variables to store parameters, such as the gene name pattern we want to look for in our ffn files\nGENE_NAME_PATTERN=\"gene_name\"\n\n# You can also Initialize variables to store intermediate values, such as the total number of genes matching the pattern found\nTOTAL_GENES_FOR_PATTERN=0\nBut the ffn files we have contain a multitude of gene sequences and their headers, extracting these genes across multiple files will require repeated parsing setups. This is where for loops come in, they allow us to iterate over a list of items and execute a block of code for each item in the list. In our case, we can use a for loop to iterate over a list of input files and process each file in turn.\n\n* (wildcard): A character that can be used to match any string of characters in file names or patterns\nfor: A control flow statement that allows us to iterate over a list of items and execute a block of code for each item\ndo and done: Keywords used to define the start and end of a loop block\nbasename: A command that extracts the base name of a file (the file name without the path and extension)\n~: In the context of regex, it represents the matching operator, used to check if a string matches a pattern\n\nExercises: For loops\n# In our INPUT_DIR we have multiple ffn files, a good way (if you have a good structured folder) to iterate over all ffn files is to use a for loop with a wildcard\nfor ffn_file in ${INPUT_DIR}/*.ffn; do \n  # putting the wilcard alongside the file extension will match all files with that extension\n  # Inside the loop, we can use the variable ffn_file established in the loop to refer to the current file being processed\n  # Extract the base name of the file (without the path and extension) to use in the output file name\n  base_name=$(basename ${ffn_file} .ffn)\n  \n  # Use awk to extract gene sequences matching the GENE_NAME_PATTERN and save them to an output file\n  # Since we are working on a fasta file, tab-separation is not needed and all data is in one column\n  # In order to pass the pattern variable to awk, you need to figure out the flag for passing variables to awk\n  awk -{__} pattern=\"${GENE_NAME_PATTERN}\" 'BEGIN{OFS=\"\\t\"} /^&gt;/{if($0 ~ pattern) {print $0; getline; print $0}}' ${ffn_file} &gt; ${OUTPUT_DIR}/${base_name}_filtered.ffn\n\n  # Count the number of genes found and add it to the total\n  # For this you need to figure out a grep command that counts the number of lines in the output file that match the pattern\n  gene_count=$(grep {___} || true)\n  TOTAL_GENES_FOR_PATTERN=$((TOTAL_GENES_FOR_PATTERN + gene_count))\n\n  # Also store the gene count for the current file in a new file for later use \n  echo -e \"${base_name}\\t${gene_count}\" &gt;&gt; ${OUTPUT_DIR}/gene_counts.tsv\n  \n  # Echo the number of genes found in the current file to you stdout, to report progress\n  echo \"Processed ${ffn_file}, found ${gene_count} genes matching pattern '${GENE_NAME_PATTERN}'\"\ndone\nLastly, we want to add some conditional logic to our script, so that we can handle different scenarios based on the input data. This is where if/else statements come in, they allow us to execute a block of code if a certain condition is met, and another block of code if the condition is not met. We’ll also introduce one additional loop to do iterative operation on the lines of a file.\n\nif: A control flow statement that allows us to execute a block of code if a certain condition is met\nthen: A keyword used to define the start of an if block\nelse: A keyword used to define an alternative block of code if the condition is not met\nfi: A keyword used to define the end of an if block\nwhile: A control flow statement that allows us to execute a block of code repeatedly as long as a specified condition is true\nread: A command that reads a line of input from a file or stdin\n-gt: A comparison operator that means “greater than”\n\nExercises: If/else\n# Conditional logic can be used in multiple ways, we will focus on an example where label our genomes based on the outcome of the for loop \n# To accomplish this, we will read the gene_counts.tsv file line by line and use an if/else statement to label the genomes based on the gene count\n# Now we can add some conditional logic to label our genomes\nwhile read -r line; do\n  # Read the genome name and gene count from the file\n  # You will need to figure out the awk commands to extract the genome name and gene count from each line\n  genome_name=$(echo {__} | awk {__})\n  gene_count=$(echo {__} | awk {__})\n\n  # Use an if/else statement to label the genome based on the gene count\n  if [ \"${gene_count}\" -gt 1 ]; then\n    label=\"label1\"\n  else\n    label=\"label2\"\n  fi\n\n  # Append the label to the metadata file\n  echo -e \"${genome_name}\\t${gene_count}\\t${label}\" &gt;&gt; \"${OUTPUT_DIR}/genomes_metadata_labeled.tsv\"\ndone &lt; \"${OUTPUT_DIR}/gene_counts.tsv\"",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Practical 3: Scripts and Advanced Text Manipulation"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html#debugging-bash-scripts-when-things-go-wrong",
-    "href": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html#debugging-bash-scripts-when-things-go-wrong",
-    "title": "Practical 3: Scripts and Advanced Text Manipulation",
-    "section": "4.1 Debugging Bash Scripts: When Things Go Wrong",
-    "text": "4.1 Debugging Bash Scripts: When Things Go Wrong\nBash scripts differ a bit from other programming languages (or atleast in the context you learn it, think CLI vs Spyder), in that they without configuration will continue running even if an error occurs. This can be both a blessing and a curse, as it allows for scripts to continue running even if a minor error occurs, but it can also make it difficult to identify and fix errors when they do occur. Finding and catching these errors is the other half of programming, we will now introduce a few tools that can help you debug your bash scripts.\nExercises: Global script settings\n# At the top your script we typically add set commands to define general behaviour for our script\n# These commands will most likely always be in your scripts\nset -e  # Exit immediately if a command exits with a non-zero status\nset -u  # Treat unset variables as an error when substituting\nset -o pipefail  # Return the exit status of the last command in the pipe that failed\n\n# One additional setting is to add debugging output\n# This will print each command before it is executed, which can be useful for debugging\n# But it can also be very verbose, and clog up your output/logs\nset -x  # Enable debugging output\nThese settings can be added at the top of your script, after the shebang line (#!/usr/bin/env bash). However, they wont help with finding the exact spot where the error occurs. For that we can use the trap command to catch errors and print useful information.\nExercises: Error messages\n# The trap command can be used to catch errors and print useful information\n# Here we will print the line number and the command that caused the error\ntrap 'echo \"Error on line $LINENO: $BASH_COMMAND\"' ERR\n\n# However, since you also know how your script logic works, you can also add custom error messages at specific points in your script\n# This a quite common use of if/else statements for bash scripts\n# Here is an example of a custom error message\nif [ ! -f \"$INPUT_FILE\" ]; then\n  echo \"Error: Input file $INPUT_FILE does not exist.\"\n  exit 1\nfi\nGo ahead and identify stages in the script from before where you think errors might occur, and add custom error messages where appropriate. Remember to test your script with both valid and invalid inputs to see how it behaves",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Practical 3: Scripts and Advanced Text Manipulation"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html#optargs---adding-flags-to-make-your-scripts-flexible",
-    "href": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html#optargs---adding-flags-to-make-your-scripts-flexible",
-    "title": "Practical 3: Scripts and Advanced Text Manipulation",
-    "section": "4.2 OPTARGS - Adding flags to make your scripts flexible",
-    "text": "4.2 OPTARGS - Adding flags to make your scripts flexible\nUp until now, our scripts have been quite rigid - they expect specific input files and parameters; an occasionally bad habit that coders refer to as “hardcoding”. However, in many scenarios, we often want our scripts to be more flexible and adaptable to different inputs and options. This is where OPTARGS comes in - a built-in bash tool that allows us to easily handle command-line options and arguments. You might recognize this from the command-line tools we’ve used so far, where we can add flags like -h for help or -v for verbose output. By using OPTARGS in our scripts, we can create flags for our own programs, making them more user-friendly and versatile.\nA few key commands that we will use in this section:\n\ngetopts: A built-in bash tool for parsing command-line options and arguments\ncase statement: A control flow statement that allows us to execute different blocks of code based on the value of a variable\n\nExercises\n# To begin using OPTARGS, we need to add a while loop at the top of our script to handle the options\n# the OPTARG variable will hold the value of whatever comes after the flag in the command line\n# A while loop iterates over the options provided to the script, and sets option variables based with the read value from the command line\nwhile getopts \"i:o:h\" opt; do\n  case $opt in\n    i) INPUT_FILE=\"$OPTARG\" ;;  # -i flag for input file\n    o) OUTPUT_FILE=\"$OPTARG\" ;; # -o flag for output file\n    h) echo \"Usage: $0 -i input_file -o output_file\"  # -h flag for help\n       exit 0 ;;\n    *) echo \"Invalid option: -$OPTARG\" &gt;&2\n       exit 1 ;;\n  esac\ndone\n\n# After the while loop, we can add checks to ensure that the required options are provided\nif [ -z \"$INPUT_FILE\" ] || [ -z \"$OUTPUT_FILE\" ]; then\n  echo \"Error: Input and output files are required.\"\n  echo \"Usage: $0 -i input_file -o output_file\"\n  exit 1\nfi\n\n# Its also a good idea to set default values for optional parameters, you do this in the same way as when you set variables normally\nOPTIONAL_PARAM=\"default_value\"\nNow take the script you wrote before, and modify it to use OPTARGS for input and output files (also consider your other variables) Remember to test your script with different combinations of options and arguments to ensure it behaves as expected",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Practical 3: Scripts and Advanced Text Manipulation"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html",
-    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html",
-    "title": "Command‑Line Essentials",
-    "section": "",
-    "text": "How to use this handout\n\n\n\nThis guide is self‑explanatory and written for true beginners.\nEvery command is followed by a plain‑language explanation (in blue/green callouts) and a short note on when you’d use it in bioinformatics.\nNo prior Linux/Unix experience is assumed.",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Command‑Line Essentials"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#why-the-command-line-for-bioinformatics",
-    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#why-the-command-line-for-bioinformatics",
-    "title": "Command‑Line Essentials",
-    "section": "1 Why the command line for bioinformatics?",
-    "text": "1 Why the command line for bioinformatics?\n\nScale: FASTA/FASTQ/BAM/VCF can be huge and numerous—GUIs do not scale.\n\nReproducibility: Commands are text, so analyses are easy to repeat and share.\n\nPortability: Works the same on laptops and HPC clusters.\n\n\n\n\n\n\n\nMental model\n\n\n\nThink of CLI tools as LEGO bricks. Each command does one small job well.\nYou snap bricks together with pipes | to build powerful analyses.",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Command‑Line Essentials"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#workspace-setup-your-lab-bench-on-disk",
-    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#workspace-setup-your-lab-bench-on-disk",
-    "title": "Command‑Line Essentials",
-    "section": "2 Workspace Setup (your “lab bench” on disk)",
-    "text": "2 Workspace Setup (your “lab bench” on disk)\n\n2.1 Create a clean project layout\nmkdir -p ~/projects/hpylori_project/{data,scripts,results,logs,refs,notebooks,tmp,backup}\ncd ~/projects/hpylori_project\nls -1\n\n\n\n\n\n\nExplanation\n\n\n\n\nmkdir -p creates all listed folders in one go—even if parents don’t exist yet.\n\nWe separate raw data, scripts, results, and logs so we never overwrite original data and can re‑run analyses cleanly.\n\nls -1 lists one item per line for quick scanning. When used: At the start of every new project to enforce reproducible structure.\n\n\n\n\n\n\n\n\n\nNaming conventions\n\n\n\nUse kebab‑case (raw-data/) or snake_case (raw_data/) for directories and files.\nAvoid spaces; prefix with dates if helpful: 2025-08-28_qc-report.tsv.\n\n\n\n\n2.2 Add a tiny dataset for practice\nprintf \"sample_id\\tcountry\\tcondition\\nS1\\tSE\\tcase\\nS2\\tIN\\tcontrol\\nS3\\tSE\\tcase\\nS4\\tKE\\tcontrol\\n\" &gt; metadata.tsv\nhead metadata.tsv\n\n\n\n\n\n\nExplanation\n\n\n\n\nprintf writes a small, deterministic TSV so everyone gets identical results.\n\nhead shows the first few lines so we can peek without opening an editor. When used: Demo/teaching, testing pipelines quickly before running on big data.",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Command‑Line Essentials"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#links-hard-link-vs-symbolic-link-symlink",
-    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#links-hard-link-vs-symbolic-link-symlink",
-    "title": "Command‑Line Essentials",
-    "section": "3 Links: Hard link vs Symbolic link (symlink)",
-    "text": "3 Links: Hard link vs Symbolic link (symlink)\n\n3.1 What is a link?\nA link references a file without copying the data.\n\n\n\nProperty\nHard link\nSymlink\n\n\n\n\nPoints to\nFile data (same inode)\nPath (shortcut)\n\n\nIf original is deleted\nData still accessible\nLink breaks\n\n\nCross filesystems?\nNo\nYes\n\n\nLink directories?\nUsually no\nYes\n\n\nCreate with\nln file linkname\nln -s target linkname\n\n\n\n\n\n\n\n\n\nIntuition\n\n\n\n\nHard link = the same book with two covers (two names, one content).\n\nSymlink = a bookmark pointing to a book on a shelf (if the book moves, the bookmark breaks). When used: Symlinks are preferred for shared references and large datasets.\n\n\n\n\n\n3.2 Create and inspect a symlink\nmkdir -p ~/shared_refs\necho \"&gt;chr1\\nACGTACGTACGT\" &gt; ~/shared_refs/genome.fa\n\nmkdir -p refs\nln -s ~/shared_refs/genome.fa ./refs/genome.fa\nls -l refs\n\n\n\n\n\n\nExplanation\n\n\n\n\nWe simulate a shared reference outside the project (~/shared_refs).\n\nln -s makes a symlink inside the project pointing to that reference.\n\nls -l shows the arrow genome.fa -&gt; /home/.../genome.fa, confirming it’s a link. When used: Keep one source of truth for references; link them into each project.\n\n\n\n\n\n3.3 Relative vs absolute symlinks\nln -s ../shared_refs/genome.fa refs/genome.fa   # relative path (portable inside repos)\n\n\n\n\n\n\nWhy relative?\n\n\n\nRelative links survive moving or cloning the project to a new location, making your project more portable.",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Command‑Line Essentials"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#finding-searching-filesdata",
-    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#finding-searching-filesdata",
-    "title": "Command‑Line Essentials",
-    "section": "4 Finding & Searching Files/Data",
-    "text": "4 Finding & Searching Files/Data\n\n4.1 find — locate files by name/type/size\nfind . -name \"*.tsv\"\nfind . -type f -size +1M\nfind . -maxdepth 2 -type d\n\n\n\n\n\n\nExplanation\n\n\n\n\n-name \"*.tsv\" match by pattern; quotes prevent the shell from expanding *.\n\n-type f (files) or -type d (directories).\n\n-size +1M files bigger than 1 MB.\n\n-maxdepth 2 restricts how deep we search. When used: Quickly find all results, all FASTQs, or big files in a tree.\n\n\n\n\n\n4.2 Peek safely at contents\nhead -n 5 metadata.tsv\nless metadata.tsv     # press q to quit\n\n\n\n\n\n\nExplanation\n\n\n\n\nhead shows the top N lines; less lets you scroll without loading the whole file into memory. When used: Before processing, to confirm format and columns.\n\n\n\n\n\n4.3 grep — search inside files\ngrep -i \"gene\" data/annotation.gff\ngrep -c \"^&gt;\" data/sequences.fa\n\n\n\n\n\n\nExplanation\n\n\n\n\n-i ignores case.\n\n^ anchors to start of line; FASTA headers start with &gt; so grep -c \"^&gt;\" counts sequences. When used: Find genes of interest, samples, headers, errors in logs.\n\n\n\n\n\n4.4 wc — counts (lines/words/chars)\nwc -l metadata.tsv\n\n\n\n\n\n\nExplanation\n\n\n\nwc = word count. -l counts lines (often rows in a table).\nWhen used: Quick sanity checks (how many reads/samples/variants?).\n\n\n\n\n4.5 cut, sort, uniq — frequency tables\ncut -f2 metadata.tsv | sort | uniq -c | sort -nr\n\n\n\n\n\n\nExplanation\n\n\n\n\ncut -f2 extracts column 2 (tab‑separated by default).\n\nsort groups identical values together.\n\nuniq -c counts occurrences (works on adjacent duplicates → sort first).\n\nFinal sort -nr orders by numeric count, descending. When used: Count countries, barcodes, gene names, sample groups.",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Command‑Line Essentials"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#pipes-redirection-connect-the-bricks",
-    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#pipes-redirection-connect-the-bricks",
-    "title": "Command‑Line Essentials",
-    "section": "5 Pipes & Redirection (connect the bricks)",
-    "text": "5 Pipes & Redirection (connect the bricks)\n\n5.1 Pipes | — send output to the next command\ngrep -w \"SE\" metadata.tsv | wc -l\n\n\n\n\n\n\nExplanation\n\n\n\nThe output of grep becomes the input of wc.\nThis counts how many rows exactly match the word SE. When used: Build end‑to‑end analyses without intermediate files.\n\n\n\n\n5.2 Redirection &gt; / &gt;&gt; / 2&gt;\ncut -f2 metadata.tsv | sort | uniq -c | sort -nr &gt; results/country_counts.txt\nhead results/country_counts.txt\n\n\n\n\n\n\nExplanation\n\n\n\n\n&gt; overwrites a file with the command’s output.\n\n&gt;&gt; appends to an existing file.\n\n2&gt; writes errors (stderr) to a file (useful for logging).\nWhen used: Save reports, summaries, and logs for later review.",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Command‑Line Essentials"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#file-permissions-chmod-make-scripts-runnable-protect-data",
-    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#file-permissions-chmod-make-scripts-runnable-protect-data",
-    "title": "Command‑Line Essentials",
-    "section": "6 File Permissions & chmod (make scripts runnable; protect data)",
-    "text": "6 File Permissions & chmod (make scripts runnable; protect data)\n\n6.1 Understand ls -l and permission bits\nls -l script.sh\n# -rw-r--r--  1 stuti staff  1024 Aug 28 10:12 script.sh\n\n\n\n\n\n\nExplanation\n\n\n\n\nPositions show owner, group, others permissions (r read, w write, x execute).\n\nHere the owner can read/write; group/others can read. When used: Diagnose “Permission denied” and set correct access.\n\n\n\n\n\n6.2 Set permissions: symbolic and numeric modes\nchmod +x script.sh            # add execute bit (now runnable with ./script.sh)\nchmod 644 report.txt          # u=rw, g=r, o=r  (common for text files)\nchmod 755 pipeline.sh         # u=rwx, g=rx, o=rx (common for shared tools)\nchmod 444 data/raw.fastq.gz   # read‑only for all (protect raw data)\n\n\n\n\n\n\nExplanation\n\n\n\n\n+x grants execute.\n\nNumeric: add r=4, w=2, x=1 → owner/group/others.\n\n644 text files; 755 tools; 444 immutable raw data. When used: Make scripts executable, protect raw FASTQ, share team tools.\n\n\n\n\n\n6.3 Quick troubleshooting\n# Is it executable?\nls -l script.sh\n\n# Can I write here?\nls -ld .\n\n\n\n\n\n\nTips\n\n\n\n\nIf a script won’t run, check for the x bit and the shebang (#!/usr/bin/env bash) at the top.\n\nOn shared HPC directories, ensure the group has the right permissions.",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Command‑Line Essentials"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#local-vs-hpc-what-changes-what-stays-the-same",
-    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#local-vs-hpc-what-changes-what-stays-the-same",
-    "title": "Command‑Line Essentials",
-    "section": "7 Local vs HPC (what changes, what stays the same)",
-    "text": "7 Local vs HPC (what changes, what stays the same)\n\n\n\nFeature\nLaptop/Desktop\nHPC Cluster\n\n\n\n\nAccess\nGUI + Terminal\nSSH (terminal)\n\n\nStorage\nLocal disk\nShared project space (/proj/...), scratch\n\n\nCompute\n1–8 cores\nMany nodes/cores; batch scheduler\n\n\nData\nSmaller, local\nLarger, shared → symlink into projects\n\n\n\n\n7.1 Typical HPC locations\n/home/username     # your private space (small)\n/proj/&lt;project&gt;    # shared project data (primary home for big data)\n/scratch           # fast temporary I/O space during jobs\n\n\n\n\n\n\nExplanation\n\n\n\n\nKeep references and large reads in /proj/...; symlink into your project.\n\nUse /scratch for temporary heavy I/O; clean up after jobs. When used: Day‑to‑day HPC work mirrors local workflows but on shared paths.\n\n\n\n\n\n7.2 Copy & verify (concepts are identical locally)\n# Copy a file to HPC\nscp metadata.tsv user@hpc.example.org:/home/user/\n\n# Sync a directory (only changes) to shared project space\nrsync -avh results/ user@hpc.example.org:/proj/course/results/\n\n# Verify integrity (run on both ends and compare)\nmd5sum metadata.tsv\n\n\n\n\n\n\nTips\n\n\n\n\nPrefer rsync for repeated updates (only diffs transfer).\n\nUse md5sum (or sha256sum) to confirm files are intact after transfer.",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Command‑Line Essentials"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#guided-practice-copypaste-friendly",
-    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#guided-practice-copypaste-friendly",
-    "title": "Command‑Line Essentials",
-    "section": "8 Guided Practice (copy/paste friendly)",
-    "text": "8 Guided Practice (copy/paste friendly)\n\n8.1 Build the workspace and simulate data\nmkdir -p project/{data,scripts,results,logs,refs}\nprintf \"sample_id\\tcountry\\nS1\\tSE\\nS2\\tIN\\nS3\\tSE\\n\" &gt; project/metadata.tsv\n\n\n\n\n\n\nExplanation\n\n\n\nWe create a small, consistent dataset so everyone’s outputs match during exercises. Goal: Reduce friction, focus on learning the commands.\n\n\n\n\n8.2 Link a shared reference\nmkdir -p ~/shared_refs && echo \"&gt;chr1\\nACGT\" &gt; ~/shared_refs/genome.fa\nln -s ~/shared_refs/genome.fa project/refs/genome.fa\nls -l project/refs\n\n\n\n\n\n\nExplanation\n\n\n\nConfirms the link with ls -l (look for the arrow).\nGoal: Practice the habit of linking large shared data instead of copying.\n\n\n\n\n8.3 Answer questions with pipelines\ncut -f2 project/metadata.tsv | sort | uniq -c | sort -nr &gt; project/results/country_counts.txt\ngrep -c \"^&gt;\" project/refs/genome.fa\n\n\n\n\n\n\nExplanation\n\n\n\nWe create a frequency table and count FASTA sequences with a one‑liner—exactly the kind of small, fast checks you’ll do every day.\n\n\n\n\n8.4 Permissions in context\nchmod 444 project/data/*.fastq.gz    # protect raw data\nchmod +x project/scripts/qc.sh       # make a pipeline script executable\n\n\n\n\n\n\nExplanation\n\n\n\nLock raw files to prevent accidents; make scripts runnable so you can execute your pipeline with ./scripts/qc.sh.",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Command‑Line Essentials"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#selfcheck-miniquiz",
-    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#selfcheck-miniquiz",
-    "title": "Command‑Line Essentials",
-    "section": "9 Self‑check (mini‑quiz)",
-    "text": "9 Self‑check (mini‑quiz)\n\nIn one sentence, why are symlinks preferred for references on HPC?\n\nWhat does chmod 755 do, and when would you use it?\n\nWrite a one‑liner to count unique countries in metadata.tsv.\n\nWhat’s the difference between &gt; and &gt;&gt;? Between &gt; and |?\n\nFind all .tsv files larger than 1 MB and save the list to big_tsvs.txt.\n\n\n\n\n\n\n\nHint\n\n\n\nTry to answer in plain language first (“what problem does this solve?”), then write the command.",
-    "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Command‑Line Essentials"
+      "Practical 2: Setting up the HPC"
     ]
   },
   {
@@ -306,9 +16,7 @@
     "section": "",
     "text": "Doing bioinformatics often necessitates the handling of very large files, with complex structure and dense matrices. This makes them often unwieldy to pretty much impossible to handle in traditional GUI-based analysis tools (such as Excel), and as such we rely on original and lightweight file handling systems such as bash-based command line enviroments that allow us to interact with our computer on a more fundamental level.\nTypically the first thing you encounter on opening a new terminal instance is:\nuser@computer:~$\nThis is the terminal prompt where you’ll be able to issue commands to the computer, with the syntax (“grammar” of the code) of your command prompts often using the following structure:\nuser@computer:-$ command -option my_object\n\n# or you may have more advanced command prompts\n\nuser@computer:-$ command -threads 2 -output $My_Directory_Variable/ -prefix New_file_ -accessoryfile Additional_file my_object | nextcommand -cvfz New_file_my_object.tar.gz\nImagination (and resources, time complexity, optimization…) sets the limit of what you can do in the CLI\nIf you’re further curious on the history of shell and the command line.\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end of this practical, you should be able to:\n\nNavigate the file system using cd and ls\nCreate and manipulate directories with mkdir\nCreate, copy, move, and delete files using touch, cp, mv, and rm\nView file contents using cat, head, and tail\nSearch within files using grep\nDisplay text using echo\nTie these commands together using pipes",
     "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Practical 1: Introduction to Command Line Interface"
+      "Practical 1: CLI Basics"
     ]
   },
   {
@@ -316,11 +24,9 @@
     "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#understanding-your-location-pwd-and-ls",
     "title": "Practical 1: Introduction to Command Line Interface",
     "section": "2.1 Understanding Your Location (pwd and ls)",
-    "text": "2.1 Understanding Your Location (pwd and ls)\nBefore we start creating new things in our directory its a good idea to get a grip on your whereabouts within the working directory\n\npwd: Print working directory - shows your current location\nls: List contents of directories\n\nFind your current location and explore the directory\n# Run pwd\npwd\n\n# Run ls\nls \n\n# Run the ls help command, then find the option to let you\n# display the directory contents as a list\nls --help\n\n# Then run that command\nls -{__}",
+    "text": "2.1 Understanding Your Location (pwd and ls)\nBefore we start creating new things in our directory its a good idea to get a grip on your whereabouts within the working directory\n\npwd: Print working directory - shows your current location\nls: List contents of directories\n\nFind your current location and explore the directory\n# Run pwd\npwd\n\n# Run ls\nls \n\n# Run the ls help command, then find the option to let you\n# display the directory contents as a list with more details\nls --help\n\n# Then run that command\nls -la",
     "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Practical 1: Introduction to Command Line Interface"
+      "Practical 1: CLI Basics"
     ]
   },
   {
@@ -330,9 +36,7 @@
     "section": "2.2 Making and Changing Directories (mkdir and cd)",
     "text": "2.2 Making and Changing Directories (mkdir and cd)\nSince the command line interface (CLI) can quickly become cluttered, we organize our work into directories. Let’s create a simple directory structure.\n\nmkdir: Create new directories\ncd: Change directory\nSpecial directories: . (current), .. (parent), ~ (home), / (root)\n\nCreate and navigate a genomics project structure\n# Create a main directory\nmkdir CLI_intro\n\n# Navigate into it\ncd CLI_intro\n\n# Create additional directories within the main directory\n# This can be done in multiple ways \n# For example, you could make multiple directories in one command:\nmkdir Escherichia\ncd Escherichia\nmkdir coli hermanni fergusonii\n\n# Check your structure\nls -la\n\n# Navigate around and try the special directory short-hands\ncd ~        # Go home\ncd ..        # Go back to previous directory",
     "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Practical 1: Introduction to Command Line Interface"
+      "Practical 1: CLI Basics"
     ]
   },
   {
@@ -340,11 +44,9 @@
     "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#text-manipulation-echo-touch",
     "title": "Practical 1: Introduction to Command Line Interface",
     "section": "3.1 Text manipulation (echo, touch)",
-    "text": "3.1 Text manipulation (echo, touch)\nBefore we start with file manipulation, we’ll first introduce text files the old school way via echo and touch\n\ntouch: Create empty files\necho: Print text provided in the prompts\n\nHandling text in CLI\n# First, lets use echo in the ye olde intro to programming way\necho \"Hello World!\"\n\n# Not the most exciting, but we can use it to add text to files via &gt; \n# Create a file using touch \ntouch test_file\n\n# Then add some text to the file \necho \"__\" &gt; test_file\n\n# Now add some more text to the next line in the file\n# To add to a file you simply extend the &gt; operator to &gt;&gt; \necho \"__\" &gt;&gt; test_file\n\n# Now lastly, try to wipe the file with some new text \necho \"__\" {__} test_file",
+    "text": "3.1 Text manipulation (echo, touch)\nBefore we start with file manipulation, we’ll first introduce text files the old school way via echo and touch\n\ntouch: Create empty files\necho: Print text provided in the prompts\n\nHandling text in CLI\n# First, lets use echo in the ye olde intro to programming way\necho \"Hello World!\"\n\n# Not the most exciting, but we can use it to add text to files via &gt; \n# Create a file using touch \ntouch test_file\n\n# Then add some text to the file \necho \"Some_text\" &gt; test_file\n\n# Now add some more text to the next line in the file\n# To add to a file you simply extend the &gt; operator to &gt;&gt; \necho \"Some_more_text\" &gt;&gt; test_file\n\n# Now lastly, try to wipe the file with some new text \necho \"New_text\" &gt; test_file",
     "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Practical 1: Introduction to Command Line Interface"
+      "Practical 1: CLI Basics"
     ]
   },
   {
@@ -352,11 +54,263 @@
     "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#file-manipulation-cp-mv-rm",
     "title": "Practical 1: Introduction to Command Line Interface",
     "section": "3.2 File Manipulation (cp, mv, rm)",
-    "text": "3.2 File Manipulation (cp, mv, rm)\nNow let’s create some mock files that we will use downstream in the analysis, and learn how to use commands to copy, rename and remove files\n\nmv: Rename the absolute path of a file (moving it)\ncp: Copy a file\nrm: Remove a file (Irreversible, be careful!!)\n\nCreate sample files and practice file operations\n# Create some more directories to store everything in \nmkdir -p raw_data backups\n\n# Create some empty mock files for different data types that we'll use later \ntouch sequences.fasta\ntouch expression_data.csv\ntouch gene_annotation.gff\n\n# Add some mock sequence data \necho \"&gt;lacZ_beta-galactosidase\" &gt; sequences.fasta\necho \"ATGACCATGATTACGCCAAGCT\" &gt;&gt; sequences.fasta\necho \"&gt;rpoB_RNA_polymerase_beta\" &gt;&gt; sequences.fasta\necho \"ATGGTGACGACGACGACGATGCT\" &gt;&gt; sequences.fasta\necho \"&gt;gyrA_DNA_gyrase_subunit_A\" &gt;&gt; sequences.fasta\necho \"ATGGCTGCTGATCGATCGATGCTA\" &gt;&gt; sequences.fasta\necho \"&gt;ompA_outer_membrane_protein\" &gt;&gt; sequences.fasta\necho \"ATGCTGATCGATCGGCTAGCTAGC\" &gt;&gt; sequences.fasta\n\n# Add data to the gene annotation file \necho \"Gene_ID,Chromosome,Start,End,Strand,Product\" &gt; gene_annotations.csv\necho \"lacZ,plasmid,1000,2500,+,beta-galactosidase\" &gt;&gt; gene_annotations.csv\necho \"rpoB,chr,3000,4200,+,RNA polymerase beta subunit\" &gt;&gt; gene_annotations.csv\necho \"gyrA,chr,500,1800,-,DNA gyrase subunit A\" &gt;&gt; gene_annotations.csv\necho \"ompA,chr,2000,3500,+,outer membrane protein A\" &gt;&gt; gene_annotations.csv\necho \"LacY,plasmid,5000,6200,+,Lactose_permease\" &gt;&gt; gene_annotations.csv\necho \"tolC,chr,100,800,+,outer membrane channel protein\" &gt;&gt; gene_annotations.csv\n\n# Add some gene expression data\necho \"Gene_ID,Condition_A,Condition_B,Function\" &gt; expression_data.csv\necho \"lacZ,150,200,beta-galactosidase\" &gt;&gt; expression_data.csv\necho \"rpoB,89,95,RNA_polymerase\" &gt;&gt; expression_data.csv\necho \"gyrA,175,180,DNA_gyrase\" &gt;&gt; expression_data.csv\necho \"LacY,165,210,Lactose_permease\" &gt;&gt; expression_data.csv\necho \"ompA,45,52,outer_membrane_protein\" &gt;&gt; expression_data.csv\n\n# Copy files (backup your data!)\ncp sequences.fasta sequences_backup.fasta\n\n# Move files to organize your project\nmv sequences_backup.fasta backups/\nmv quality_scores.fastq raw_data/\n\n# mv can also be used to rename files, similar to the syntax of cp \n# You just remembered that these files were E.coli, rename them and think of good informative names\nmv raw_data/gene_annotation.gff raw_data/__.gff\n\n# We dont need the other genera directories anymore\n# so remove them from our working directory - what flag do you need?\nrm Acinetobacter  # This will fail - figure out the right flag!\nrm -{__} Acinetobacter\n\n# Lastly lets sort a bit in your directories\n# Copy the entire raw_data directory with contents (find the right flag!)\ncp -{__} raw_data/ Escherichia/coli/",
+    "text": "3.2 File Manipulation (cp, mv, rm)\nNow let’s create some mock files that we will use downstream in the analysis, and learn how to use commands to copy, rename and remove files\n\nmv: Rename the absolute path of a file (moving it)\ncp: Copy a file\nrm: Remove a file (Irreversible, be careful!!)\n\nCreate sample files and practice file operations\n# Create some more directories to store everything in \nmkdir -p raw_data backups\n\n# Create some empty mock files for different data types that we'll use later \ntouch sequences.fasta\ntouch expression_data.csv\ntouch gene_annotations.csv\n\n# Add some mock sequence data \necho \"&gt;lacZ_beta-galactosidase\" &gt; sequences.fasta\necho \"ATGACCATGATTACGCCAAGCT\" &gt;&gt; sequences.fasta\necho \"&gt;rpoB_RNA_polymerase_beta\" &gt;&gt; sequences.fasta\necho \"ATGGTGACGACGACGACGATGCT\" &gt;&gt; sequences.fasta\necho \"&gt;gyrA_DNA_gyrase_subunit_A\" &gt;&gt; sequences.fasta\necho \"ATGGCTGCTGATCGATCGATGCTA\" &gt;&gt; sequences.fasta\necho \"&gt;ompA_outer_membrane_protein\" &gt;&gt; sequences.fasta\necho \"ATGCTGATCGATCGGCTAGCTAGC\" &gt;&gt; sequences.fasta\n\n# Add data to the gene annotation file \necho \"Gene_ID,Chromosome,Start,End,Strand,Product\" &gt; gene_annotations.csv\necho \"lacZ,plasmid,1000,2500,+,beta-galactosidase\" &gt;&gt; gene_annotations.csv\necho \"rpoB,chr,3000,4200,+,RNA polymerase beta subunit\" &gt;&gt; gene_annotations.csv\necho \"gyrA,chr,500,1800,-,DNA gyrase subunit A\" &gt;&gt; gene_annotations.csv\necho \"ompA,chr,2000,3500,+,outer membrane protein A\" &gt;&gt; gene_annotations.csv\necho \"LacY,plasmid,5000,6200,+,Lactose_permease\" &gt;&gt; gene_annotations.csv\necho \"tolC,chr,100,800,+,outer membrane channel protein\" &gt;&gt; gene_annotations.csv\n\n# Add some gene expression data\necho \"Gene_ID,Condition_A,Condition_B,Function\" &gt; expression_data.csv\necho \"lacZ,150,200,beta-galactosidase\" &gt;&gt; expression_data.csv\necho \"rpoB,89,95,RNA_polymerase\" &gt;&gt; expression_data.csv\necho \"gyrA,175,180,DNA_gyrase\" &gt;&gt; expression_data.csv\necho \"LacY,165,210,Lactose_permease\" &gt;&gt; expression_data.csv\necho \"ompA,45,52,outer_membrane_protein\" &gt;&gt; expression_data.csv\n\n# Copy files (backup your data!)\ncp sequences.fasta sequences_backup.fasta\n\n# Move files to organize your project\nmv sequences_backup.fasta backups/\n\n# mv can also be used to rename files, similar to the syntax of cp \n# You just remembered that these files were E.coli, rename them and think of good informative names\nmv raw_data/gene_annotation.csv raw_data/E_coli_gene_annotations.csv\n\n# remove files (be careful, no undo!)\nrm sequences_backup.fasta\n# rm can also be used with flags to remove directories and their contents\nrm -r backups/\n\n# Lastly lets sort a bit in your directories\n# Copy the entire raw_data directory with contents (find the right flag!)\ncp -r raw_data/ Escherichia/coli/\nNote: After this section is done, remember that you renamed the data files to include the species name (E.coli), rename them back for the subsequent sections if you want. Otherwise, make sure the change doesnt confuse you",
     "crumbs": [
-      "Practical 1: CLI Basics",
-      "Getting Started",
-      "Practical 1: Introduction to Command Line Interface"
+      "Practical 1: CLI Basics"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "BIO511 Genomics - Practical Repository",
+    "section": "",
+    "text": "This repository contains practical exercises for the BIO511 Genomics course. Use this page, or the navbar to navigate to the different sections.\n\n\nHere are the practical exercises related to command line programming section of the course:\n\nPractical 1: CLI Basics\nPractical 2: Setting up the HPC\nPractical 3: Workspace Management and Data Management\nPractical 4: Scripting and Advanced Text Manipulation\nPractical 5: Software & Containers\n\n\n\n\nComing Soon…\n\n\n\nComing Soon…\n\nFor questions or issues, please contact the course instructors."
+  },
+  {
+    "objectID": "index.html#course-overview",
+    "href": "index.html#course-overview",
+    "title": "BIO511 Genomics - Practical Repository",
+    "section": "",
+    "text": "This repository contains practical exercises for the BIO511 Genomics course. Use this page, or the navbar to navigate to the different sections.\n\n\nHere are the practical exercises related to command line programming section of the course:\n\nPractical 1: CLI Basics\nPractical 2: Setting up the HPC\nPractical 3: Workspace Management and Data Management\nPractical 4: Scripting and Advanced Text Manipulation\nPractical 5: Software & Containers\n\n\n\n\nComing Soon…\n\n\n\nComing Soon…\n\nFor questions or issues, please contact the course instructors."
+  },
+  {
+    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html",
+    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html",
+    "title": "Practical 3 - Workspaces and Data Management",
+    "section": "",
+    "text": "How to use this handout\n\n\n\nThis guide is self‑explanatory and written for true beginners.\nEvery command is followed by a plain‑language explanation (in blue/green callouts) and a short note on when you’d use it in bioinformatics.\nNo prior Linux/Unix experience is assumed.",
+    "crumbs": [
+      "Practical 3: Workspace Management and Data Management"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#why-the-command-line-for-bioinformatics",
+    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#why-the-command-line-for-bioinformatics",
+    "title": "Practical 3 - Workspaces and Data Management",
+    "section": "1 Why the command line for bioinformatics?",
+    "text": "1 Why the command line for bioinformatics?\n\nScale: FASTA/FASTQ/BAM/VCF can be huge and numerous—GUIs do not scale.\n\nReproducibility: Commands are text, so analyses are easy to repeat and share.\n\nPortability: Works the same on laptops and HPC clusters.\n\n\n\n\n\n\n\nMental model\n\n\n\nThink of CLI tools as LEGO bricks. Each command does one small job well.\nYou snap bricks together with pipes | to build powerful analyses.",
+    "crumbs": [
+      "Practical 3: Workspace Management and Data Management"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#workspace-setup-your-lab-bench-on-disk",
+    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#workspace-setup-your-lab-bench-on-disk",
+    "title": "Practical 3 - Workspaces and Data Management",
+    "section": "2 Workspace Setup (your “lab bench” on disk)",
+    "text": "2 Workspace Setup (your “lab bench” on disk)\n\n2.1 Create a clean project layout\nmkdir -p ~/projects/hpylori_project/{data,scripts,results,logs,refs,notebooks,tmp,backup}\ncd ~/projects/hpylori_project\nls -1\n\n\n\n\n\n\nExplanation\n\n\n\n\nmkdir -p creates all listed folders in one go—even if parents don’t exist yet.\n\nWe separate raw data, scripts, results, and logs so we never overwrite original data and can re‑run analyses cleanly.\n\nls -1 lists one item per line for quick scanning. When used: At the start of every new project to enforce reproducible structure.\n\n\n\n\n\n\n\n\n\nNaming conventions\n\n\n\nUse kebab‑case (raw-data/) or snake_case (raw_data/) for directories and files.\nAvoid spaces; prefix with dates if helpful: 2025-08-28_qc-report.tsv.\n\n\n\n\n2.2 Add a tiny dataset for practice\nprintf \"sample_id\\tcountry\\tcondition\\nS1\\tSE\\tcase\\nS2\\tIN\\tcontrol\\nS3\\tSE\\tcase\\nS4\\tKE\\tcontrol\\n\" &gt; metadata.tsv\nhead metadata.tsv\n\n\n\n\n\n\nExplanation\n\n\n\n\nprintf writes a small, deterministic TSV so everyone gets identical results.\n\nhead shows the first few lines so we can peek without opening an editor. When used: Demo/teaching, testing pipelines quickly before running on big data.",
+    "crumbs": [
+      "Practical 3: Workspace Management and Data Management"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#links-hard-link-vs-symbolic-link-symlink",
+    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#links-hard-link-vs-symbolic-link-symlink",
+    "title": "Practical 3 - Workspaces and Data Management",
+    "section": "3 Links: Hard link vs Symbolic link (symlink)",
+    "text": "3 Links: Hard link vs Symbolic link (symlink)\n\n3.1 What is a link?\nA link references a file without copying the data.\n\n\n\nProperty\nHard link\nSymlink\n\n\n\n\nPoints to\nFile data (same inode)\nPath (shortcut)\n\n\nIf original is deleted\nData still accessible\nLink breaks\n\n\nCross filesystems?\nNo\nYes\n\n\nLink directories?\nUsually no\nYes\n\n\nCreate with\nln file linkname\nln -s target linkname\n\n\n\n\n\n\n\n\n\nIntuition\n\n\n\n\nHard link = the same book with two covers (two names, one content).\n\nSymlink = a bookmark pointing to a book on a shelf (if the book moves, the bookmark breaks). When used: Symlinks are preferred for shared references and large datasets.\n\n\n\n\n\n3.2 Create and inspect a symlink\nmkdir -p ~/shared_refs\necho \"&gt;chr1\\nACGTACGTACGT\" &gt; ~/shared_refs/genome.fa\n\nmkdir -p refs\nln -s ~/shared_refs/genome.fa ./refs/genome.fa\nls -l refs\n\n\n\n\n\n\nExplanation\n\n\n\n\nWe simulate a shared reference outside the project (~/shared_refs).\n\nln -s makes a symlink inside the project pointing to that reference.\n\nls -l shows the arrow genome.fa -&gt; /home/.../genome.fa, confirming it’s a link. When used: Keep one source of truth for references; link them into each project.\n\n\n\n\n\n3.3 Relative vs absolute symlinks\nln -s ../shared_refs/genome.fa refs/genome.fa   # relative path (portable inside repos)\n\n\n\n\n\n\nWhy relative?\n\n\n\nRelative links survive moving or cloning the project to a new location, making your project more portable.",
+    "crumbs": [
+      "Practical 3: Workspace Management and Data Management"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#finding-searching-filesdata",
+    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#finding-searching-filesdata",
+    "title": "Practical 3 - Workspaces and Data Management",
+    "section": "4 Finding & Searching Files/Data",
+    "text": "4 Finding & Searching Files/Data\n\n4.1 find — locate files by name/type/size\nfind . -name \"*.tsv\"\nfind . -type f -size +1M\nfind . -maxdepth 2 -type d\n\n\n\n\n\n\nExplanation\n\n\n\n\n-name \"*.tsv\" match by pattern; quotes prevent the shell from expanding *.\n\n-type f (files) or -type d (directories).\n\n-size +1M files bigger than 1 MB.\n\n-maxdepth 2 restricts how deep we search. When used: Quickly find all results, all FASTQs, or big files in a tree.\n\n\n\n\n\n4.2 Peek safely at contents\nhead -n 5 metadata.tsv\nless metadata.tsv     # press q to quit\n\n\n\n\n\n\nExplanation\n\n\n\n\nhead shows the top N lines; less lets you scroll without loading the whole file into memory. When used: Before processing, to confirm format and columns.\n\n\n\n\n\n4.3 grep — search inside files\ngrep -i \"gene\" data/annotation.gff\ngrep -c \"^&gt;\" data/sequences.fa\n\n\n\n\n\n\nExplanation\n\n\n\n\n-i ignores case.\n\n^ anchors to start of line; FASTA headers start with &gt; so grep -c \"^&gt;\" counts sequences. When used: Find genes of interest, samples, headers, errors in logs.\n\n\n\n\n\n4.4 wc — counts (lines/words/chars)\nwc -l metadata.tsv\n\n\n\n\n\n\nExplanation\n\n\n\nwc = word count. -l counts lines (often rows in a table).\nWhen used: Quick sanity checks (how many reads/samples/variants?).\n\n\n\n\n4.5 cut, sort, uniq — frequency tables\ncut -f2 metadata.tsv | sort | uniq -c | sort -nr\n\n\n\n\n\n\nExplanation\n\n\n\n\ncut -f2 extracts column 2 (tab‑separated by default).\n\nsort groups identical values together.\n\nuniq -c counts occurrences (works on adjacent duplicates → sort first).\n\nFinal sort -nr orders by numeric count, descending. When used: Count countries, barcodes, gene names, sample groups.",
+    "crumbs": [
+      "Practical 3: Workspace Management and Data Management"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#file-permissions-chmod-make-scripts-runnable-protect-data",
+    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#file-permissions-chmod-make-scripts-runnable-protect-data",
+    "title": "Practical 3 - Workspaces and Data Management",
+    "section": "5 File Permissions & chmod (make scripts runnable; protect data)",
+    "text": "5 File Permissions & chmod (make scripts runnable; protect data)\n\n5.1 Understand ls -l and permission bits\nls -l script.sh\n# -rw-r--r--  1 stuti staff  1024 Aug 28 10:12 script.sh\n\n\n\n\n\n\nExplanation\n\n\n\n\nPositions show owner, group, others permissions (r read, w write, x execute).\n\nHere the owner can read/write; group/others can read. When used: Diagnose “Permission denied” and set correct access.\n\n\n\n\n\n5.2 Set permissions: symbolic and numeric modes\nchmod +x script.sh            # add execute bit (now runnable with ./script.sh)\nchmod 644 report.txt          # u=rw, g=r, o=r  (common for text files)\nchmod 755 pipeline.sh         # u=rwx, g=rx, o=rx (common for shared tools)\nchmod 444 data/raw.fastq.gz   # read‑only for all (protect raw data)\n\n\n\n\n\n\nExplanation\n\n\n\n\n+x grants execute.\n\nNumeric: add r=4, w=2, x=1 → owner/group/others.\n\n644 text files; 755 tools; 444 immutable raw data. When used: Make scripts executable, protect raw FASTQ, share team tools.\n\n\n\n\n\n5.3 Quick troubleshooting\n# Is it executable?\nls -l script.sh\n\n# Can I write here?\nls -ld .\n\n\n\n\n\n\nTips\n\n\n\n\nIf a script won’t run, check for the x bit and the shebang (#!/usr/bin/env bash) at the top.\n\nOn shared HPC directories, ensure the group has the right permissions.",
+    "crumbs": [
+      "Practical 3: Workspace Management and Data Management"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#local-vs-hpc-what-changes-what-stays-the-same",
+    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#local-vs-hpc-what-changes-what-stays-the-same",
+    "title": "Practical 3 - Workspaces and Data Management",
+    "section": "6 Local vs HPC (what changes, what stays the same)",
+    "text": "6 Local vs HPC (what changes, what stays the same)\n\n\n\nFeature\nLaptop/Desktop\nHPC Cluster\n\n\n\n\nAccess\nGUI + Terminal\nSSH (terminal)\n\n\nStorage\nLocal disk\nShared project space (/proj/...), scratch\n\n\nCompute\n1–8 cores\nMany nodes/cores; batch scheduler\n\n\nData\nSmaller, local\nLarger, shared → symlink into projects\n\n\n\n\n6.1 Typical HPC locations\n/home/username     # your private space (small)\n/proj/&lt;project&gt;    # shared project data (primary home for big data)\n/scratch           # fast temporary I/O space during jobs\n\n\n\n\n\n\nExplanation\n\n\n\n\nKeep references and large reads in /proj/...; symlink into your project.\n\nUse /scratch for temporary heavy I/O; clean up after jobs. When used: Day‑to‑day HPC work mirrors local workflows but on shared paths.\n\n\n\n\n\n6.2 Copy & verify (concepts are identical locally)\n# Copy a file to HPC\nscp metadata.tsv user@hpc.example.org:/home/user/\n\n# Sync a directory (only changes) to shared project space\nrsync -avh results/ user@hpc.example.org:/proj/course/results/\n\n# Verify integrity (run on both ends and compare)\nmd5sum metadata.tsv\n\n\n\n\n\n\nTips\n\n\n\n\nPrefer rsync for repeated updates (only diffs transfer).\n\nUse md5sum (or sha256sum) to confirm files are intact after transfer.",
+    "crumbs": [
+      "Practical 3: Workspace Management and Data Management"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#guided-practice-copypaste-friendly",
+    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#guided-practice-copypaste-friendly",
+    "title": "Practical 3 - Workspaces and Data Management",
+    "section": "7 Guided Practice (copy/paste friendly)",
+    "text": "7 Guided Practice (copy/paste friendly)\n\n7.1 Build the workspace and simulate data\nmkdir -p project/{data,scripts,results,logs,refs}\nprintf \"sample_id\\tcountry\\nS1\\tSE\\nS2\\tIN\\nS3\\tSE\\n\" &gt; project/metadata.tsv\n\n\n\n\n\n\nExplanation\n\n\n\nWe create a small, consistent dataset so everyone’s outputs match during exercises. Goal: Reduce friction, focus on learning the commands.\n\n\n\n\n7.2 Link a shared reference\nmkdir -p ~/shared_refs && echo \"&gt;chr1\\nACGT\" &gt; ~/shared_refs/genome.fa\nln -s ~/shared_refs/genome.fa project/refs/genome.fa\nls -l project/refs\n\n\n\n\n\n\nExplanation\n\n\n\nConfirms the link with ls -l (look for the arrow).\nGoal: Practice the habit of linking large shared data instead of copying.\n\n\n\n\n7.3 Answer questions with pipelines\ncut -f2 project/metadata.tsv | sort | uniq -c | sort -nr &gt; project/results/country_counts.txt\ngrep -c \"^&gt;\" project/refs/genome.fa\n\n\n\n\n\n\nExplanation\n\n\n\nWe create a frequency table and count FASTA sequences with a one‑liner—exactly the kind of small, fast checks you’ll do every day.\n\n\n\n\n7.4 Permissions in context\nchmod 444 project/data/*.fastq.gz    # protect raw data\nchmod +x project/scripts/qc.sh       # make a pipeline script executable\n\n\n\n\n\n\nExplanation\n\n\n\nLock raw files to prevent accidents; make scripts runnable so you can execute your pipeline with ./scripts/qc.sh.",
+    "crumbs": [
+      "Practical 3: Workspace Management and Data Management"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#selfcheck-miniquiz",
+    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#selfcheck-miniquiz",
+    "title": "Practical 3 - Workspaces and Data Management",
+    "section": "8 Self‑check (mini‑quiz)",
+    "text": "8 Self‑check (mini‑quiz)\n\nIn one sentence, why are symlinks preferred for references on HPC?\n\nWhat does chmod 755 do, and when would you use it?\n\nWrite a one‑liner to count unique countries in metadata.tsv.\n\nFind all .tsv files larger than 1 MB and save the list to big_tsvs.txt.\n\n\n\n\n\n\n\nHint\n\n\n\nTry to answer in plain language first (“what problem does this solve?”), then write the command.",
+    "crumbs": [
+      "Practical 3: Workspace Management and Data Management"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html",
+    "href": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html",
+    "title": "Practical 4: Scripts and Advanced Text Manipulation",
+    "section": "",
+    "text": "Now that you’ve learned the basics of the command-line, its high time that we start working on making our coding structured and reproducible. While runnning pipes in our command line prompt can be quick and easy, writing our code in structured machine-readable text files called scripts, allows us to expand the possibilities of our programming. In genomics, you’ll pretty much always need to process massive datasets - think millions of sequences, GWAS data with millions of variants, or annotation files with complex formatting. Typically these files have a standardized structure, which the handling of we can automate by creating generalizable and well-formatted scripts.\n\n\n\n\n\n\nREMEMBER: CREATE A SEPARATE PROJECT FOLDER IN YOUR HOME DIRECTORY FOR THIS PRACTICAL\n\n\n\nmkdir -p ~/yourdir/practical_4\ncd ~/yourdir/practical_4\n\n\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end of this practical you should be able to:\n\nUse awk to execute short programs for text manipulation\nWrite iterative bash scripts using for loops and if/else statements\nDebug your scripts using global set-options, traps and custom error messages\nBe able to write basic flexible shell scripts using OPTARGS",
+    "crumbs": [
+      "Practical 4: Scripting and Advanced Text Manipulation"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html#awk-pattern-scanning-and-processing-language",
+    "href": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html#awk-pattern-scanning-and-processing-language",
+    "title": "Practical 4: Scripts and Advanced Text Manipulation",
+    "section": "2.1 awk: Pattern Scanning and Processing Language",
+    "text": "2.1 awk: Pattern Scanning and Processing Language\nawk can do things that may at first glance remind us of other commands like grep, since we can similarly search for patterns in text files and output them into the stdout. However, awk is much more powerful text manipulation tool that allows us to do advanced language processing and data extraction not to dissimilar to a programming language. Using awk we can accomplish short programming tasks directly in the command line.\n\nawk (Aho, Weinberger, and Kernighan): Allows for advanced text processing and file manipulation\n\nSome key commands:\n\n-F: Specifies the input field separator (default is whitespace)\nBEGIN{}: Block of programming that runs before processing any input lines (before text is put into $1, $2, etc)\nEND{}: Block that runs after processing all input lines (after all text has been processed)\n{}: Block that runs for each input line (used for processing)\n$1, $2, ...: Represents the first, second, etc. fields (eg. columns) in the current line\nOFS: Output field separator (default is a space, can be set in BEGIN block)\n\nExercises\n# awk is great for quick column selection and simple filtering\n# The syntax is 'awk option 'program' input-file' where program is a series of commands\n# Print seqid and type columns of a gff file\nawk -F'\\t' 'BEGIN{OFS=\"\\t\"} {print $1,$3,$9}' AF316.gff &gt; seqid_type.tsv\n\n# You can also filter rows based on conditions, to retain only specific features (similar to what we can accomplish with grep)\n# Here we can filter for only CDS features\nawk -F'\\t' '$3==\"CDS\"' AF316.gff &gt; cds_features.tsv\n\n# Another thing is performing operations on the data in transit, similar to what would need a pipe and multiple commands otherwise\n# Here we can calculate the length of each CDS feature and output it as a new column\n# Consider which columns should be used to calculate the length\nawk -F'\\t' 'BEGIN{OFS=\"\\t\"} $3==\"CDS\"{print $1,$4,$5,$9,($5-$4+1)}' AF316.gff &gt; cds_features_length.tsv\n\n# Lets operate some more on the feature length file\n# Calculate the total number of CDS features and their average length\nawk -F'\\t' 'BEGIN{OFS=\"\\t\"} {total_length+=($5-$4+1); count++} END{print \"Total_CDS\",count,\"Average_Length\",total_length/count}' cds_features_length.tsv\nAwk programs can get quite complex, and we will not cover all its features here. However, it is a very useful tool to have in your toolbox, and I encourage you to explore it further on your own. A good resource is the GNU Awk User’s Guide.",
+    "crumbs": [
+      "Practical 4: Scripting and Advanced Text Manipulation"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html#starting-a-bash-script",
+    "href": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html#starting-a-bash-script",
+    "title": "Practical 4: Scripts and Advanced Text Manipulation",
+    "section": "3.1 Starting a bash script",
+    "text": "3.1 Starting a bash script\nWe are already familiar with bash, one of the most common shell used in Linux and macOS, and is the default shell on most HPC systems. A bash script is simply a text file containing a series of bash commands that can be executed in sequence.\nExercises: Starting a script\n# For this practical, we will write a script that processes the AF genome files and looks for genes of a certain type\n# Start by creating a new file called process_AF_genome.sh\n# You can do this either by creating one manually in your vscode editor, or by using the touch command\ntouch process_AF_genome.sh\n\n# Open the file in your editor and add the shebang line at the top\n# A shebang line tells the system which interpreter to use to run the script, an interpreter is the program that will read and execute the script\n# Add this line at the top of your script:\n#!/usr/bin/env bash\n\n# Now change the file permissions to make it executable\nchmod +x process_AF_genome.sh\n\n# To run the script, simply run the filename in your terminal\n./process_AF_genome.sh",
+    "crumbs": [
+      "Practical 4: Scripting and Advanced Text Manipulation"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html#variables-for-loops-and-ifelse-statements",
+    "href": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html#variables-for-loops-and-ifelse-statements",
+    "title": "Practical 4: Scripts and Advanced Text Manipulation",
+    "section": "3.2 Variables, for loops and if/else statements",
+    "text": "3.2 Variables, for loops and if/else statements\nOur next step is to add some functionality to our script. We will start by adding variables ${VAR_NAME}, these variables can be used to store values that we can use later in the script. This is useful for storing file names, parameters, or any other values that we want to use multiple times in the script.\nExercises: Variables\n# Good variables to start with are input and output file names\n# For these variables, we typically use the full path to the file, this makes it easier to run the script from any directory\n# Swap the paths below with the correct paths to your files\nINPUT_DIR=\"path/to/data\"\nOUTPUT_DIR=\"path/to/output\"\n\n# You can also use variables to store parameters, such as the gene name pattern we want to look for in our ffn files\nGENE_NAME_PATTERN=\"gene_name\"\n\n# You can also Initialize variables to store intermediate values, such as the total number of genes matching the pattern found\nTOTAL_GENES_FOR_PATTERN=0\nBut the ffn files we have contain a multitude of gene sequences and their headers, extracting these genes across multiple files will require repeated parsing setups. This is where for loops come in, they allow us to iterate over a list of items and execute a block of code for each item in the list. In our case, we can use a for loop to iterate over a list of input files and process each file in turn.\n\n* (wildcard): A character that can be used to match any string of characters in file names or patterns\nfor: A control flow statement that allows us to iterate over a list of items and execute a block of code for each item\ndo and done: Keywords used to define the start and end of a loop block\nbasename: A command that extracts the base name of a file (the file name without the path and extension)\n~: In the context of regex, it represents the matching operator, used to check if a string matches a pattern\n\nExercises: For loops\n# Also add a creation of the counts file\necho -e \"Genome\\tGene_Count\" &gt; ${OUTPUT_DIR}/gene_counts.tsv\n\n# In our INPUT_DIR we have multiple ffn files, a good way (if you have a good structured folder) to iterate over all ffn files is to use a for loop with a wildcard\nfor ffn_file in ${INPUT_DIR}/*.ffn; do \n  # putting the wilcard alongside the file extension will match all files with that extension\n  # Inside the loop, we can use the variable ffn_file established in the loop to refer to the current file being processed\n  # Extract the base name of the file (without the path and extension) to use in the output file name\n  base_name=$(basename ${ffn_file} .ffn)\n  \n  # Use awk to extract gene sequences matching the GENE_NAME_PATTERN and save them to an output file\n  # Since we are working on a fasta file, tab-separation is not needed and all data is in one column\n  # In order to pass the pattern variable to awk, you need to figure out the flag for passing variables to awk\n  awk -v pattern=\"${GENE_NAME_PATTERN}\" 'BEGIN{OFS=\"\\t\"} /^&gt;/{if($0 ~ pattern) {print $0; getline; print $0}}' ${ffn_file} &gt; ${OUTPUT_DIR}/${base_name}_filtered.ffn\n\n  # Count the number of genes found and add it to the total\n  gene_count=$(grep -c '^&gt;' \"${OUTPUT_DIR}/${base_name}_filtered.ffn\" || true)\n  TOTAL_GENES_FOR_PATTERN=$((TOTAL_GENES_FOR_PATTERN + gene_count))\n\n  # Also store the gene count for the current file in a new file for later use \n  echo -e \"${base_name}\\t${gene_count}\" &gt;&gt; ${OUTPUT_DIR}/gene_counts.tsv\n  \n  # Echo the number of genes found in the current file to you stdout, to report progress\n  echo \"Processed ${ffn_file}, found ${gene_count} genes matching pattern '${GENE_NAME_PATTERN}'\"\ndone\nLastly, we want to add some conditional logic to our script, so that we can handle different scenarios based on the input data. This is where if/else statements come in, they allow us to execute a block of code if a certain condition is met, and another block of code if the condition is not met. We’ll also introduce one additional loop to do iterative operation on the lines of a file.\n\nif: A control flow statement that allows us to execute a block of code if a certain condition is met\nthen: A keyword used to define the start of an if block\nelse: A keyword used to define an alternative block of code if the condition is not met\nfi: A keyword used to define the end of an if block\nwhile: A control flow statement that allows us to execute a block of code repeatedly as long as a specified condition is true\nread: A command that reads a line of input from a file or stdin\n-gt: A comparison operator that means “greater than”\n\nExercises: If/else\n# Conditional logic can be used in multiple ways, we will focus on an example where label our genomes based on the outcome of the for loop \n# To accomplish this, we will read the gene_counts.tsv file line by line and use an if/else statement to label the genomes based on the gene count\n# Now we can add some conditional logic to label our genomes\nwhile read -r line; do\n  # Read the genome name and gene count from the file\n  genome_name=$(echo \"$line\" | awk -F'\\t' '{print $1}')\n  gene_count=$(echo \"$line\" | awk -F'\\t' '{print $2}')\n\n  # Use an if/else statement to label the genome based on the gene count\n  if [ \"${gene_count}\" -gt 0 ]; then\n    label=\"label1\"\n  else\n    label=\"label2\"\n  fi\n\n  # Append the label to the metadata file\n  echo -e \"${genome_name}\\t${gene_count}\\t${label}\" &gt;&gt; \"${OUTPUT_DIR}/genomes_metadata_labeled.tsv\"\ndone &lt; \"${OUTPUT_DIR}/gene_counts.tsv\"",
+    "crumbs": [
+      "Practical 4: Scripting and Advanced Text Manipulation"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html#debugging-bash-scripts-when-things-go-wrong",
+    "href": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html#debugging-bash-scripts-when-things-go-wrong",
+    "title": "Practical 4: Scripts and Advanced Text Manipulation",
+    "section": "4.1 Debugging Bash Scripts: When Things Go Wrong",
+    "text": "4.1 Debugging Bash Scripts: When Things Go Wrong\nBash scripts differ a bit from other programming languages (or atleast in the context you learn it, think CLI vs Spyder), in that they without configuration will continue running even if an error occurs. This can be both a blessing and a curse, as it allows for scripts to continue running even if a minor error occurs, but it can also make it difficult to identify and fix errors when they do occur. Finding and catching these errors is the other half of programming, we will now introduce a few tools that can help you debug your bash scripts.\nExercises: Global script settings\n# At the top your script we typically add set commands to define general behaviour for our script\n# These commands will most likely always be in your scripts\nset -e  # Exit immediately if a command exits with a non-zero status\nset -u  # Treat unset variables as an error when substituting\nset -o pipefail  # Return the exit status of the last command in the pipe that failed\n\n# One additional setting is to add debugging output\n# This will print each command before it is executed, which can be useful for debugging\n# But it can also be very verbose, and clog up your output/logs\nset -x  # Enable debugging output\nThese settings can be added at the top of your script, after the shebang line (#!/usr/bin/env bash) (also add the shebang line at the top!). However, they wont help with finding the exact spot where the error occurs. One way to debug your code easily, is to use echo and create custom error messages at different stages of your script. Another way is to use traps, however we will not cover that here.\nExercises: Error messages\n# This a quite common use of if/else statements for bash scripts\n# Here is an example of a custom error message\nif [ ! -f \"$INPUT_FILE\" ]; then\n  echo \"Error: Input file $INPUT_FILE does not exist.\"\n  exit 1\nfi\nGo ahead and identify stages in the script from before where you think errors might occur, and add custom error messages where appropriate. Remember to test your script with both valid and invalid inputs to see how it behaves\n# Here are some suggestions for custom error messages: \n# You dont need to all of these if you dont want to, but if you do, make sure they are placed at the correct spots in the script\n# - Check if input and output directories exist\nif [ ! -d \"$INPUT_DIR\" ]; then\n  echo \"Error: Input directory $INPUT_DIR does not exist.\"\n  exit 1\nfi\n# and \nif [ ! -d \"$OUTPUT_DIR\" ]; then\n  echo \"Error: Output directory $OUTPUT_DIR does not exist.\"\n  exit 1\nfi\n\n# Check if a name pattern is provided\nif [ -z \"$GENE_NAME_PATTERN\" ]; then\n  echo \"Error: Gene name pattern is not provided.\"\n  exit 1\nfi\n\n# Print the basename of the file being processed in the for loop\n# allows you to later check that all files were processed\necho \"Processing file: ${base_name}\"\n\n# Check if any genes were found in the current file\nif [ \"${gene_count}\" -eq 0 ]; then\n  echo \"Warning: No genes matching pattern '${GENE_NAME_PATTERN}' found in ${ffn_file}\"\nfi\n\n# At the end of the script, print the total number of genes found\necho \"Total genes matching pattern '${GENE_NAME_PATTERN}': ${TOTAL_GENES_FOR_PATTERN}\"\n\n# For the while loop, check if the gene_counts.tsv file is not empty before processing\nif [ ! -s \"${OUTPUT_DIR}/gene_counts.tsv\" ]; then\n  echo \"Error: gene_counts.tsv file is empty or does not exist.\"\n  exit 1\nfi",
+    "crumbs": [
+      "Practical 4: Scripting and Advanced Text Manipulation"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html#optargs---adding-flags-to-make-your-scripts-flexible-this-is-optional",
+    "href": "PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html#optargs---adding-flags-to-make-your-scripts-flexible-this-is-optional",
+    "title": "Practical 4: Scripts and Advanced Text Manipulation",
+    "section": "4.2 OPTARGS - Adding flags to make your scripts flexible (THIS IS OPTIONAL)",
+    "text": "4.2 OPTARGS - Adding flags to make your scripts flexible (THIS IS OPTIONAL)\nUp until now, our scripts have been quite rigid - they expect specific input files and parameters; an occasionally bad habit that coders refer to as “hardcoding”. However, in many scenarios, we often want our scripts to be more flexible and adaptable to different inputs and options. This is where OPTARGS comes in - a built-in bash tool that allows us to easily handle command-line options and arguments. You might recognize this from the command-line tools we’ve used so far, where we can add flags like -h for help or -v for verbose output. By using OPTARGS in our scripts, we can create flags for our own programs, making them more user-friendly and versatile.\nA few key commands that we will use in this section:\n\ngetopts: A built-in bash tool for parsing command-line options and arguments\ncase statement: A control flow statement that allows us to execute different blocks of code based on the value of a variable\n\nExercises\n# To begin using OPTARGS, we need to add a while loop at the top of our script to handle the options\n# the OPTARG variable will hold the value of whatever comes after the flag in the command line\n# A while loop iterates over the options provided to the script, and sets option variables based with the read value from the command line\nwhile getopts \"i:o:p:h:\" opt; do\n  case $opt in\n    i) INPUT_DIR=\"$OPTARG\" ;;  # -i flag for input directory\n    o) OUTPUT_DIR=\"$OPTARG\" ;; # -o flag for output directory\n    p) GENE_NAME_PATTERN=\"$OPTARG\" ;; # -p flag for gene name pattern\n    h) echo \"Usage: $0 -i input_dir -o output_dir -p gene_name_pattern\"  # -h flag for help\n       exit 0 ;;\n    *) echo \"Invalid option: -$OPTARG\" &gt;&2\n       exit 1 ;;\n  esac\ndone\n\n# We can add checks to ensure that the required options are provided\nif [ -z \"$INPUT_DIR\" ] || [ -z \"$OUTPUT_DIR\" ]; then\n  echo \"Error: Input and output directories are required.\"\n  echo \"Usage: $0 -i input_dir -o output_dir -p gene_name_pattern\"\n  exit 1\nfi\n\n# Its also a good idea to set default values for optional parameters, you do this in the same way as when you set variables normally\nGENE_NAME_PATTERN=\"${GENE_NAME_PATTERN:-gene_name}\"  # Default pattern if not provided\n# This sets GENE_NAME_PATTERN to the value provided by the -p flag, or to \"gene_name\" if no value is provided (as we did before)\nNow take the script you wrote before, and modify it to use OPTARGS for input and output files as well as a pattern selection OPTARGS should be placed at the top of your script, after the shebang line and global settings Remember to test your script with different combinations of options and arguments to ensure it behaves as expected",
+    "crumbs": [
+      "Practical 4: Scripting and Advanced Text Manipulation"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html",
+    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html",
+    "title": "Practical 5: Software Installation and Containers",
+    "section": "",
+    "text": "Up until now youve had to make everything by yourself (sort of, at least using base programs that come with your unix distro). This approach, while flexible, defeats one of they key benefits of modern bioinformatics; Open source and collaborative solutions to large data handling. Thanks to a lot of effort, there are countless of free, open-source tools available in various repositiories on the internet.\nHowever these tools, while saving us a lot of time, may be tricky to find and set up correctly. Different tools require different dependencies, versions, or system libraries. This often leads to complex webs of libraries and packages that act as the backbone of your code, which can be difficult to manage and reproduce on other systems. In this practical, you’ll learn where to find tools, various ways of installing an managing them (conda, apt), cloning repos from GitHub, and—most importantly—how to package tools in a Singularity/Apptainer containers that you can copy to, and run, anywhere (including HPC environments).\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end of this practical you should be able to:\n\nFind and identify bioinformatics tools in public repositories\nInstall software locally using package managers (apt, conda)\nCreate and manage conda environments for isolated software setups\nWrite a basic Singularity definition file to create a container from a base image\nBuild and test a Singularity container locally\nTransfer and run a Singularity container on an HPC using SLURM\n\n\n\n\n\n\n\n\n\n\nREMEMBER: Create a separate project folder\n\n\n\nmkdir -p ~/yourdir/practical_5\ncd ~/yourdir/practical_5",
+    "crumbs": [
+      "Practical 5: Software & Containers"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#exercises-discover-tools",
+    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#exercises-discover-tools",
+    "title": "Practical 5: Software Installation and Containers",
+    "section": "2.1 Exercises: Discover tools",
+    "text": "2.1 Exercises: Discover tools\n# Explore apt \n# Find which apt subcommand lists packages for the following queries:\napt search kraken2\napt search singularity\napt search prokka\n\n# Lets look a little closer at prokka:\napt show prokka\n\n# Explore a tool on GitHub:\n#   1) Find the repository for 'BAKTA'\n#   2) Locate the installation methods, what options are available?\n#   3) Identify dependencies and OS requirements",
+    "crumbs": [
+      "Practical 5: Software & Containers"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#setting-up-conda",
+    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#setting-up-conda",
+    "title": "Practical 5: Software Installation and Containers",
+    "section": "3.1 Setting up Conda",
+    "text": "3.1 Setting up Conda\nTo begin with, we will install Miniconda, a minimal installer for Conda. Conda is an open-source package management system and environment management system that runs on Windows, macOS, and Linux. It quickly installs, runs, and updates packages and their dependencies. Conda also creates, saves, loads, and switches between environments on your local computer. This is particularly useful in bioinformatics, where different projects may require different versions of software and libraries.\n# Install Miniconda\n# For this we need to fetch files from the internet via wget \nwget -O Miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh\nbash Miniconda.sh -b -p $HOME/miniconda3\n\n# Initialize shell and set channels\neval \"$($HOME/miniconda3/bin/conda shell.bash hook)\"\nconda init\n\n# Open a new shell terminal\n\n# Configure channels for bioconda packages, a specialized repository for bioinformatics software\nconda config --add channels conda-forge\nconda config --add channels bioconda\nconda config --set channel_priority strict",
+    "crumbs": [
+      "Practical 5: Software & Containers"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#install-fastp-locally-via-apt",
+    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#install-fastp-locally-via-apt",
+    "title": "Practical 5: Software Installation and Containers",
+    "section": "3.2 Install fastp locally via apt",
+    "text": "3.2 Install fastp locally via apt\nNext up, we will install fastp locally using apt, the default package manager for Debian-based Linux distributions. You will encounter fastp later in the genomics workflow praticals, its a tool inteded for quality control and preprocessing of FASTQ read files.\n# Before we install anything via apt, its always a good idea to update the package lists\n# This ensures you get the latest versions available in the repositories\nsudo apt update\n\n# Search for fastp package in apt repositories\napt search fastp\n\n# Install fastp\nsudo apt install -y fastp\n\n# Verify installation\nfastp --version",
+    "crumbs": [
+      "Practical 5: Software & Containers"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#use-conda-to-install-multiqc-locally",
+    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#use-conda-to-install-multiqc-locally",
+    "title": "Practical 5: Software Installation and Containers",
+    "section": "3.3 Use Conda to install MultiQC locally",
+    "text": "3.3 Use Conda to install MultiQC locally\nFor this segment we will install MultiQC, a tool that aggregates results from bioinformatics analyses across many samples into a single report. This is particularly useful for summarizing the output of tools like FastQC. Our install will be done in a conda enviroment, installing the version hosted on bioconda.\n# Create a new conda environment named MultiQC with python 3.9\nconda create -n MultiQC python=3.9\n\n# Activate the environment\nconda activate MultiQC\n\n# Install MultiQC from bioconda\nconda install multiqc\n\n# Verify installation\nmultiqc --version",
+    "crumbs": [
+      "Practical 5: Software & Containers"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#containerization-with-singularity",
+    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#containerization-with-singularity",
+    "title": "Practical 5: Software Installation and Containers",
+    "section": "4.1 Containerization with Singularity",
+    "text": "4.1 Containerization with Singularity\nContainers are a way to package software and its dependencies into a single, portable unit that can run consistently across different computing environments. Unlike virtual machines, containers share the host system’s kernel, making them more lightweight and efficient. This is particularly useful in bioinformatics, where software often has complex dependencies and needs to run on various systems, including high-performance computing (HPC) clusters.\nOn HPC you usually cannot sudo and may not be allowed to build images on the login/compute nodes. Best practice is then: - Build the image locally (or via a remote builder). - Copy the .sif to the HPC. - Bind-mount data and databases at runtime.",
+    "crumbs": [
+      "Practical 5: Software & Containers"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#a-minimal-kraken2-singularity-definition-file",
+    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#a-minimal-kraken2-singularity-definition-file",
+    "title": "Practical 5: Software Installation and Containers",
+    "section": "4.2 A minimal kraken2 Singularity definition file",
+    "text": "4.2 A minimal kraken2 Singularity definition file\nThe first step to creating a singularity container is to write a definition file. This file describes the base image, metadata, and the steps needed to install and configure the software inside the container. In many cases it will be simple, if an already hosted image exists (e.g. on BioContainers), luckily kraken2 is one of those cases. if you want to learn more about writing definition files, check out the Singularity documentation.\nCreate a file named kraken2.def with the contents below. It uses the BioContainers kraken2 image as a base.\n# kraken2.def\nBootstrap: docker\nFrom: quay.io/biocontainers/kraken2:2.1.6--pl5321h077b44d_0\n\n%labels\n    maintainer Y/N\n    org.opencontainers.image.title \"kraken2\"\n    org.opencontainers.image.source \"https://github.com/DerrickWood/kraken2\"\n\n%help\n    # Help exists to provide users with information about the container.\n    # Running `singularity run-help kraken2.sif` will display this message.\n    \n    Kraken 2 in a Singularity/Apptainer container.\n    \n    Bind your database at runtime, e.g. --bind /path/to/db:/db and use --db /db.\n\n    Used for the BIO511 Genomics course at Univsersity of Gothenburg.\n\n%post\n  # Here is where you would install additional software if needed and make config changes.\n  # However, the BioContainers image already has kraken2 installed.\n\n  # But for the hell of it, put a little text file in /home\n    echo \"This is a kraken2 container built from BioContainers base image.\" &gt; /home/kraken2_info.txt\n\n    # Echo a message to indicate successful build\n    echo \"kraken2 installed. Use --bind to mount a database at runtime.\"\n\n%environment\n    # Here is where you would usually set environment variables.\n    # However, the BioContainers image already has kraken2 in PATH. so nothing needed here.",
+    "crumbs": [
+      "Practical 5: Software & Containers"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#build-test-and-run-locally",
+    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#build-test-and-run-locally",
+    "title": "Practical 5: Software Installation and Containers",
+    "section": "4.3 Build, test, and run locally",
+    "text": "4.3 Build, test, and run locally\n# Build a read-only image from the def file (locally)\nsingularity build kraken2.sif kraken2.def\n\n# Test that kraken works by running a version check\nsingularity exec kraken2.sif kraken2 --version\n\n# We also made a little text file in /home, lets check that too\n# For this, try to shell into the container and once your in try to print the contents of the file to stdout\nsingularity shell kraken2.sif",
+    "crumbs": [
+      "Practical 5: Software & Containers"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#slurm-job-script-to-invoke-singularity-container-based-software",
+    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#slurm-job-script-to-invoke-singularity-container-based-software",
+    "title": "Practical 5: Software Installation and Containers",
+    "section": "5.1 SLURM job script to invoke singularity container based software",
+    "text": "5.1 SLURM job script to invoke singularity container based software\nAs you already know, running software in the login node of an HPC is frowned upon. Instead, you should submit jobs to the scheduler (SLURM in this case), which allows you to take up space on one of the production nodes in the cluster. Below is a example of a SLURM job script that i (Tor) have used to run a Roary pangenome analysis on another cluster. Se if you can configure it to run kraken2 instead. All HPCs are different, so make sure to adjust paths, partitions, memory, time, etc to fit your HPC. The manual for Vera can be found here.\n#!/bin/bash -l\n#SBATCH -A nbin2-gu               # Project ID\n#SBATCH -J Roary_Pangenome        # Job name\n#SBATCH -t 20:00:00               # Time limit \n#SBATCH -n 1                      # Number of tasks (processes)\n#SBATCH -p main                   # Partition to submit to\n#SBATCH --mem=200G                # Memory per node\n#SBATCH --output=/cfs/klemming/projects/supr/naiss2024-22-639/05_PANGENOME_ANALYSIS/logs/roary_%j.out  # Standard output\n#SBATCH --error=/cfs/klemming/projects/supr/naiss2024-22-639/05_PANGENOME_ANALYSIS/logs/roary_%j.err   # Standard error\n\n# Load necessary modules (Do you need to load any modules for singularity on your HPC?)\nml singularity/4.1.1-cpeGNU-23.12\n\n# Define paths to script and container\nSINGULARITY_CONTAINER=\"/cfs/klemming/projects/supr/naiss2024-22-639/DBGWAS_test\"\"\n\n# Execute script within singularity environment\nsrun singularity exec -B /cfs/klemming/projects/supr/nbin2-gu:/mnt/data $SINGULARITY_CONTAINER roary -e --mafft -p 8 -f /mnt/data/05_PANGENOME_ANALYSIS/output/ /mnt/data/05_PANGENOME_ANALYSIS/input/*.gff\nOnce a jobscript is done, you can submit it to SLURM with the sbatch command, monitor its progress with squeue, and check the output files once its done.\nWe wont be running a jobscript for kraken2 here, but try to set one up yourself. You can use the jobscript above as a template Well run kraken2 for real in the next practical\n# Example of submitting a jobscript\nsbatch job_kraken2.slurm\n\n# Monitor\nsqueue -u $USER\n# or \nscontrol show job JOBID\n\n# Check output files\ntail -20 kraken2_12345.out\n\n\n\n\n\n\n\nKey Takeaways\n\n\n\n\nPackage managers (apt, conda) simplify software installation and dependency management.\nConda environments allow for isolated setups, preventing conflicts between projects.\nContainers (Singularity/Apptainer) provide portability and reproducibility across different systems.\nAlways bind necessary directories (data, databases) when running containers on HPC.\n\n\n\n\n\n\n\n\n\nPro Tips\n\n\n\n\nTest containers locally before HPC deployment. Run exec, shell, and run commands to ensure functionality.\nKeep containers minimal; BioContainers images are a quick and reliable base.\nUse %help and labels in your definition file; inspect with singularity run-help and singularity inspect. This helps reproducibility for other users.\nBind data with --bind host_dir:container_dir; pass multiple directories with variables\nIn some cases, you may need additional config for your runs. Instead of making complex invokes in the jobscript, consider writing a script to run the analysis, and then invoke that script within the container.",
+    "crumbs": [
+      "Practical 5: Software & Containers"
     ]
   }
 ]

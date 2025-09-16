@@ -32,8 +32,8 @@ By the end of this practical you should be able to:
 ::: {.callout-important}
 ## REMEMBER: Create a separate project folder
 ```bash
-mkdir -p ~/bio511/yourdir/practical_4
-cd ~/bio511/yourdir/practical_4
+mkdir -p ~/yourdir/practical_5
+cd ~/yourdir/practical_5
 ```
 :::
 
@@ -47,12 +47,12 @@ While paid licensed software are often hosted on their own websites, and are del
 ```bash
 # Explore apt 
 # Find which apt subcommand lists packages for the following queries:
-apt {__} kraken2
-apt {__} singularity
-apt {__} prokka
+apt search kraken2
+apt search singularity
+apt search prokka
 
 # Lets look a little closer at prokka:
-apt {__} prokka
+apt show prokka
 
 # Explore a tool on GitHub:
 #   1) Find the repository for 'BAKTA'
@@ -120,11 +120,11 @@ fastp --version
 For this segment we will install MultiQC, a tool that aggregates results from bioinformatics analyses across many samples into a single report. This is particularly useful for summarizing the output of tools like FastQC. Our install will be done in a conda enviroment, installing the version hosted on bioconda.
 
 ```bash
-# Create a new conda environment named bioinfo with python 3.9
-conda create -n {__} python=3.9
+# Create a new conda environment named MultiQC with python 3.9
+conda create -n MultiQC python=3.9
 
 # Activate the environment
-conda activate {__}
+conda activate MultiQC
 
 # Install MultiQC from bioconda
 conda install multiqc
@@ -212,13 +212,11 @@ Now that we have a working kraken2 container, we can transfer it to the HPC and 
 
 ```bash
 # Transfer the image (from local to HPC)
-scp kraken2.sif user@login.hpc.__:/home/user/containers/
+scp kraken2.sif user@vera2.c3se.chalmers.se:/home/user/containers/
 
 # Log into the HPC
-ssh user@login.hpc.__
-
-# (On the HPC)
-module load singularity
+ssh user@vera2.c3se.chalmers.se
+# OR open a remotessh instance in VSCode
 
 # Quick interactive test
 singularity exec /home/user/containers/kraken2.sif kraken2 --version
@@ -251,8 +249,11 @@ srun singularity exec -B /cfs/klemming/projects/supr/nbin2-gu:/mnt/data $SINGULA
 ```
 Once a jobscript is done, you can submit it to SLURM with the `sbatch` command, monitor its progress with `squeue`, and check the output files once its done.
 
+**We wont be running a jobscript for kraken2 here, but try to set one up yourself. You can use the jobscript above as a template**
+**Well run kraken2 for real in the next practical**
+
 ```bash
-# Submit
+# Example of submitting a jobscript
 sbatch job_kraken2.slurm
 
 # Monitor
@@ -262,6 +263,7 @@ scontrol show job JOBID
 
 # Check output files
 tail -20 kraken2_12345.out
+
 ```
 
 ---

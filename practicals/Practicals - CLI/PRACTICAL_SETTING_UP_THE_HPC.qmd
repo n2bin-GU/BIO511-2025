@@ -61,3 +61,24 @@ To be able to access c3se from other networks than in GU or Chalmers, you will n
 
 # Connecting to the HPC using ssh in VSCode
 
+To be able to connect to the HPC in a manner that will let you use the full suite of tools available (or most of them at least) in VSCode, you will need to install the Remote - SSH extension.
+
+- Open VSCode
+- Go to the Extensions view by clicking on the Extensions icon in the Activity Bar on the side of the window or by pressing `Ctrl+Shift+X`
+- Search for "Remote - SSH" and install the extension by Microsoft (if youre unsure how install extensions, see [here](https://code.visualstudio.com/docs/getstarted/extensions))
+- After installation, you will see a new icon in the Activity Bar on the side of the window. Click on it to open the Remote Explorer view.
+  - If the SSH Targets are not visible, click on the drop down to expand the view
+- Click on the `+` ("New Remote") icon next to SSH header to add a new SSH host
+- In the input box that appears, enter the SSH connection string for Vera: `<your_chalmers_id>@vera1.c3se.chalmers.se` (replace `<your_chalmers_id>` with your actual Chalmers ID)
+- Press Enter to confirm
+- You will be prompted to select the SSH configuration file to update. Choose the default option (usually `~/.ssh/config`)
+
+Once you have added the SSH host, you can connect to Vera:
+
+- In the Remote Explorer view, find the Vera entry under SSH Targets (or by clicking on the blue "remote window" icon in the bottom left corner of VSCode)
+  -  Click on the "Connect to Host" icon (an arrow if you want the same window, square if you want a new one) next to the Vera entry
+  - If you clicked on the blue "remote window" icon, select "Remote-SSH: Connect to Host..." and then select the Vera entry
+- A new VSCode window will open, and you will be prompted to enter your Chalmers ID password
+- After entering your password, you should be connected to Vera, and you can start working on the HPC cluster directly from VSCode. Make sure that you open your home folder on Vera to open up a workspace.
+- You can verify that you are connected to Vera by opening a new terminal in VSCode (Terminal > New Terminal) and checking the hostname in the terminal prompt. It should show something like `your_chalmers_id@vera:~$`
+
