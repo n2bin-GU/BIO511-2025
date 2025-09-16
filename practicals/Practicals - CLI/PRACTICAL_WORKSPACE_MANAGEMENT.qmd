@@ -19,13 +19,6 @@ execute:
   message: false
 ---
 
-::: callout-note
-### How to use this handout
-This guide is **self‑explanatory** and written for true beginners.  
-Every command is followed by a **plain‑language explanation** (in blue/green callouts) and a short note on **when you’d use it in bioinformatics**.  
-No prior Linux/Unix experience is assumed.
-:::
-
 ## Why the command line for bioinformatics?
 
 - **Scale:** FASTA/FASTQ/BAM/VCF can be huge and numerous—GUIs do not scale.  
