@@ -1,0 +1,63 @@
+---
+title: "Practical 2: Connecting to the HPC"
+subtitle: "BIO511 Genomics - The c3se High Performance Computing Cluster"
+author: "Kaisa Thorell, Tor Kling"
+date: today
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+# Introduction
+
+This tutorial is to take you through the final steps of setting up and accessing the [c3se](https://www.c3se.chalmers.se/) 
+High Performance Computing infrastructure. The specific cluster we will use is called Vera. You will be introduced to this 
+cluster in the lecture and [here](https://www.c3se.chalmers.se/about/Vera/) you can find more information about it, including 
+what resources that are available, how to run jobs and other documentation. 
+
+We will walk you through step by step in this tutorial so that we (hopefully) can assist if there are any problems.
+
+
+::: {.callout-note}
+## Pre-course setup
+To be able to follow these steps you first have to have followed the steps of the **Pre-course Setup** 
+including registration at SUPR and application to the course HPC project.
+:::
+
+---
+
+# Adding Vera/c3se at SUPR
+- Log in to [SUPR](https://supr.naiss.se/)
+- Click "Accounts" in the left side menu
+- Request access to Vera/c3se
+
+---
+
+# Setting up a Chalmers ID
+
+- Navigate to [https://myaccount.chalmers.se/](https://myaccount.chalmers.se/). 
+- Log in with your GU account.
+- Choose "Activate CID" and follow the instructions to activate your account
+
+::: {.callout-note}
+## Remember your password!
+The CID username and password are the ones you will use to log in to the cluster
+:::
+
+---
+
+# Setting up Chalmers VPN
+
+To be able to access c3se from other networks than in GU or Chalmers, you will need a Chalmers VPN
+
+- Navigate to [https://chalmers.topdesk.net/tas/public/ssp/content/detail/knowledgeitem?unid=07e6154089a648d09711ccc42a42fc88](https://chalmers.topdesk.net/tas/public/ssp/content/detail/knowledgeitem?unid=07e6154089a648d09711ccc42a42fc88)
+- Follow the instructions to set up the Chalmers VPN
+
+---
+
+# Connecting to the HPC using ssh in VSCode
+
