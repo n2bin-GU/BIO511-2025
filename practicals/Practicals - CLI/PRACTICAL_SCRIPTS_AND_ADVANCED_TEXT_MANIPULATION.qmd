@@ -1,5 +1,5 @@
 ---
-title: "Practical 3: Scripts and Advanced Text Manipulation"
+title: "Practical 4: Scripts and Advanced Text Manipulation"
 subtitle: "BIO511 Genomics - Scripting in bash"
 author: "Tor Kling, Stuti Jain"
 date: "today"
