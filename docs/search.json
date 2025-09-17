@@ -76,89 +76,49 @@
   {
     "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html",
     "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html",
-    "title": "Practical 3 - Workspaces and Data Management",
+    "title": "Practical 3 — Workspace & Data Management",
     "section": "",
-    "text": "How to use this handout\n\n\n\nThis guide is self‑explanatory and written for true beginners.\nEvery command is followed by a plain‑language explanation (in blue/green callouts) and a short note on when you’d use it in bioinformatics.\nNo prior Linux/Unix experience is assumed.",
+    "text": "The goal of this practical is to build good workspace habits on the command line so your projects are organized, reproducible, and HPC-friendly. You’ll practice:\n\nProject layouts that keep data, scripts, and results separate\n\nUsing symlinks to reference large/shared data (don’t duplicate!)\n\nFinding/searching files efficiently\n\nCombining commands with pipes and redirection\n\nManaging basic file permissions\n\nUnderstanding how these habits translate to the HPC filesystem\n\n\nImportant\nWe reuse the dataset you created in Practical 1 — the FASTA, gene annotations, and expression data files. Here, we will reorganize them into a structured project layout. If some of them still have different names (such as an E_coli prefix), please rename them back to the original filenames for consistency with this practical.\n\n\n\n\n\n\n\nDid You Know?\n\n\n\nMost bioinformatics tools are tiny LEGO bricks on the CLI. You connect bricks with pipes | to build powerful, reproducible analyses.",
     "crumbs": [
       "Practical 3: Workspace Management and Data Management"
     ]
   },
   {
-    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#why-the-command-line-for-bioinformatics",
-    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#why-the-command-line-for-bioinformatics",
-    "title": "Practical 3 - Workspaces and Data Management",
-    "section": "1 Why the command line for bioinformatics?",
-    "text": "1 Why the command line for bioinformatics?\n\nScale: FASTA/FASTQ/BAM/VCF can be huge and numerous—GUIs do not scale.\n\nReproducibility: Commands are text, so analyses are easy to repeat and share.\n\nPortability: Works the same on laptops and HPC clusters.\n\n\n\n\n\n\n\nMental model\n\n\n\nThink of CLI tools as LEGO bricks. Each command does one small job well.\nYou snap bricks together with pipes | to build powerful analyses.",
+    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#locate-by-nametypesize-with-find",
+    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#locate-by-nametypesize-with-find",
+    "title": "Practical 3 — Workspace & Data Management",
+    "section": "4.1 Locate by name/type/size with find",
+    "text": "4.1 Locate by name/type/size with find\ncd ~/CLI_intro\nfind . -name \"*.tsv\"           # all TSV files\nfind data -type f -size +1M    # files &gt; 1 MB in data/\nfind . -maxdepth 2 -type d     # directories up to depth 2",
     "crumbs": [
       "Practical 3: Workspace Management and Data Management"
     ]
   },
   {
-    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#workspace-setup-your-lab-bench-on-disk",
-    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#workspace-setup-your-lab-bench-on-disk",
-    "title": "Practical 3 - Workspaces and Data Management",
-    "section": "2 Workspace Setup (your “lab bench” on disk)",
-    "text": "2 Workspace Setup (your “lab bench” on disk)\n\n2.1 Create a clean project layout\nmkdir -p ~/projects/hpylori_project/{data,scripts,results,logs,refs,notebooks,tmp,backup}\ncd ~/projects/hpylori_project\nls -1\n\n\n\n\n\n\nExplanation\n\n\n\n\nmkdir -p creates all listed folders in one go—even if parents don’t exist yet.\n\nWe separate raw data, scripts, results, and logs so we never overwrite original data and can re‑run analyses cleanly.\n\nls -1 lists one item per line for quick scanning. When used: At the start of every new project to enforce reproducible structure.\n\n\n\n\n\n\n\n\n\nNaming conventions\n\n\n\nUse kebab‑case (raw-data/) or snake_case (raw_data/) for directories and files.\nAvoid spaces; prefix with dates if helpful: 2025-08-28_qc-report.tsv.\n\n\n\n\n2.2 Add a tiny dataset for practice\nprintf \"sample_id\\tcountry\\tcondition\\nS1\\tSE\\tcase\\nS2\\tIN\\tcontrol\\nS3\\tSE\\tcase\\nS4\\tKE\\tcontrol\\n\" &gt; metadata.tsv\nhead metadata.tsv\n\n\n\n\n\n\nExplanation\n\n\n\n\nprintf writes a small, deterministic TSV so everyone gets identical results.\n\nhead shows the first few lines so we can peek without opening an editor. When used: Demo/teaching, testing pipelines quickly before running on big data.",
+    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#peek-safely-with-head-tail-less",
+    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#peek-safely-with-head-tail-less",
+    "title": "Practical 3 — Workspace & Data Management",
+    "section": "4.2 Peek safely with head, tail, less",
+    "text": "4.2 Peek safely with head, tail, less\nWe assume data/metadata.tsv exists (or you can rename expression_data.csv to metadata.tsv for practice).\n# Show a small slice so it's visibly different from the full file:\nhead -n 2 data/metadata.tsv\ntail -n 2 data/metadata.tsv\nless data/metadata.tsv   # press 'q' to quit\n\n\n\n\n\n\nDefaults\n\n\n\nBy default, head and tail each print 10 lines if you don’t specify -n.",
     "crumbs": [
       "Practical 3: Workspace Management and Data Management"
     ]
   },
   {
-    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#links-hard-link-vs-symbolic-link-symlink",
-    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#links-hard-link-vs-symbolic-link-symlink",
-    "title": "Practical 3 - Workspaces and Data Management",
-    "section": "3 Links: Hard link vs Symbolic link (symlink)",
-    "text": "3 Links: Hard link vs Symbolic link (symlink)\n\n3.1 What is a link?\nA link references a file without copying the data.\n\n\n\nProperty\nHard link\nSymlink\n\n\n\n\nPoints to\nFile data (same inode)\nPath (shortcut)\n\n\nIf original is deleted\nData still accessible\nLink breaks\n\n\nCross filesystems?\nNo\nYes\n\n\nLink directories?\nUsually no\nYes\n\n\nCreate with\nln file linkname\nln -s target linkname\n\n\n\n\n\n\n\n\n\nIntuition\n\n\n\n\nHard link = the same book with two covers (two names, one content).\n\nSymlink = a bookmark pointing to a book on a shelf (if the book moves, the bookmark breaks). When used: Symlinks are preferred for shared references and large datasets.\n\n\n\n\n\n3.2 Create and inspect a symlink\nmkdir -p ~/shared_refs\necho \"&gt;chr1\\nACGTACGTACGT\" &gt; ~/shared_refs/genome.fa\n\nmkdir -p refs\nln -s ~/shared_refs/genome.fa ./refs/genome.fa\nls -l refs\n\n\n\n\n\n\nExplanation\n\n\n\n\nWe simulate a shared reference outside the project (~/shared_refs).\n\nln -s makes a symlink inside the project pointing to that reference.\n\nls -l shows the arrow genome.fa -&gt; /home/.../genome.fa, confirming it’s a link. When used: Keep one source of truth for references; link them into each project.\n\n\n\n\n\n3.3 Relative vs absolute symlinks\nln -s ../shared_refs/genome.fa refs/genome.fa   # relative path (portable inside repos)\n\n\n\n\n\n\nWhy relative?\n\n\n\nRelative links survive moving or cloning the project to a new location, making your project more portable.",
+    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#search-inside-files-with-grep",
+    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#search-inside-files-with-grep",
+    "title": "Practical 3 — Workspace & Data Management",
+    "section": "4.3 Search inside files with grep",
+    "text": "4.3 Search inside files with grep\n# Case-insensitive search for the word \"case\" in metadata\ngrep -i \"case\" data/metadata.tsv\n\n# Count the number of FASTA headers (if you have a FASTA in refs/)\ngrep -c \"^&gt;\" refs/sequences.fasta\n\n\n\n\n\n\nCommon Mistake\n\n\n\nIf the command says “No such file or directory”, ensure you’re in ~/CLI_intro and the file really exists there. Use pwd and ls to verify.",
     "crumbs": [
       "Practical 3: Workspace Management and Data Management"
     ]
   },
   {
-    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#finding-searching-filesdata",
-    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#finding-searching-filesdata",
-    "title": "Practical 3 - Workspaces and Data Management",
-    "section": "4 Finding & Searching Files/Data",
-    "text": "4 Finding & Searching Files/Data\n\n4.1 find — locate files by name/type/size\nfind . -name \"*.tsv\"\nfind . -type f -size +1M\nfind . -maxdepth 2 -type d\n\n\n\n\n\n\nExplanation\n\n\n\n\n-name \"*.tsv\" match by pattern; quotes prevent the shell from expanding *.\n\n-type f (files) or -type d (directories).\n\n-size +1M files bigger than 1 MB.\n\n-maxdepth 2 restricts how deep we search. When used: Quickly find all results, all FASTQs, or big files in a tree.\n\n\n\n\n\n4.2 Peek safely at contents\nhead -n 5 metadata.tsv\nless metadata.tsv     # press q to quit\n\n\n\n\n\n\nExplanation\n\n\n\n\nhead shows the top N lines; less lets you scroll without loading the whole file into memory. When used: Before processing, to confirm format and columns.\n\n\n\n\n\n4.3 grep — search inside files\ngrep -i \"gene\" data/annotation.gff\ngrep -c \"^&gt;\" data/sequences.fa\n\n\n\n\n\n\nExplanation\n\n\n\n\n-i ignores case.\n\n^ anchors to start of line; FASTA headers start with &gt; so grep -c \"^&gt;\" counts sequences. When used: Find genes of interest, samples, headers, errors in logs.\n\n\n\n\n\n4.4 wc — counts (lines/words/chars)\nwc -l metadata.tsv\n\n\n\n\n\n\nExplanation\n\n\n\nwc = word count. -l counts lines (often rows in a table).\nWhen used: Quick sanity checks (how many reads/samples/variants?).\n\n\n\n\n4.5 cut, sort, uniq — frequency tables\ncut -f2 metadata.tsv | sort | uniq -c | sort -nr\n\n\n\n\n\n\nExplanation\n\n\n\n\ncut -f2 extracts column 2 (tab‑separated by default).\n\nsort groups identical values together.\n\nuniq -c counts occurrences (works on adjacent duplicates → sort first).\n\nFinal sort -nr orders by numeric count, descending. When used: Count countries, barcodes, gene names, sample groups.",
-    "crumbs": [
-      "Practical 3: Workspace Management and Data Management"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#file-permissions-chmod-make-scripts-runnable-protect-data",
-    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#file-permissions-chmod-make-scripts-runnable-protect-data",
-    "title": "Practical 3 - Workspaces and Data Management",
-    "section": "5 File Permissions & chmod (make scripts runnable; protect data)",
-    "text": "5 File Permissions & chmod (make scripts runnable; protect data)\n\n5.1 Understand ls -l and permission bits\nls -l script.sh\n# -rw-r--r--  1 stuti staff  1024 Aug 28 10:12 script.sh\n\n\n\n\n\n\nExplanation\n\n\n\n\nPositions show owner, group, others permissions (r read, w write, x execute).\n\nHere the owner can read/write; group/others can read. When used: Diagnose “Permission denied” and set correct access.\n\n\n\n\n\n5.2 Set permissions: symbolic and numeric modes\nchmod +x script.sh            # add execute bit (now runnable with ./script.sh)\nchmod 644 report.txt          # u=rw, g=r, o=r  (common for text files)\nchmod 755 pipeline.sh         # u=rwx, g=rx, o=rx (common for shared tools)\nchmod 444 data/raw.fastq.gz   # read‑only for all (protect raw data)\n\n\n\n\n\n\nExplanation\n\n\n\n\n+x grants execute.\n\nNumeric: add r=4, w=2, x=1 → owner/group/others.\n\n644 text files; 755 tools; 444 immutable raw data. When used: Make scripts executable, protect raw FASTQ, share team tools.\n\n\n\n\n\n5.3 Quick troubleshooting\n# Is it executable?\nls -l script.sh\n\n# Can I write here?\nls -ld .\n\n\n\n\n\n\nTips\n\n\n\n\nIf a script won’t run, check for the x bit and the shebang (#!/usr/bin/env bash) at the top.\n\nOn shared HPC directories, ensure the group has the right permissions.",
-    "crumbs": [
-      "Practical 3: Workspace Management and Data Management"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#local-vs-hpc-what-changes-what-stays-the-same",
-    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#local-vs-hpc-what-changes-what-stays-the-same",
-    "title": "Practical 3 - Workspaces and Data Management",
-    "section": "6 Local vs HPC (what changes, what stays the same)",
-    "text": "6 Local vs HPC (what changes, what stays the same)\n\n\n\nFeature\nLaptop/Desktop\nHPC Cluster\n\n\n\n\nAccess\nGUI + Terminal\nSSH (terminal)\n\n\nStorage\nLocal disk\nShared project space (/proj/...), scratch\n\n\nCompute\n1–8 cores\nMany nodes/cores; batch scheduler\n\n\nData\nSmaller, local\nLarger, shared → symlink into projects\n\n\n\n\n6.1 Typical HPC locations\n/home/username     # your private space (small)\n/proj/&lt;project&gt;    # shared project data (primary home for big data)\n/scratch           # fast temporary I/O space during jobs\n\n\n\n\n\n\nExplanation\n\n\n\n\nKeep references and large reads in /proj/...; symlink into your project.\n\nUse /scratch for temporary heavy I/O; clean up after jobs. When used: Day‑to‑day HPC work mirrors local workflows but on shared paths.\n\n\n\n\n\n6.2 Copy & verify (concepts are identical locally)\n# Copy a file to HPC\nscp metadata.tsv user@hpc.example.org:/home/user/\n\n# Sync a directory (only changes) to shared project space\nrsync -avh results/ user@hpc.example.org:/proj/course/results/\n\n# Verify integrity (run on both ends and compare)\nmd5sum metadata.tsv\n\n\n\n\n\n\nTips\n\n\n\n\nPrefer rsync for repeated updates (only diffs transfer).\n\nUse md5sum (or sha256sum) to confirm files are intact after transfer.",
-    "crumbs": [
-      "Practical 3: Workspace Management and Data Management"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#guided-practice-copypaste-friendly",
-    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#guided-practice-copypaste-friendly",
-    "title": "Practical 3 - Workspaces and Data Management",
-    "section": "7 Guided Practice (copy/paste friendly)",
-    "text": "7 Guided Practice (copy/paste friendly)\n\n7.1 Build the workspace and simulate data\nmkdir -p project/{data,scripts,results,logs,refs}\nprintf \"sample_id\\tcountry\\nS1\\tSE\\nS2\\tIN\\nS3\\tSE\\n\" &gt; project/metadata.tsv\n\n\n\n\n\n\nExplanation\n\n\n\nWe create a small, consistent dataset so everyone’s outputs match during exercises. Goal: Reduce friction, focus on learning the commands.\n\n\n\n\n7.2 Link a shared reference\nmkdir -p ~/shared_refs && echo \"&gt;chr1\\nACGT\" &gt; ~/shared_refs/genome.fa\nln -s ~/shared_refs/genome.fa project/refs/genome.fa\nls -l project/refs\n\n\n\n\n\n\nExplanation\n\n\n\nConfirms the link with ls -l (look for the arrow).\nGoal: Practice the habit of linking large shared data instead of copying.\n\n\n\n\n7.3 Answer questions with pipelines\ncut -f2 project/metadata.tsv | sort | uniq -c | sort -nr &gt; project/results/country_counts.txt\ngrep -c \"^&gt;\" project/refs/genome.fa\n\n\n\n\n\n\nExplanation\n\n\n\nWe create a frequency table and count FASTA sequences with a one‑liner—exactly the kind of small, fast checks you’ll do every day.\n\n\n\n\n7.4 Permissions in context\nchmod 444 project/data/*.fastq.gz    # protect raw data\nchmod +x project/scripts/qc.sh       # make a pipeline script executable\n\n\n\n\n\n\nExplanation\n\n\n\nLock raw files to prevent accidents; make scripts runnable so you can execute your pipeline with ./scripts/qc.sh.",
-    "crumbs": [
-      "Practical 3: Workspace Management and Data Management"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#selfcheck-miniquiz",
-    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#selfcheck-miniquiz",
-    "title": "Practical 3 - Workspaces and Data Management",
-    "section": "8 Self‑check (mini‑quiz)",
-    "text": "8 Self‑check (mini‑quiz)\n\nIn one sentence, why are symlinks preferred for references on HPC?\n\nWhat does chmod 755 do, and when would you use it?\n\nWrite a one‑liner to count unique countries in metadata.tsv.\n\nFind all .tsv files larger than 1 MB and save the list to big_tsvs.txt.\n\n\n\n\n\n\n\nHint\n\n\n\nTry to answer in plain language first (“what problem does this solve?”), then write the command.",
+    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#counts-and-quick-summaries-with-wc-sort-uniq",
+    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#counts-and-quick-summaries-with-wc-sort-uniq",
+    "title": "Practical 3 — Workspace & Data Management",
+    "section": "4.4 Counts and quick summaries with wc, sort, uniq",
+    "text": "4.4 Counts and quick summaries with wc, sort, uniq\n\nCorrect mental model:\nsort orders lines (alphabetically/numerically). uniq only removes adjacent duplicates — so you almost always sort first before uniq.\n\n# How many rows (lines) are in the metadata?\nwc -l data/metadata.tsv\n\n# STEP-BY-STEP (encouraged so you see each stage):\ncut -f2 data/metadata.tsv              # column 2 (e.g., country) from a TAB-separated file\ncut -f2 data/metadata.tsv | sort       # order values to cluster identical ones\ncut -f2 data/metadata.tsv | sort | uniq -c   # collapse adjacent duplicates and count\nNow that you’ve seen each stage, try the pipeline form that saves the result:\ncut -f2 data/metadata.tsv | sort | uniq -c | sort -nr &gt; results/country_counts.txt\nhead results/country_counts.txt\n\n\n\n\n\n\nDelimiter tip\n\n\n\ncut defaults to tab. If your file is CSV, add -d, (comma) and adjust field numbers accordingly.",
     "crumbs": [
       "Practical 3: Workspace Management and Data Management"
     ]

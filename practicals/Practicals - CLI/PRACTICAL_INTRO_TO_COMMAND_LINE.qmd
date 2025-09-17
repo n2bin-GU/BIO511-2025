@@ -69,11 +69,6 @@ ls
 # display the directory contents as a list with more details
 ls --help
 
-#NB! In zsh, the default shell of MacOS, this command doesn't work. You instead have to use 
-man ls 
-#(you exit the manual by typing "q")
-
-
 # Then run that command
 ls -la
 
@@ -98,7 +93,6 @@ cd CLI_intro
 # This can be done in multiple ways 
 # For example, you could make multiple directories in one command:
 mkdir Escherichia
-mkdir Acinetobacter
 cd Escherichia
 mkdir coli hermanni fergusonii
 
@@ -115,11 +109,6 @@ cd ..        # Go back to previous directory
 # File Creation and Manipulation 
 
 Now that we have an introduction to navigating our workspace, let's learn how to create and manage files. In bioinformatics, you'll constantly be creating, copying, moving, and organizing data files - from raw sequencing data to analysis results. While in a typical file explorer, you may drag and drop files as you please, in CLI, these operations require deliberate commands.
-
-::: {.callout-note}
-## Before you start
-Make sure you navigate to the CLI_intro directory again so that you know where the files you have created are :)
-:::
 
 ## Text manipulation (`echo`, `touch`)
 Before we start with file manipulation, we'll first introduce text files the old school way via `echo` and `touch`
