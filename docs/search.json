@@ -98,7 +98,7 @@
     "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#peek-safely-with-head-tail-less",
     "title": "Practical 3 — Workspace & Data Management",
     "section": "4.2 Peek safely with head, tail, less",
-    "text": "4.2 Peek safely with head, tail, less\nWe assume data/metadata.tsv exists (or you can rename expression_data.csv to metadata.tsv for practice).\n# Show a small slice so it's visibly different from the full file:\nhead -n 2 data/metadata.tsv\ntail -n 2 data/metadata.tsv\nless data/metadata.tsv   # press 'q' to quit\n\n\n\n\n\n\nDefaults\n\n\n\nBy default, head and tail each print 10 lines if you don’t specify -n.",
+    "text": "4.2 Peek safely with head, tail, less\nWe assume data/metadata.tsv exists, but otherwise create it.\n# Show a small slice so it's visibly different from the full file:\n# If you need to create the metadata.tsv file: \ncat &gt; data/metadata.tsv &lt;&lt; 'EOF'\nSample_ID    Country Tissue\nS1   SE   gut\nS2   SE   gut\nS3   NO   skin\nS4   DK   gut\nS5   SE   skin\nEOF\n\nhead -n 2 data/metadata.tsv\ntail -n 2 data/metadata.tsv\nless data/metadata.tsv   # press 'q' to quit\n\n\n\n\n\n\nDefaults\n\n\n\nBy default, head and tail each print 10 lines if you don’t specify -n.",
     "crumbs": [
       "Practical 3: Workspace Management and Data Management"
     ]

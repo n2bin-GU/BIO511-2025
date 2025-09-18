@@ -107,10 +107,20 @@ find . -maxdepth 2 -type d     # directories up to depth 2
 
 ## Peek safely with `head`, `tail`, `less`
 
-We assume **`data/metadata.tsv`** exists (or you can rename `expression_data.csv` to `metadata.tsv` for practice).
+We assume **`data/metadata.tsv`** exists, but otherwise create it.
 
 ```bash
 # Show a small slice so it's visibly different from the full file:
+# If you need to create the metadata.tsv file: 
+cat > data/metadata.tsv << 'EOF'
+Sample_ID    Country Tissue
+S1   SE   gut
+S2   SE   gut
+S3   NO   skin
+S4   DK   gut
+S5   SE   skin
+EOF
+
 head -n 2 data/metadata.tsv
 tail -n 2 data/metadata.tsv
 less data/metadata.tsv   # press 'q' to quit
