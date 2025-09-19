@@ -39,6 +39,18 @@ By the end of this practical you should be able to:
 
 # Advanced Text Manipulation
 
+## Download data
+For this practical, we will work with a set of five *E. coli* genomes. You may either retrieve these from the canvas course page, or if you want, you can try to fetch them from the HPC group directory (if you have access). 
+```bash
+# Download the data from canvas
+# or 
+# use scp (secure copy) to copy the data from the HPC group directory
+scp <CIDusername>@vera2.c3se.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/practical4/DATAPRACTICAL4.tar.gz ~/CLI_intro/practical_4/data/
+
+# Unpack the data
+tar -xvzf ~/CLI_intro/practical_4/data/DATAPRACTICAL4.tar.gz -C ~/CLI_intro/practical_4/data/
+```
+
 ## awk: Pattern Scanning and Processing Language
 awk can do things that may at first glance remind us of other commands like `grep`, since we can similarly search for patterns in text files and output them into the stdout. However, `awk` is much more powerful text manipulation tool that allows us to do advanced language processing and data extraction not to dissimilar to a programming language. Using awk we can accomplish short programming tasks directly in the command line.
 
@@ -128,7 +140,7 @@ But the ffn files we have contain a multitude of gene sequences and their header
 - `for`: A control flow statement that allows us to iterate over a list of items and execute a block of code for each item
 - `do` and `done`: Keywords used to define the start and end of a loop block
 - `basename`: A command that extracts the base name of a file (the file name without the path and extension)
-- `~`: In the context of regex, it represents the matching operator, used to check if a string matches a pattern
+- `~`: represents the matching operator, used to check if a string matches a pattern
 
 **Exercises: For loops**
 ```bash
@@ -144,7 +156,6 @@ for ffn_file in ${INPUT_DIR}/*.ffn; do
   
   # Use awk to extract gene sequences matching the GENE_NAME_PATTERN and save them to an output file
   # Since we are working on a fasta file, tab-separation is not needed and all data is in one column
-  # In order to pass the pattern variable to awk, you need to figure out the flag for passing variables to awk
   awk -v pattern="${GENE_NAME_PATTERN}" 'BEGIN{OFS="\t"} /^>/{if($0 ~ pattern) {print $0; getline; print $0}}' ${ffn_file} > ${OUTPUT_DIR}/${base_name}_filtered.ffn
 
   # Count the number of genes found and add it to the total
@@ -173,8 +184,16 @@ Lastly, we want to add some conditional logic to our script, so that we can hand
 ```bash
 # Conditional logic can be used in multiple ways, we will focus on an example where label our genomes based on the outcome of the for loop 
 # To accomplish this, we will read the gene_counts.tsv file line by line and use an if/else statement to label the genomes based on the gene count
+# First, create a new file to store the metadata with labels
+echo -e "Genome\tGene_Count\tLabel" > "${OUTPUT_DIR}/genomes_metadata_labeled.tsv"
+
 # Now we can add some conditional logic to label our genomes
 while read -r line; do
+  # skip the header line
+  if [[ "$line" == Genome* ]]; then
+    continue
+  fi
+
   # Read the genome name and gene count from the file
   genome_name=$(echo "$line" | awk -F'\t' '{print $1}')
   gene_count=$(echo "$line" | awk -F'\t' '{print $2}')
@@ -231,7 +250,7 @@ fi
 ```bash
 # Here are some suggestions for custom error messages: 
 # You dont need to all of these if you dont want to, but if you do, make sure they are placed at the correct spots in the script
-# - Check if input and output directories exist
+# Check if input and output directories exist
 if [ ! -d "$INPUT_DIR" ]; then
   echo "Error: Input directory $INPUT_DIR does not exist."
   exit 1
@@ -282,7 +301,7 @@ A few key commands that we will use in this section:
 # To begin using OPTARGS, we need to add a while loop at the top of our script to handle the options
 # the OPTARG variable will hold the value of whatever comes after the flag in the command line
 # A while loop iterates over the options provided to the script, and sets option variables based with the read value from the command line
-while getopts "i:o:p:h:" opt; do
+while getopts "i:o:p:h" opt; do
   case $opt in
     i) INPUT_DIR="$OPTARG" ;;  # -i flag for input directory
     o) OUTPUT_DIR="$OPTARG" ;; # -o flag for output directory
@@ -316,7 +335,7 @@ GENE_NAME_PATTERN="${GENE_NAME_PATTERN:-gene_name}"  # Default pattern if not pr
 Now that you have a finished script, try to use it to answer the following questions:
 
 1. How many genes in total across all three ffn files match the pattern "hypothetical protein"?
-2. How many genomes can be considered ESBL strains? (You may need to look up what characterizes an ESBL strain), you should also make sure that the hardcoded labels are suitable (ie change them from label1 and label2 to something more meaningful)
+2. How many genomes can be considered ESBL strains? (You may need to look up what characterizes an ESBL strain, what is the most prevalent ESBL gene?), you should also make sure that the hardcoded labels are suitable (ie change them from label1 and label2 to something more meaningful)
 
 ---
 
