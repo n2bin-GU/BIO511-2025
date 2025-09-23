@@ -1,0 +1,99 @@
+---
+title: "Best Coding Practices for Command‑Line Programming"
+author: "Stuti Jain, Tor Kling"
+format:
+  html:
+    theme: cosmo
+number-sections: true
+toc: true
+---
+
+## Introduction
+
+This short guide introduces habits for writing reliable command‑line (Bash) scripts. 
+
+**Why it matters**
+- Scripts don’t crash silently.
+- You understand what the script did later in future too.
+- Results are reproducible and don’t get overwritten by accident.
+
+## The Six Golden Rules
+
+1. **Start every Bash script safely**  
+   Use strict mode so mistakes fail fast.
+   ```bash
+   #!/usr/bin/env bash
+   set -euo pipefail       # exit on error, unset var is error, fail on pipe errors
+   IFS=$'\n\t'              # safer word splitting
+   ```
+
+2. **Always offer help**  
+   Let users see how to run the script.
+   ```bash
+   usage() {
+     echo "Usage: $(basename "$0") -i INPUT -o OUTDIR [--force]"
+     echo "Example: $(basename "$0") -i data/sample.txt -o results"
+   }
+   # Show help if asked
+   [[ ${1:-} == "-h" || ${1:-} == "--help" ]] && { usage; exit 0; }
+   ```
+
+3. **Use project‑relative paths (not absolute)**  
+   Make scripts portable by computing the project root from the script’s location.
+   ```bash
+   SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+   PROJECT_ROOT=$(cd -- "$SCRIPT_DIR/.." && pwd)
+   IN="$PROJECT_ROOT/data/input.txt"
+   OUTDIR="$PROJECT_ROOT/results"
+   ```
+
+4. **Never overwrite outputs by accident**  
+   Create folders you need, and require `--force` to overwrite existing files.
+   ```bash
+   mkdir -p "$OUTDIR"
+   OUT="$OUTDIR/summary.txt"
+   force=false
+   [[ ${1:-} == "--force" ]] && force=true
+   if [[ -e "$OUT" && "$force" != true ]]; then
+     echo "Refusing to overwrite $OUT (use --force)"; exit 1
+   fi
+   ```
+
+5. **Log what you do**  
+   Print key parameters and tool versions to a small log so runs are traceable.
+   ```bash
+   {
+     echo "# Params"; echo "input=$IN"; echo "outdir=$OUTDIR"; date
+     echo "# Tool versions"; bash --version | head -n1
+   } | tee "$OUTDIR/run.log"
+   ```
+
+6. **Quote variables**  
+   Quote `"$var"` to handle spaces.
+
+::: {.callout-note title="Did You Know?"}
+- `set -x` prints each command as it runs — handy for debugging.  
+- `cd -` jumps back to your previous directory.
+:::
+
+::: {.callout-tip title="Best Practice"}
+Keep scripts **small and single‑purpose**: one script = one task. Chain tasks with a Makefile later if needed.
+:::
+
+## Common Mistakes (and quick fixes)
+
+- **Unquoted variables** → Always use `"$var"` (handles spaces safely).  
+- **Absolute paths** → Use project‑relative paths like `"$PROJECT_ROOT/data"` instead.  
+- **Overwriting results** → Require `--force` or new output filenames.  
+- **No log** → Write a minimal `run.log` with parameters and versions.
+
+::: {.callout-warning title="Common Mistake"}
+Using `rm -rf "$SOME_VAR"` without checking that `"$SOME_VAR"` is **non‑empty** can delete the wrong folder. Always validate inputs first.
+:::
+
+## Summary
+
+- Start **safely** (`set -euo pipefail`, quote variables).  
+- Use **project‑relative paths** and **don’t overwrite** results.  
+- **Log** what you do; test on a small sample first.  
+- Keep scripts **simple, readable, and single‑purpose**.
