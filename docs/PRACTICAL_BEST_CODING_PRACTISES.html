@@ -6,10 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Kaisa Thorell, Tor Kling">
-<meta name="dcterms.date" content="2025-09-24">
+<meta name="author" content="Stuti Jain, Tor Kling">
 
-<title>Practical 2: Connecting to the HPC – BIO511 Genomics - Practical Repository</title>
+<title>Best Coding Practices for Command‑Line Programming – BIO511 Genomics - Practical Repository</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -161,7 +195,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./PRACTICAL_INTRO_TO_COMMAND_LINE.html">Intro to Command Line</a></li><li class="breadcrumb-item"><a href="./PRACTICAL_SETTING_UP_THE_HPC.html">Practical 2: Setting up the HPC</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./PRACTICAL_GIT_SESSION1.html">Coding Best Practices</a></li><li class="breadcrumb-item"><a href="./PRACTICAL_BEST_CODING_PRACTISES.html">Practical 3: Best Coding Practices</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -190,7 +224,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./PRACTICAL_SETTING_UP_THE_HPC.html" class="sidebar-item-text sidebar-link active">
+  <a href="./PRACTICAL_SETTING_UP_THE_HPC.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Practical 2: Setting up the HPC</span></a>
   </div>
 </li>
@@ -237,7 +271,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./PRACTICAL_BEST_CODING_PRACTISES.html" class="sidebar-item-text sidebar-link">
+  <a href="./PRACTICAL_BEST_CODING_PRACTISES.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Practical 3: Best Coding Practices</span></a>
   </div>
 </li>
@@ -254,20 +288,18 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
-  <li><a href="#adding-verac3se-at-supr" id="toc-adding-verac3se-at-supr" class="nav-link" data-scroll-target="#adding-verac3se-at-supr"><span class="header-section-number">2</span> Adding Vera/c3se at SUPR</a></li>
-  <li><a href="#setting-up-a-chalmers-id" id="toc-setting-up-a-chalmers-id" class="nav-link" data-scroll-target="#setting-up-a-chalmers-id"><span class="header-section-number">3</span> Setting up a Chalmers ID</a></li>
-  <li><a href="#setting-up-chalmers-vpn" id="toc-setting-up-chalmers-vpn" class="nav-link" data-scroll-target="#setting-up-chalmers-vpn"><span class="header-section-number">4</span> Setting up Chalmers VPN</a></li>
-  <li><a href="#connecting-to-the-hpc-using-ssh-in-vscode" id="toc-connecting-to-the-hpc-using-ssh-in-vscode" class="nav-link" data-scroll-target="#connecting-to-the-hpc-using-ssh-in-vscode"><span class="header-section-number">5</span> Connecting to the HPC using ssh in VSCode</a></li>
+  <li><a href="#the-six-golden-rules" id="toc-the-six-golden-rules" class="nav-link" data-scroll-target="#the-six-golden-rules"><span class="header-section-number">2</span> The Six Golden Rules</a></li>
+  <li><a href="#common-mistakes-and-quick-fixes" id="toc-common-mistakes-and-quick-fixes" class="nav-link" data-scroll-target="#common-mistakes-and-quick-fixes"><span class="header-section-number">3</span> Common Mistakes (and quick fixes)</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">4</span> Summary</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./PRACTICAL_INTRO_TO_COMMAND_LINE.html">Intro to Command Line</a></li><li class="breadcrumb-item"><a href="./PRACTICAL_SETTING_UP_THE_HPC.html">Practical 2: Setting up the HPC</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./PRACTICAL_GIT_SESSION1.html">Coding Best Practices</a></li><li class="breadcrumb-item"><a href="./PRACTICAL_BEST_CODING_PRACTISES.html">Practical 3: Best Coding Practices</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Practical 2: Connecting to the HPC</h1>
-<p class="subtitle lead">BIO511 Genomics - The c3se High Performance Computing Cluster</p>
+<h1 class="title">Best Coding Practices for Command‑Line Programming</h1>
 </div>
 
 
@@ -277,16 +309,10 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Kaisa Thorell, Tor Kling </p>
+             <p>Stuti Jain, Tor Kling </p>
           </div>
   </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">September 24, 2025</p>
-    </div>
-  </div>
   
     
   </div>
@@ -296,91 +322,117 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="introduction" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
-<p>This tutorial is to take you through the final steps of setting up and accessing the <a href="https://www.c3se.chalmers.se/">c3se</a> High Performance Computing infrastructure. The specific cluster we will use is called Vera. You will be introduced to this cluster in the lecture and <a href="https://www.c3se.chalmers.se/about/Vera/">here</a> you can find more information about it, including what resources that are available, how to run jobs and other documentation.</p>
-<p>We will walk you through step by step in this tutorial so that we (hopefully) can assist if there are any problems.</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<section id="introduction" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
+<p>This short guide introduces habits for writing reliable command‑line (Bash) scripts.</p>
+<p><strong>Why it matters</strong> - Scripts don’t crash silently. - You understand what the script did later in future too. - Results are reproducible and don’t get overwritten by accident.</p>
+</section>
+<section id="the-six-golden-rules" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="the-six-golden-rules"><span class="header-section-number">2</span> The Six Golden Rules</h2>
+<ol type="1">
+<li><p><strong>Start every Bash script safely</strong><br>
+Use strict mode so mistakes fail fast.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> <span class="at">-euo</span> pipefail       <span class="co"># exit on error, unset var is error, fail on pipe errors</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="va">IFS</span><span class="op">=</span><span class="st">$'</span><span class="dt">\n\t</span><span class="st">'</span>              <span class="co"># safer word splitting</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Always offer help</strong><br>
+Let users see how to run the script.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">usage()</span> <span class="kw">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Usage: </span><span class="va">$(</span><span class="fu">basename</span> <span class="st">"</span><span class="va">$0</span><span class="st">"</span><span class="va">)</span><span class="st"> -i INPUT -o OUTDIR [--force]"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Example: </span><span class="va">$(</span><span class="fu">basename</span> <span class="st">"</span><span class="va">$0</span><span class="st">"</span><span class="va">)</span><span class="st"> -i data/sample.txt -o results"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Show help if asked</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">[[</span> <span class="va">${1</span><span class="op">:-</span><span class="va">}</span> <span class="ot">==</span> <span class="st">"-h"</span> <span class="kw">||</span> <span class="va">${1</span><span class="op">:-</span><span class="va">}</span> <span class="ot">==</span> <span class="st">"--help"</span> <span class="kw">]]</span> <span class="kw">&amp;&amp;</span> <span class="kw">{</span> <span class="ex">usage</span><span class="kw">;</span> <span class="bu">exit</span> 0<span class="kw">;</span> <span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Use project‑relative paths (not absolute)</strong><br>
+Make scripts portable by computing the project root from the script’s location.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="va">SCRIPT_DIR</span><span class="op">=</span><span class="va">$(</span><span class="bu">cd</span> <span class="at">--</span> <span class="st">"</span><span class="va">$(</span><span class="fu">dirname</span> <span class="at">--</span> <span class="st">"</span><span class="va">${BASH_SOURCE</span><span class="op">[</span><span class="dv">0</span><span class="op">]</span><span class="va">}</span><span class="st">"</span><span class="va">)</span><span class="st">"</span> <span class="kw">&amp;&amp;</span> <span class="bu">pwd</span><span class="va">)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="va">PROJECT_ROOT</span><span class="op">=</span><span class="va">$(</span><span class="bu">cd</span> <span class="at">--</span> <span class="st">"</span><span class="va">$SCRIPT_DIR</span><span class="st">/.."</span> <span class="kw">&amp;&amp;</span> <span class="bu">pwd</span><span class="va">)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="va">IN</span><span class="op">=</span><span class="st">"</span><span class="va">$PROJECT_ROOT</span><span class="st">/data/input.txt"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="va">OUTDIR</span><span class="op">=</span><span class="st">"</span><span class="va">$PROJECT_ROOT</span><span class="st">/results"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Never overwrite outputs by accident</strong><br>
+Create folders you need, and require <code>--force</code> to overwrite existing files.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="st">"</span><span class="va">$OUTDIR</span><span class="st">"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="va">OUT</span><span class="op">=</span><span class="st">"</span><span class="va">$OUTDIR</span><span class="st">/summary.txt"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="va">force</span><span class="op">=</span>false</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">[[</span> <span class="va">${1</span><span class="op">:-</span><span class="va">}</span> <span class="ot">==</span> <span class="st">"--force"</span> <span class="kw">]]</span> <span class="kw">&amp;&amp;</span> <span class="va">force</span><span class="op">=</span>true</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">[[</span> <span class="ot">-e</span> <span class="st">"</span><span class="va">$OUT</span><span class="st">"</span> <span class="kw">&amp;&amp;</span> <span class="st">"</span><span class="va">$force</span><span class="st">"</span> <span class="ot">!=</span> true <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Refusing to overwrite </span><span class="va">$OUT</span><span class="st"> (use --force)"</span><span class="kw">;</span> <span class="bu">exit</span> 1</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Log what you do</strong><br>
+Print key parameters and tool versions to a small log so runs are traceable.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"# Params"</span><span class="kw">;</span> <span class="bu">echo</span> <span class="st">"input=</span><span class="va">$IN</span><span class="st">"</span><span class="kw">;</span> <span class="bu">echo</span> <span class="st">"outdir=</span><span class="va">$OUTDIR</span><span class="st">"</span><span class="kw">;</span> <span class="fu">date</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"# Tool versions"</span><span class="kw">;</span> <span class="fu">bash</span> <span class="at">--version</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n1</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span> <span class="kw">|</span> <span class="fu">tee</span> <span class="st">"</span><span class="va">$OUTDIR</span><span class="st">/run.log"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Quote variables</strong><br>
+Quote <code>"$var"</code> to handle spaces.</p></li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled" title="Did You Know?">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Pre-course setup
+Did You Know?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>To be able to follow these steps you first have to have followed the steps of the <strong>Pre-course Setup</strong> including registration at SUPR and application to the course HPC project.</p>
+<ul>
+<li><code>set -x</code> prints each command as it runs — handy for debugging.<br>
+</li>
+<li><code>cd -</code> jumps back to your previous directory.</li>
+</ul>
 </div>
 </div>
-<hr>
-</section>
-<section id="adding-verac3se-at-supr" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Adding Vera/c3se at SUPR</h1>
-<ul>
-<li>Log in to <a href="https://supr.naiss.se/">SUPR</a></li>
-<li>Click “Accounts” in the left side menu</li>
-<li>Request access to Vera/c3se</li>
-</ul>
-<hr>
-</section>
-<section id="setting-up-a-chalmers-id" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Setting up a Chalmers ID</h1>
-<ul>
-<li>Navigate to <a href="https://myaccount.chalmers.se/">https://myaccount.chalmers.se/</a>.</li>
-<li>Log in with your GU account.</li>
-<li>Choose “Activate CID” and follow the instructions to activate your account</li>
-</ul>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-default callout-tip callout-titled" title="Best Practice">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Remember your password!
+Best Practice
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The CID username and password are the ones you will use to log in to the cluster</p>
+<p>Keep scripts <strong>small and single‑purpose</strong>: one script = one task. Chain tasks with a Makefile later if needed.</p>
 </div>
 </div>
-<hr>
 </section>
-<section id="setting-up-chalmers-vpn" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Setting up Chalmers VPN</h1>
-<p>To be able to access c3se from other networks than in GU or Chalmers, you will need a Chalmers VPN</p>
+<section id="common-mistakes-and-quick-fixes" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="common-mistakes-and-quick-fixes"><span class="header-section-number">3</span> Common Mistakes (and quick fixes)</h2>
 <ul>
-<li>Navigate to <a href="https://chalmers.topdesk.net/tas/public/ssp/content/detail/knowledgeitem?unid=07e6154089a648d09711ccc42a42fc88">https://chalmers.topdesk.net/tas/public/ssp/content/detail/knowledgeitem?unid=07e6154089a648d09711ccc42a42fc88</a></li>
-<li>Follow the instructions to set up the Chalmers VPN</li>
+<li><strong>Unquoted variables</strong> → Always use <code>"$var"</code> (handles spaces safely).<br>
+</li>
+<li><strong>Absolute paths</strong> → Use project‑relative paths like <code>"$PROJECT_ROOT/data"</code> instead.<br>
+</li>
+<li><strong>Overwriting results</strong> → Require <code>--force</code> or new output filenames.<br>
+</li>
+<li><strong>No log</strong> → Write a minimal <code>run.log</code> with parameters and versions.</li>
 </ul>
-<hr>
+<div class="callout callout-style-default callout-warning callout-titled" title="Common Mistake">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Common Mistake
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Using <code>rm -rf "$SOME_VAR"</code> without checking that <code>"$SOME_VAR"</code> is <strong>non‑empty</strong> can delete the wrong folder. Always validate inputs first.</p>
+</div>
+</div>
 </section>
-<section id="connecting-to-the-hpc-using-ssh-in-vscode" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Connecting to the HPC using ssh in VSCode</h1>
-<p>To be able to connect to the HPC in a manner that will let you use the full suite of tools available (or most of them at least) in VSCode, you will need to install the Remote - SSH extension.</p>
+<section id="summary" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="summary"><span class="header-section-number">4</span> Summary</h2>
 <ul>
-<li>Open VSCode</li>
-<li>Go to the Extensions view by clicking on the Extensions icon in the Activity Bar on the side of the window or by pressing <code>Ctrl+Shift+X</code></li>
-<li>Search for “Remote - SSH” and install the extension by Microsoft (if youre unsure how install extensions, see <a href="https://code.visualstudio.com/docs/getstarted/extensions">here</a>)</li>
-<li>After installation, you will see a new icon in the Activity Bar on the side of the window. Click on it to open the Remote Explorer view.
-<ul>
-<li>If the SSH Targets are not visible, click on the drop down to expand the view</li>
-</ul></li>
-<li>Click on the <code>+</code> (“New Remote”) icon next to SSH header to add a new SSH host</li>
-<li>In the input box that appears, enter the SSH connection string for Vera: <code>&lt;your_chalmers_id&gt;@vera1.c3se.chalmers.se</code> (replace <code>&lt;your_chalmers_id&gt;</code> with your actual Chalmers ID)</li>
-<li>Press Enter to confirm</li>
-<li>You will be prompted to select the SSH configuration file to update. Choose the default option (usually <code>~/.ssh/config</code>)</li>
-</ul>
-<p>Once you have added the SSH host, you can connect to Vera:</p>
-<ul>
-<li>In the Remote Explorer view, find the Vera entry under SSH Targets (or by clicking on the blue “remote window” icon in the bottom left corner of VSCode)
-<ul>
-<li>Click on the “Connect to Host” icon (an arrow if you want the same window, square if you want a new one) next to the Vera entry</li>
-<li>If you clicked on the blue “remote window” icon, select “Remote-SSH: Connect to Host…” and then select the Vera entry</li>
-</ul></li>
-<li>A new VSCode window will open, and you will be prompted to enter your Chalmers ID password</li>
-<li>After entering your password, you should be connected to Vera, and you can start working on the HPC cluster directly from VSCode. Make sure that you open your home folder on Vera to open up a workspace.</li>
-<li>You can verify that you are connected to Vera by opening a new terminal in VSCode (Terminal &gt; New Terminal) and checking the hostname in the terminal prompt. It should show something like <code>your_chalmers_id@vera:~$</code></li>
+<li>Start <strong>safely</strong> (<code>set -euo pipefail</code>, quote variables).<br>
+</li>
+<li>Use <strong>project‑relative paths</strong> and <strong>don’t overwrite</strong> results.<br>
+</li>
+<li><strong>Log</strong> what you do; test on a small sample first.<br>
+</li>
+<li>Keep scripts <strong>simple, readable, and single‑purpose</strong>.</li>
 </ul>
 
 

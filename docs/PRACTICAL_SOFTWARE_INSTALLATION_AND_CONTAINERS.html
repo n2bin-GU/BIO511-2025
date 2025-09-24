@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Tor Kling, Stuti Jain">
-<meta name="dcterms.date" content="2025-09-19">
+<meta name="dcterms.date" content="2025-09-24">
 
 <title>Practical 5: Software Installation and Containers – BIO511 Genomics - Practical Repository</title>
 <style>
@@ -134,6 +134,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Command Line Programming</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-command-line-programming">    
+        <li class="dropdown-header">Intro to Command Line</li>
         <li>
     <a class="dropdown-item" href="./PRACTICAL_INTRO_TO_COMMAND_LINE.html">
  <span class="dropdown-text">Practical 1: CLI Basics</span></a>
@@ -153,6 +154,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="./PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html">
  <span class="dropdown-text">Practical 5: Software &amp; Containers</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li class="dropdown-header">Coding Best Practices</li>
+        <li>
+    <a class="dropdown-item" href="./PRACTICAL_GIT_SESSION1.html">
+ <span class="dropdown-text">Practical 1: Git Fundamentals: Session 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./PRACTICAL_GIT_SESSION2.html">
+ <span class="dropdown-text">Practical 2: Git Fundamentals: Session 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./PRACTICAL_BEST_CODING_PRACTISES.html">
+ <span class="dropdown-text">Practical 3: Best Coding Practices</span></a>
   </li>  
     </ul>
   </li>
@@ -181,7 +196,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html">Practical 5: Software &amp; Containers</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./PRACTICAL_INTRO_TO_COMMAND_LINE.html">Intro to Command Line</a></li><li class="breadcrumb-item"><a href="./PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html">Practical 5: Software &amp; Containers</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -193,36 +208,76 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Intro to Command Line</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./PRACTICAL_INTRO_TO_COMMAND_LINE.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Practical 1: CLI Basics</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./PRACTICAL_SETTING_UP_THE_HPC.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Practical 2: Setting up the HPC</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./PRACTICAL_WORKSPACE_MANAGEMENT.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Practical 3: Workspace Management and Data Management</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Practical 4: Scripting and Advanced Text Manipulation</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Practical 5: Software &amp; Containers</span></a>
   </div>
 </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Coding Best Practices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./PRACTICAL_GIT_SESSION1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 1: Git Fundamentals: Session 1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./PRACTICAL_GIT_SESSION2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 2: Git Fundamentals: Session 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./PRACTICAL_BEST_CODING_PRACTISES.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 3: Best Coding Practices</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -260,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./PRACTICAL_INTRO_TO_COMMAND_LINE.html">Intro to Command Line</a></li><li class="breadcrumb-item"><a href="./PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html">Practical 5: Software &amp; Containers</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Practical 5: Software Installation and Containers</h1>
 <p class="subtitle lead">BIO511 Genomics - Package managers, Conda locally, and Singularity on HPC</p>
@@ -280,7 +335,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 19, 2025</p>
+      <p class="date">September 24, 2025</p>
     </div>
   </div>
   

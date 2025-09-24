@@ -8,7 +8,7 @@
 
 <meta name="author" content="Stuti Jain, Tor Kling">
 
-<title>Practical 3 — Workspace &amp; Data Management – BIO511 Genomics - Practical Repository</title>
+<title>Git Session 2 — Conflicts, Tags, Remotes (HTTPS &amp; SSH), and Undo – BIO511 Genomics - Practical Repository</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -195,7 +195,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./PRACTICAL_INTRO_TO_COMMAND_LINE.html">Intro to Command Line</a></li><li class="breadcrumb-item"><a href="./PRACTICAL_WORKSPACE_MANAGEMENT.html">Practical 3: Workspace Management and Data Management</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./PRACTICAL_GIT_SESSION1.html">Coding Best Practices</a></li><li class="breadcrumb-item"><a href="./PRACTICAL_GIT_SESSION2.html">Practical 2: Git Fundamentals: Session 2</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -230,7 +230,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./PRACTICAL_WORKSPACE_MANAGEMENT.html" class="sidebar-item-text sidebar-link active">
+  <a href="./PRACTICAL_WORKSPACE_MANAGEMENT.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Practical 3: Workspace Management and Data Management</span></a>
   </div>
 </li>
@@ -265,7 +265,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./PRACTICAL_GIT_SESSION2.html" class="sidebar-item-text sidebar-link">
+  <a href="./PRACTICAL_GIT_SESSION2.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Practical 2: Git Fundamentals: Session 2</span></a>
   </div>
 </li>
@@ -288,29 +288,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
-  <li><a href="#workspace-setup" id="toc-workspace-setup" class="nav-link" data-scroll-target="#workspace-setup"><span class="header-section-number">2</span> Workspace Setup</a></li>
-  <li><a href="#symlinks-linking-shared-or-large-data" id="toc-symlinks-linking-shared-or-large-data" class="nav-link" data-scroll-target="#symlinks-linking-shared-or-large-data"><span class="header-section-number">3</span> Symlinks: linking shared or large data</a></li>
-  <li><a href="#finding-searching-files" id="toc-finding-searching-files" class="nav-link" data-scroll-target="#finding-searching-files"><span class="header-section-number">4</span> Finding &amp; Searching Files</a>
+  <li><a href="#what-you-need" id="toc-what-you-need" class="nav-link" data-scroll-target="#what-you-need"><span class="header-section-number">2</span> What You Need</a></li>
+  <li><a href="#main-concepts" id="toc-main-concepts" class="nav-link" data-scroll-target="#main-concepts"><span class="header-section-number">3</span> Main Concepts</a></li>
+  <li><a href="#merge-conflict" id="toc-merge-conflict" class="nav-link" data-scroll-target="#merge-conflict"><span class="header-section-number">4</span> Merge Conflict</a></li>
+  <li><a href="#tag-important-states" id="toc-tag-important-states" class="nav-link" data-scroll-target="#tag-important-states"><span class="header-section-number">5</span> Tag Important States</a></li>
+  <li><a href="#share-to-github-https-or-ssh" id="toc-share-to-github-https-or-ssh" class="nav-link" data-scroll-target="#share-to-github-https-or-ssh"><span class="header-section-number">6</span> Share to GitHub — HTTPS or SSH</a>
   <ul class="collapse">
-  <li><a href="#locate-by-nametypesize-with-find" id="toc-locate-by-nametypesize-with-find" class="nav-link" data-scroll-target="#locate-by-nametypesize-with-find"><span class="header-section-number">4.1</span> Locate by name/type/size with <code>find</code></a></li>
-  <li><a href="#peek-safely-with-head-tail-less" id="toc-peek-safely-with-head-tail-less" class="nav-link" data-scroll-target="#peek-safely-with-head-tail-less"><span class="header-section-number">4.2</span> Peek safely with <code>head</code>, <code>tail</code>, <code>less</code></a></li>
-  <li><a href="#search-inside-files-with-grep" id="toc-search-inside-files-with-grep" class="nav-link" data-scroll-target="#search-inside-files-with-grep"><span class="header-section-number">4.3</span> Search inside files with <code>grep</code></a></li>
-  <li><a href="#counts-and-quick-summaries-with-wc-sort-uniq" id="toc-counts-and-quick-summaries-with-wc-sort-uniq" class="nav-link" data-scroll-target="#counts-and-quick-summaries-with-wc-sort-uniq"><span class="header-section-number">4.4</span> Counts and quick summaries with <code>wc</code>, <code>sort</code>, <code>uniq</code></a></li>
+  <li><a href="#option-1-https" id="toc-option-1-https" class="nav-link" data-scroll-target="#option-1-https"><span class="header-section-number">6.1</span> Option 1 — HTTPS</a></li>
+  <li><a href="#option-2-ssh-bonus-section" id="toc-option-2-ssh-bonus-section" class="nav-link" data-scroll-target="#option-2-ssh-bonus-section"><span class="header-section-number">6.2</span> Option 2 — SSH (BONUS SECTION)</a></li>
   </ul></li>
-  <li><a href="#file-permissions-readwriteexecute" id="toc-file-permissions-readwriteexecute" class="nav-link" data-scroll-target="#file-permissions-readwriteexecute"><span class="header-section-number">5</span> File Permissions (read/write/execute)</a></li>
-  <li><a href="#local-vs-hpc" id="toc-local-vs-hpc" class="nav-link" data-scroll-target="#local-vs-hpc"><span class="header-section-number">6</span> Local vs HPC</a></li>
-  <li><a href="#guided-practice" id="toc-guided-practice" class="nav-link" data-scroll-target="#guided-practice"><span class="header-section-number">7</span> Guided Practice</a></li>
-  <li><a href="#self-check-mini-quiz" id="toc-self-check-mini-quiz" class="nav-link" data-scroll-target="#self-check-mini-quiz"><span class="header-section-number">8</span> Self-Check (mini-quiz)</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">9</span> Summary</a></li>
+  <li><a href="#undoing" id="toc-undoing" class="nav-link" data-scroll-target="#undoing"><span class="header-section-number">7</span> Undoing</a></li>
+  <li><a href="#collaboration-etiquette" id="toc-collaboration-etiquette" class="nav-link" data-scroll-target="#collaboration-etiquette"><span class="header-section-number">8</span> Collaboration Etiquette</a></li>
+  <li><a href="#guided-practice" id="toc-guided-practice" class="nav-link" data-scroll-target="#guided-practice"><span class="header-section-number">9</span> Guided Practice</a></li>
+  <li><a href="#troubleshooting-faq" id="toc-troubleshooting-faq" class="nav-link" data-scroll-target="#troubleshooting-faq"><span class="header-section-number">10</span> Troubleshooting &amp; FAQ</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">11</span> Summary</a></li>
+  <li><a href="#cheat-sheet" id="toc-cheat-sheet" class="nav-link" data-scroll-target="#cheat-sheet"><span class="header-section-number">12</span> Cheat Sheet</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./PRACTICAL_INTRO_TO_COMMAND_LINE.html">Intro to Command Line</a></li><li class="breadcrumb-item"><a href="./PRACTICAL_WORKSPACE_MANAGEMENT.html">Practical 3: Workspace Management and Data Management</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./PRACTICAL_GIT_SESSION1.html">Coding Best Practices</a></li><li class="breadcrumb-item"><a href="./PRACTICAL_GIT_SESSION2.html">Practical 2: Git Fundamentals: Session 2</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Practical 3 — Workspace &amp; Data Management</h1>
+<h1 class="title">Git Session 2 — Conflicts, Tags, Remotes (HTTPS &amp; SSH), and Undo</h1>
 </div>
 
 
@@ -333,26 +334,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="introduction" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
-<p>The goal of this practical is to build <strong>good workspace habits</strong> on the command line so your projects are <strong>organized, reproducible, and HPC-friendly</strong>. You’ll practice:</p>
+<section id="introduction" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
+<p>This second session teaches <strong>practical collaboration</strong> with Git, step by step:</p>
 <ul>
-<li>Project layouts that keep data, scripts, and results separate<br>
-</li>
-<li>Using <strong>symlinks</strong> to reference large/shared data (don’t duplicate!)<br>
-</li>
-<li>Finding/searching files efficiently<br>
-</li>
-<li>Combining commands with <strong>pipes</strong> and <strong>redirection</strong><br>
-</li>
-<li>Managing basic <strong>file permissions</strong><br>
-</li>
-<li>Understanding how these habits translate to the <strong>HPC filesystem</strong></li>
+<li>Resolve a <strong>merge conflict</strong> safely</li>
+<li>Mark important states with <strong>annotated tags</strong></li>
+<li>Share your work to GitHub via <strong>HTTPS</strong> or <strong>SSH keys</strong></li>
+<li>Use <strong>gentle undo</strong> to fix small mistakes without panic</li>
 </ul>
-<blockquote class="blockquote">
-<p><strong>Important</strong><br>
-We <strong>reuse the dataset you created in Practical 1</strong> — the FASTA, gene annotations, and expression data files. Here, we will reorganize them into a structured project layout. If some of them still have different names (such as an E_coli prefix), please rename them back to the original filenames for consistency with this practical.</p>
-</blockquote>
+<p>You should already have the <code>~/projects/git-lab</code> repository from Session 1.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Learning Outcomes">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning Outcomes
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>By the end, you can: 1) Create and resolve a merge conflict by editing conflict markers<br>
+2) Create and push <strong>annotated tags</strong> (<code>v0.1</code>, <code>v0.2</code>)<br>
+3) Push your branch to GitHub via <strong>HTTPS</strong>, or set up <strong>SSH keys</strong> and push via SSH<br>
+4) Use <code>git restore</code> and <code>git restore --staged</code> to undo safely</p>
+</div>
+</div>
+</section>
+<section id="what-you-need" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="what-you-need"><span class="header-section-number">2</span> What You Need</h2>
+<ul>
+<li>Git installed (<code>git --version</code>)<br>
+</li>
+<li>A GitHub account (free)<br>
+</li>
+<li>Your <code>git-lab</code> repo from Session 1 (or let the commands below scaffold it)</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If needed, create/enter the repo now</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/projects/git-lab <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> ~/projects/git-lab</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"Your Name"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"you@example.com"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> config</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-e</span> <span class="st">"project: git-lab\nthreads: 4\ngenome_id: ST398"</span> <span class="op">&gt;</span> config/config.yml</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add config/config.yml</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Start project with config"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="main-concepts" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="main-concepts"><span class="header-section-number">3</span> Main Concepts</h2>
+<ul>
+<li><strong>Remote:</strong> a copy of your repository hosted elsewhere (e.g., GitHub). The default name is <code>origin</code>.</li>
+<li><strong>Tracking branch:</strong> a local branch that remembers which remote branch it tracks (set with <code>git push -u origin main</code>).</li>
+<li><strong>Merge vs fast‑forward:</strong> a merge creates a new commit that combines two histories; a fast‑forward just moves a pointer.</li>
+<li><strong>Conflict markers:</strong> lines Git writes inside a file to show both sides of a conflicting change — you edit the file to the final content and remove the markers.</li>
+<li><strong>Annotated tag:</strong> a named label on a commit with a message and metadata, perfect for submissions/releases.</li>
+</ul>
 <div class="callout callout-style-default callout-note callout-titled" title="Did You Know?">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -363,31 +399,59 @@ Did You Know?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Most bioinformatics tools are tiny <strong>LEGO bricks</strong> on the CLI. You connect bricks with <strong>pipes</strong> <code>|</code> to build powerful, reproducible analyses.</p>
+<p><code>git pull</code> ≈ <code>git fetch</code> + <code>git merge</code>. Prefer <code>git fetch</code> first when learning, so you can inspect before merging.</p>
 </div>
 </div>
-<hr>
 </section>
-<section id="workspace-setup" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Workspace Setup</h1>
-<p>In Practical 1 you created a folder called <strong>CLI_intro/</strong> and placed some mock files there (FASTA sequences, annotations, expression data).<br>
-Now we will <strong>expand this folder into a proper project structure</strong> so that it’s easier to keep track of data, scripts, and results.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/CLI_intro</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a reproducible project layout</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> data refs results scripts logs</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Move the files you created in Practical 1 into the right places</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> sequences.fasta refs/</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> gene_annotations.csv data/</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> expression_data.csv data/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Your folder tree should now look like:</p>
-<pre><code>CLI_intro/
-├── data/         # CSV annotation + expression data
-├── refs/         # FASTA sequences
-├── results/      # outputs you generate
-├── scripts/      # scripts (used later)
-└── logs/         # logs from runs</code></pre>
+<section id="merge-conflict" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="merge-conflict"><span class="header-section-number">4</span> Merge Conflict</h2>
+<p>We’ll create a tiny conflict on <strong>one line</strong>, fix it, and finish the merge.</p>
+<p><strong>1) Change on <code>main</code></strong></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch <span class="at">-c</span> main <span class="dv">2</span><span class="op">&gt;</span>/dev/null <span class="kw">||</span> <span class="fu">git</span> switch main</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"genome_id: ST400"</span> <span class="op">&gt;</span> config/config.yml</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add config/config.yml</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Set genome_id to ST400 on main"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>2) Different change on a new branch</strong></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch <span class="at">-c</span> feature/alt-genome</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"genome_id: ST401"</span> <span class="op">&gt;</span> config/config.yml</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add config/config.yml</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Set genome_id to ST401 on feature branch"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>3) Merge back into <code>main</code> (conflict expected)</strong></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch main</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge feature/alt-genome</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Open <code>config/config.yml</code> — you’ll see markers like:</p>
+<pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+genome_id: ST400
+=======
+genome_id: ST401
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/alt-genome</code></pre>
+<p><strong>4) Fix the file</strong><br>
+Decide the final line (e.g., keep <code>genome_id: ST401</code>). <strong>Delete the three marker lines</strong> (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>). Save.</p>
+<p><strong>5) Tell Git you fixed it and complete the merge</strong></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add config/config.yml</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit   <span class="co"># completes the merge</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Checkpoint</strong></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span> <span class="at">--decorate</span> <span class="at">--graph</span> <span class="at">-n</span> 5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Common Mistake">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Common Mistake
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Leaving conflict markers in the file (the <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> <code>=======</code> <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> lines) will confuse you later. <strong>Remove them all</strong> before committing.</p>
+</div>
+</div>
+</section>
+<section id="tag-important-states" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="tag-important-states"><span class="header-section-number">5</span> Tag Important States</h2>
+<p>Think of a <strong>tag</strong> as a sticky note on a specific snapshot.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> tag <span class="at">-a</span> v0.1 <span class="at">-m</span> <span class="st">"First tagged version after conflict resolution"</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> tag          <span class="co"># should list v0.1</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> show v0.1    <span class="co"># see what it points to</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Best Practice">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -398,325 +462,152 @@ Best Practice
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Keep <strong>raw data</strong> read-only and <strong>never</strong> write outputs into <code>data/</code>. Use <code>results/</code> for generated files and <code>logs/</code> for run logs.</p>
-</div>
-</div>
-<hr>
-</section>
-<section id="symlinks-linking-shared-or-large-data" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Symlinks: linking shared or large data</h1>
-<p>A <strong>symbolic link (symlink)</strong> points to a file by <strong>path</strong> (like a shortcut). This avoids unnecessary copies and keeps one <strong>source of truth</strong>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: link a shared reference into your existing refs/ folder</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (If your course provides a shared path on HPC, you'll link that path here.)</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/CLI_intro</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Link target --&gt; link name (re-using existing refs/ made above)</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /proj/course/shared_refs/genome.fa refs/genome.fa   <span class="co"># example path</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> refs            <span class="co"># look for the arrow "genome.fa -&gt; /proj/..."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout callout-style-default callout-note callout-titled" title="When to use symlinks">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-When to use symlinks
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>Large or shared files (reference genomes, annotation bundles)<br>
-</li>
-<li>Data living in shared HPC locations (<code>/proj/...</code>)<br>
-</li>
-<li>Multiple projects needing the <strong>same</strong> resource</li>
-</ul>
-</div>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled" title="Common Mistake">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Common Mistake
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Don’t create <strong>another</strong> <code>refs/</code> folder somewhere else. Reuse the <strong>existing</strong> <code>CLI_intro/refs/</code> to keep your project tidy.</p>
-</div>
-</div>
-<hr>
-</section>
-<section id="finding-searching-files" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Finding &amp; Searching Files</h1>
-<section id="locate-by-nametypesize-with-find" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="locate-by-nametypesize-with-find"><span class="header-section-number">4.1</span> Locate by name/type/size with <code>find</code></h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/CLI_intro</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> . <span class="at">-name</span> <span class="st">"*.tsv"</span>           <span class="co"># all TSV files</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> data <span class="at">-type</span> f <span class="at">-size</span> +1M    <span class="co"># files &gt; 1 MB in data/</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> . <span class="at">-maxdepth</span> 2 <span class="at">-type</span> d     <span class="co"># directories up to depth 2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="peek-safely-with-head-tail-less" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="peek-safely-with-head-tail-less"><span class="header-section-number">4.2</span> Peek safely with <code>head</code>, <code>tail</code>, <code>less</code></h2>
-<p>We assume <strong><code>data/metadata.tsv</code></strong> exists, but otherwise create it.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show a small slice so it's visibly different from the full file:</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># If you need to create the metadata.tsv file: </span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> data/metadata.tsv <span class="op">&lt;&lt; 'EOF'</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="st">Sample_ID    Country Tissue</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="st">S1   SE   gut</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="st">S2   SE   gut</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="st">S3   NO   skin</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="st">S4   DK   gut</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="st">S5   SE   skin</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> 2 data/metadata.tsv</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-n</span> 2 data/metadata.tsv</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">less</span> data/metadata.tsv   <span class="co"># press 'q' to quit</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout callout-style-default callout-note callout-titled" title="Defaults">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Defaults
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>By default, <code>head</code> and <code>tail</code> each print <strong>10 lines</strong> if you don’t specify <code>-n</code>.</p>
+<p>Use <strong>annotated</strong> tags (<code>-a</code>) with a short message to mark submissions, milestones, or results you cite.</p>
 </div>
 </div>
 </section>
-<section id="search-inside-files-with-grep" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="search-inside-files-with-grep"><span class="header-section-number">4.3</span> Search inside files with <code>grep</code></h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Case-insensitive search for the word "case" in metadata</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-i</span> <span class="st">"case"</span> data/metadata.tsv</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of FASTA headers (if you have a FASTA in refs/)</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"^&gt;"</span> refs/sequences.fasta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout callout-style-default callout-warning callout-titled" title="Common Mistake">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Common Mistake
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>If the command says “No such file or directory”, ensure you’re in <code>~/CLI_intro</code> and the file really exists <strong>there</strong>. Use <code>pwd</code> and <code>ls</code> to verify.</p>
-</div>
-</div>
-</section>
-<section id="counts-and-quick-summaries-with-wc-sort-uniq" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="counts-and-quick-summaries-with-wc-sort-uniq"><span class="header-section-number">4.4</span> Counts and quick summaries with <code>wc</code>, <code>sort</code>, <code>uniq</code></h2>
-<blockquote class="blockquote">
-<p>Correct mental model:<br>
-<code>sort</code> <strong>orders</strong> lines (alphabetically/numerically). <code>uniq</code> only removes <strong>adjacent</strong> duplicates — so you almost always <strong>sort first</strong> before <code>uniq</code>.</p>
-</blockquote>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How many rows (lines) are in the metadata?</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> data/metadata.tsv</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP-BY-STEP (encouraged so you see each stage):</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cut</span> <span class="at">-f2</span> data/metadata.tsv              <span class="co"># column 2 (e.g., country) from a TAB-separated file</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cut</span> <span class="at">-f2</span> data/metadata.tsv <span class="kw">|</span> <span class="fu">sort</span>       <span class="co"># order values to cluster identical ones</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cut</span> <span class="at">-f2</span> data/metadata.tsv <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span>   <span class="co"># collapse adjacent duplicates and count</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Now that you’ve seen each stage, try the <strong>pipeline</strong> form that saves the result:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cut</span> <span class="at">-f2</span> data/metadata.tsv <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-nr</span> <span class="op">&gt;</span> results/country_counts.txt</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> results/country_counts.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout callout-style-default callout-note callout-titled" title="Delimiter tip">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Delimiter tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><code>cut</code> defaults to <strong>tab</strong>. If your file is CSV, add <code>-d,</code> (comma) and adjust field numbers accordingly.</p>
-</div>
-</div>
-<hr>
-</section>
-</section>
-<section id="file-permissions-readwriteexecute" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> File Permissions (read/write/execute)</h1>
-<p>Inspect permissions:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> data/metadata.tsv</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># -rw-r--r--  means: owner can read/write; group &amp; others can read</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Common patterns:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a text file broadly readable</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 644 results/country_counts.txt   <span class="co"># u=rw, g=r, o=r</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Protect raw data (read-only for everyone)</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 444 data/<span class="pp">*</span>.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Quick troubleshooting">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Quick troubleshooting
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>“Permission denied”? Check the directory’s permissions: <code>ls -ld .</code><br>
-</li>
-<li>Need to make a <strong>tool</strong> executable? (Used in later scripting practical.)
-<ul>
-<li>You’ll use <code>chmod +x script.sh</code> <strong>after</strong> you create scripts in Practical 4.</li>
-</ul></li>
-</ul>
-</div>
-</div>
-<hr>
-</section>
-<section id="local-vs-hpc" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Local vs HPC</h1>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Feature</th>
-<th>Laptop/Desktop</th>
-<th>HPC Cluster</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Access</td>
-<td>GUI + Terminal</td>
-<td>SSH (terminal)</td>
-</tr>
-<tr class="even">
-<td>Storage</td>
-<td>Local disk</td>
-<td><code>/home/&lt;user&gt;</code> (small), <code>/proj/&lt;project&gt;</code> (shared), <code>/scratch</code> (temporary, fast)</td>
-</tr>
-<tr class="odd">
-<td>Compute</td>
-<td>1–8 cores</td>
-<td>Many nodes/cores via a batch scheduler</td>
-</tr>
-<tr class="even">
-<td>Data</td>
-<td>Small/local</td>
-<td>Large/shared — link into your project via <strong>symlinks</strong></td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-note callout-titled" title="Guideline on HPC paths">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Guideline on HPC paths
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>Keep large references and reads in <code>/proj/&lt;project&gt;</code><br>
-</li>
-<li><strong>Symlink</strong> them into <code>~/CLI_intro/refs/</code><br>
-</li>
-<li>Use <code>/scratch</code> for temporary I/O during jobs and clean up after</li>
-</ul>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled" title="Bonus (advanced / optional)">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Bonus (advanced / optional)
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Transferring between local and HPC:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy a single file</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> data/metadata.tsv your_cid@vera1.c3se.chalmers.se:/home/your_cid/CLI_intro/data/</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sync a directory (only changes)</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avh</span> results/ your_cid@vera1.c3se.chalmers.se:/proj/course/results/</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify integrity on both sides (compare hashes)</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">md5sum</span> data/metadata.tsv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This will be covered more deeply when we work <strong>in-depth</strong> with the HPC.</p>
-</div>
-</div>
-<hr>
-</section>
-<section id="guided-practice" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Guided Practice</h1>
+<section id="share-to-github-https-or-ssh" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="share-to-github-https-or-ssh"><span class="header-section-number">6</span> Share to GitHub — HTTPS or SSH</h2>
+<section id="option-1-https" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="option-1-https"><span class="header-section-number">6.1</span> Option 1 — HTTPS</h3>
 <ol type="1">
-<li><strong>Confirm workspace &amp; data are in the right place</strong></li>
+<li>Create an <strong>empty</strong> GitHub repo named <code>git-lab</code> (do <strong>not</strong> add a README).<br>
+</li>
+<li>Connect your local repo (replace <code>YOURUSER</code>):</li>
 </ol>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/CLI_intro</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-1</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-1</span> data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ol start="2" type="1">
-<li><strong>Link a shared reference</strong> (if provided by the course/HPC)</li>
-</ol>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjust the /proj path to the correct course/project location</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /proj/course/shared_refs/genome.fa refs/genome.fa</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> refs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add origin https://github.com/YOURUSER/git-lab.git</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote <span class="at">-v</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="3" type="1">
-<li><strong>Answer a question with a pipeline</strong></li>
+<li>Push <code>main</code> and set tracking (you’ll sign in or use a token the first time):</li>
 </ol>
-<blockquote class="blockquote">
-<p>Q: <em>How many samples per country are in <code>data/metadata.tsv</code>?</em></p>
-</blockquote>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cut</span> <span class="at">-f2</span> data/metadata.tsv <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-nr</span> <span class="op">&gt;</span> results/country_counts.txt</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> results/country_counts.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="4" type="1">
-<li><strong>Permissions in context</strong></li>
+<li>Push your tag(s):</li>
 </ol>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make results readable by all (typical for text reports)</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 644 results/country_counts.txt</span>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">--tags</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Common Mistake">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Common Mistake
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you accidentally created the GitHub repo <strong>with</strong> a README, run <code>git pull</code> once before your first push.</p>
+</div>
+</div>
+</section>
+<section id="option-2-ssh-bonus-section" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="option-2-ssh-bonus-section"><span class="header-section-number">6.2</span> Option 2 — SSH (BONUS SECTION)</h3>
+<p>This is a <strong>one‑time setup</strong> per machine. Use it if you prefer entering a passphrase once and pushing without tokens.</p>
+<p><strong>Step 1 — Do you already have a key?</strong></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-al</span> ~/.ssh</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># If you see id_ed25519 and id_ed25519.pub, you likely already have a key.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Step 2 — Create a key (if needed)</strong></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-t</span> ed25519 <span class="at">-C</span> <span class="st">"you@example.com"</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Press Enter to accept the default location (~/.ssh/id_ed25519)</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Choose a passphrase (recommended) or press Enter for none</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Step 3 — Add the key to your ssh-agent</strong></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Start the agent (if not running) and add your key</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span> <span class="st">"</span><span class="va">$(</span><span class="fu">ssh-agent</span> <span class="at">-s</span><span class="va">)</span><span class="st">"</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-add</span> ~/.ssh/id_ed25519</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Step 4 — Copy your PUBLIC key and add it on GitHub</strong></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># macOS: copy to clipboard</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pbcopy</span> <span class="op">&lt;</span> ~/.ssh/id_ed25519.pub</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># If you have raw data files, make them read-only to avoid accidents</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 444 data/<span class="pp">*</span>.csv   <span class="co"># (skip if none exist)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<hr>
-</section>
-<section id="self-check-mini-quiz" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Self-Check (mini-quiz)</h1>
-<ol type="1">
-<li>In one sentence, why are <strong>symlinks</strong> preferred for references on HPC?<br>
-</li>
-<li>What’s the difference between <code>&gt;</code> and <code>&gt;&gt;</code>? Between <code>&gt;</code> and <code>|</code>?<br>
-</li>
-<li>Write a one-liner to count unique values in <strong>column 2</strong> of <code>data/metadata.tsv</code>.<br>
-</li>
-<li>Explain why <code>sort</code> usually comes <strong>before</strong> <code>uniq</code>.<br>
-</li>
-<li>Where should <strong>raw data</strong> live? Where should <strong>generated results</strong> be written?</li>
-</ol>
-<hr>
-</section>
-<section id="summary" class="level1" data-number="9">
-<h1 data-number="9"><span class="header-section-number">9</span> Summary</h1>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># If pbcopy isn't available, print and copy manually:</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> ~/.ssh/id_ed25519.pub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>On GitHub: <strong>Settings → SSH and GPG keys → New SSH key</strong> → paste → Save.</p>
+<p><strong>Step 5 — Test your SSH connection</strong></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-T</span> git@github.com</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Expect a greeting like: "Hi &lt;username&gt;! You've successfully authenticated..."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Step 6 — Switch your remote from HTTPS to SSH and push</strong></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote set-url origin git@github.com:YOURUSER/git-lab.git</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote <span class="at">-v</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">--tags</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Common Mistakes">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Common Mistakes
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
-<li>Expand your <strong>CLI_intro/</strong> workspace from Practical 1 into a reproducible project structure.<br>
+<li>Don’t paste your <strong>private</strong> key; paste the <code>.pub</code> file only.<br>
 </li>
-<li>Use <strong>symlinks</strong> to avoid copying large/shared data; keep one source of truth.<br>
+<li>“Repository not found”? Check the username/repo and that it exists.<br>
 </li>
-<li>Build insight with <strong>small steps</strong> (<code>cut</code> → <code>sort</code> → <code>uniq</code>) and then combine with <strong>pipes</strong>.<br>
-</li>
-<li>Use <strong>redirection</strong> to save outputs in <code>results/</code>, not over your inputs.<br>
-</li>
-<li>Manage <strong>permissions</strong> to protect raw data and share read access to results.<br>
-</li>
-<li>These habits <strong>transfer directly</strong> to the HPC filesystem.</li>
+<li>Locked‑down networks may block SSH — switch back to HTTPS if needed: <code>git remote set-url origin https://github.com/YOURUSER/git-lab.git</code></li>
 </ul>
+</div>
+</div>
+</section>
+</section>
+<section id="undoing" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="undoing"><span class="header-section-number">7</span> Undoing</h2>
+<ul>
+<li><strong>Unstage</strong> a file (keep changes):<br>
+<code>git restore --staged &lt;file&gt;</code><br>
+</li>
+<li><strong>Discard</strong> local edits in a file (careful):<br>
+<code>git restore &lt;file&gt;</code></li>
+</ul>
+</section>
+<section id="collaboration-etiquette" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="collaboration-etiquette"><span class="header-section-number">8</span> Collaboration Etiquette</h2>
+<ul>
+<li>Keep branches <strong>short‑lived</strong> and focused.<br>
+</li>
+<li>Write <strong>imperative</strong> commit subjects (e.g., “Add README note”).<br>
+</li>
+<li>Push early; open a short <strong>Pull Request</strong> describing the change in one sentence.<br>
+</li>
+<li>Tag milestones and note them in your README.</li>
+</ul>
+</section>
+<section id="guided-practice" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="guided-practice"><span class="header-section-number">9</span> Guided Practice</h2>
+<ol type="1">
+<li><strong>Conflict practice</strong> — Make a new branch <code>feature/readme-title</code>, edit the <strong>same line</strong> in <code>README.md</code> on <code>main</code> and the branch, merge, resolve markers, commit.<br>
+</li>
+<li><strong>Tag &amp; explain</strong> — Create <code>v0.2</code> on your current <code>main</code>. Run <code>git show v0.2</code> and add a one‑line note to <code>README.md</code> about what <code>v0.2</code> represents. Commit.<br>
+</li>
+<li><strong>Remote sync</strong> — Push <code>main</code>, push <code>v0.2</code>. If you used HTTPS, try switching to SSH and push again.<br>
+</li>
+<li><strong>Undo drill</strong> — Stage a file by mistake, then unstage it with <code>git restore --staged &lt;file&gt;</code>. Make a test edit and discard it with <code>git restore &lt;file&gt;</code>.</li>
+</ol>
+</section>
+<section id="troubleshooting-faq" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="troubleshooting-faq"><span class="header-section-number">10</span> Troubleshooting &amp; FAQ</h2>
+<ul>
+<li><strong>“Permission denied (publickey)”</strong> → Add your public key to GitHub and test with <code>ssh -T git@github.com</code>.<br>
+</li>
+<li><strong>“Repository not found”</strong> → Check the remote URL and your permissions; ensure the repo exists.<br>
+</li>
+<li><strong>“Updates were rejected”</strong> → The remote has work you don’t. Run <code>git fetch</code>, inspect with <code>git log --oneline --decorate --graph --all</code>, then <code>git merge</code> or <code>git pull</code>.<br>
+</li>
+<li><strong>Accidentally tagged the wrong commit</strong> → Delete the local tag with <code>git tag -d v0.1</code>, delete it on the remote with <code>git push --delete origin v0.1</code>, re‑create on the correct commit, push tags again.</li>
+</ul>
+</section>
+<section id="summary" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="summary"><span class="header-section-number">11</span> Summary</h2>
+<p>Today you practiced real collaboration moves: - Resolved a <strong>merge conflict</strong> - Created and pushed <strong>annotated tags</strong> - Shared your repo to GitHub via <strong>HTTPS</strong> or <strong>SSH</strong> - Used <strong>undoing</strong> to safely back out of small mistakes</p>
+<p>You’re now ready to participate in simple team workflows and submit reproducible snapshots of your work.</p>
+</section>
+<section id="cheat-sheet" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="cheat-sheet"><span class="header-section-number">12</span> Cheat Sheet</h2>
+<pre class="text"><code>Conflict:   git switch main → git merge &lt;branch&gt; → edit file → git add → git commit
+Tags:       git tag -a &lt;name&gt; -m "msg"  |  git show &lt;name&gt;  |  git push --tags
+HTTPS:      git remote add origin https://github.com/USER/REPO.git  |  git push -u origin main
+SSH setup:  ssh-keygen -t ed25519 -C "you@ex"; pbcopy &lt; ~/.ssh/id_ed25519.pub; add key on GitHub
+SSH push:   git remote set-url origin git@github.com:USER/REPO.git  |  git push -u origin main
+Undo:       git restore --staged &lt;file&gt;   |   git restore &lt;file&gt;</code></pre>
 
 
 </section>
