@@ -1,0 +1,279 @@
+---
+title: "Git Fundamentals: Session 1"
+author: "Stuti Jain, Tor Kling"
+format:
+  html:
+    theme: cosmo
+number-sections: true
+toc: true
+---
+
+## Introduction
+
+In this first session, you will learn the Git workflow: initialize a repository, make clean commits, inspect history, ignore generated files, and do a simple branch-and-merge. 
+
+**Why this matters for bioinformatics**
+- Reproducibility: record *exactly* what changed and when.
+- Safety: experiment on branches without breaking your main work.
+- Collaboration: a clear, searchable history others can follow.
+
+::: {.callout-tip title="Learning Outcomes"}
+By the end of this session, you can:
+1) Initialize a repo and configure your identity
+2) Stage and commit with clear, focused messages
+3) Inspect unstaged vs staged changes and view history
+4) Use `.gitignore` to keep clutter out of Git
+5) Create a short-lived feature branch, merge it, and clean up
+:::
+
+## Main Concepts 
+
+- **Repository (repo):** a project folder that Git watches (contains a hidden `.git/` directory).
+- **Working tree:** your actual files on disk.
+- **Staging area (index):** a waiting room where you queue the exact changes for your next snapshot.
+- **Commit:** a permanent snapshot with a message (what/why).
+- **Branch:** a label that moves forward as you commit, representing a line of work (e.g., `main`, `feature/x`).
+- **`.gitignore`:** patterns telling Git which files/folders not to track (e.g., `results/`).
+
+::: {.callout-note title="Did You Know?"}
+You can set the default branch name to `main` globally:
+```bash
+git config --global init.defaultBranch main
+```
+:::
+
+## Before You Begin
+
+**Confirm Git & shell**
+```bash
+git --version
+which git
+```
+You should see a version like `git version 2.x` and a path.
+
+**Set your identity (appears in commit history)**
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+# Beginner-friendly editor for commit messages
+git config --global core.editor "nano -w"
+# Verify
+git config --list --show-origin
+```
+
+**Terminal refresher**
+```bash
+pwd        # print working directory
+ls -la     # list files (detailed)
+cd <dir>   # change directory
+mkdir <d>  # make directory
+nano <f>   # edit file (CTRL+O save, Enter, CTRL+X exit)
+```
+
+::: {.callout-warning title="Common Mistake"}
+Working in a path with spaces can cause quoting issues (e.g., `My Documents`). Prefer `~/projects/git-lab`.
+:::
+
+## Step-by-Step Practical
+
+> We’ll create a small, clean project called **git-lab** and practice the local Git cycle repeatedly.
+
+### Create a Repository 
+
+```bash
+mkdir -p ~/projects/git-lab && cd ~/projects/git-lab
+git init
+```
+**Expected output:** a line like `Initialized empty Git repository in .../.git/`
+
+```bash
+git status
+```
+**Expected:** "No commits yet" and nothing staged.
+
+::: {.callout-tip title="Best Practice"}
+Run `git status` often. It tells you exactly what Git sees at every step.
+:::
+
+### Add Initial Files 
+
+Create a README, a small config, and the folder layout:
+```bash
+cat > README.md << 'EOF'
+# Git Lab
+This mini project demonstrates local Git basics.
+
+## Quickstart
+See below for commands and checkpoints.
+EOF
+
+mkdir -p config scripts results data
+
+cat > config/config.yml << 'EOF'
+project: git-lab
+threads: 2
+genome_id: ST398
+EOF
+```
+
+**Self-check**
+```bash
+ls -la
+# Expect: README.md, config/, scripts/, results/, data/
+cat config/config.yml
+```
+
+### Stage and First Commit
+
+```bash
+git add README.md config/config.yml
+git status          # these files should appear under "Changes to be committed"
+
+git commit -m "Add README and base config"
+```
+
+**Verify history**
+```bash
+git log --oneline -n 1
+# Expect: one commit with your message
+```
+
+::: {.callout-warning title="Common Mistake"}
+Seeing *"nothing to commit"*? You probably forgot `git add`. Stage your changes first, then commit.
+:::
+
+### `.gitignore` to Keep the Repo Clean
+
+```bash
+cat > .gitignore << 'EOF'
+results/
+*.tmp
+.DS_Store
+*.swp
+EOF
+
+git add .gitignore
+git commit -m "Add .gitignore for results and temp files"
+```
+
+**Prove it works**
+```bash
+mkdir -p results && echo "tmp" > results/test.tmp
+git status   # results/ and *.tmp should NOT show up
+```
+
+::: {.callout-note title="Did You Know?"}
+If a file was tracked **before** you added it to `.gitignore`, Git keeps tracking it. Use `git rm --cached <file>` once to stop tracking.
+:::
+
+### Inspecting Changes — Unstaged vs Staged
+
+Make and review edits:
+```bash
+# Edit values (macOS and Linux differ; we try both variants)
+sed -i '' 's/threads: 2/threads: 4/' config/config.yml 2>/dev/null || sed -i 's/threads: 2/threads: 4/' config/config.yml
+
+git status       # shows modified but unstaged
+git diff         # shows the exact diff
+
+git add config/config.yml
+git diff --staged  # shows what will be committed
+
+git commit -m "Increase threads to 4"
+```
+
+**Good commit messages** (rule of thumb)
+- Subject ≤ 50 chars, **imperative**: "Increase threads to 4"
+- Body (optional): wrap at 72 chars; explain **why**
+
+::: {.callout-tip title="Best Practice"}
+Use `git add -p` to stage only the meaningful hunks when a file has multiple changes.
+:::
+
+### Branching Basics & No-Conflict Merge
+
+Create a branch, make a small change, merge to `main`, then delete the branch:
+```bash
+git switch -c feature/readme-usage
+
+echo "
+## Usage
+./scripts/qc.sh ST398 4 > results/qc.log" >> README.md
+
+git add README.md
+git commit -m "Document basic usage with example command"
+
+git switch main
+git merge feature/readme-usage
+
+git branch -d feature/readme-usage
+```
+
+**Verify**
+```bash
+git log --oneline --decorate --graph --all | head -n 10
+```
+You should see a merge into `main` and the feature branch deleted locally.
+
+::: {.callout-warning title="Common Mistake"}
+Merging fails if you have **uncommitted** work. Commit or stash changes first; then merge.
+:::
+
+## Guided Practice (You Do It)
+
+Complete these tasks in your `git-lab` repo. Use the **self-checks** and commands shown earlier.
+
+1) **Parameter tweak**  
+   Edit `config/config.yml` to add `memory_gb: 8`. Stage and commit with a clear message.
+
+2) **Second feature branch**  
+   Create `feature/genome-note`, append `notes: update genome soon` to `config/config.yml`, commit, merge into `main`, and delete the branch.
+
+3) **Prove .gitignore works**  
+   Create `results/run1.log` and `scratch.tmp`. Show that `git status` ignores them.
+
+4) **Inspect history**  
+   Run `git log --oneline --decorate --graph -n 5` and briefly explain (in your own words) what the last 3 commits did.
+
+::: {.callout-tip title="Best Practice"}
+Keep branches **short-lived** and focused on one small change. Merge when done; delete the branch to avoid clutter.
+:::
+
+## Self-Check Quiz (Quick)
+
+1) What’s the difference between **unstaged** and **staged** changes?  
+2) What does `.gitignore` do? What *doesn’t* it do?  
+3) Why write commit messages in **imperative mood** ("Add", "Fix")?  
+4) What command shows staged changes only?  
+5) How do you create and switch to a new branch in **one** command?
+
+*(Answers: 1) Unstaged are edits on disk; staged are queued for the next commit. 2) Prevents new files matching patterns from being tracked; doesn’t untrack files already committed. 3) Reads as commands to the codebase—clear history. 4) `git diff --staged`. 5) `git switch -c <name>`.)*
+
+## Troubleshooting & Recovery
+
+- **"fatal: not a git repository"** → Run `pwd` and ensure you’re in `~/projects/git-lab`. Use `cd` to enter the repo folder.
+- **`sed -i` complains** → Open the file with `nano config/config.yml`, edit manually, save.
+- **Accidentally staged the wrong file** → `git restore --staged <file>` (does not change file content).
+- **Want to start over** → Move away from the folder (or delete it) and repeat from step 1. To un-Git a folder, remove the hidden `.git/` directory.
+
+::: {.callout-note title="Did You Know?"}
+`git show <commit>` reveals the patch and metadata for a single commit. Great for code review and learning from changes.
+:::
+
+## Summary
+
+You created a clean repository, practiced the local cycle (status → diff → add → commit → log), used `.gitignore` to keep noise out, and completed a simple branch-and-merge. These habits set the foundation for Session 2 (conflicts, tags, remotes, and recovery).
+
+## Cheat Sheet
+
+```text
+Initialize:  git init
+Identity:    git config --global user.name "Name"; git config --global user.email "you@ex"
+Status:      git status
+Stage:       git add <file>
+Commit:      git commit -m "Message"
+Diff:        git diff        (unstaged)   |   git diff --staged
+Log:         git log --oneline --decorate --graph
+Ignore:      echo pattern >> .gitignore; git add .gitignore; git commit -m "Add .gitignore"
+Branch:      git switch -c <name>; git switch main; git merge <name>; git branch -d <name>
+```

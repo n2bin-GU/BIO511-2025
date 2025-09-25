@@ -125,51 +125,51 @@
     "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html",
     "title": "Practical 1: Introduction to Command Line Interface",
     "section": "",
-    "text": "Doing bioinformatics often necessitates the handling of very large files, with complex structure and dense matrices. This makes them often unwieldy to pretty much impossible to handle in traditional GUI-based analysis tools (such as Excel), and as such we rely on original and lightweight file handling systems such as bash-based command line enviroments that allow us to interact with our computer on a more fundamental level.\nTypically the first thing you encounter on opening a new terminal instance is:\nuser@computer:~$\nThis is the terminal prompt where you’ll be able to issue commands to the computer, with the syntax (“grammar” of the code) of your command prompts often using the following structure:\nuser@computer:-$ command -option my_object\n\n# or you may have more advanced command prompts\n\nuser@computer:-$ command -threads 2 -output $My_Directory_Variable/ -prefix New_file_ -accessoryfile Additional_file my_object | nextcommand -cvfz New_file_my_object.tar.gz\nImagination (and resources, time complexity, optimization…) sets the limit of what you can do in the CLI\nIf you’re further curious on the history of shell and the command line.\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end of this practical, you should be able to:\n\nNavigate the file system using cd and ls\nCreate and manipulate directories with mkdir\nCreate, copy, move, and delete files using touch, cp, mv, and rm\nView file contents using cat, head, and tail\nSearch within files using grep\nDisplay text using echo\nTie these commands together using pipes",
+    "text": "In this first session, you will learn the Git workflow: initialize a repository, make clean commits, inspect history, ignore generated files, and do a simple branch-and-merge.\nWhy this matters for bioinformatics - Reproducibility: record exactly what changed and when. - Safety: experiment on branches without breaking your main work. - Collaboration: a clear, searchable history others can follow.\n\n\n\n\n\n\nLearning Outcomes\n\n\n\nBy the end of this session, you can: 1) Initialize a repo and configure your identity 2) Stage and commit with clear, focused messages 3) Inspect unstaged vs staged changes and view history 4) Use .gitignore to keep clutter out of Git 5) Create a short-lived feature branch, merge it, and clean up",
     "crumbs": [
       "Intro to Command Line",
       "Practical 1: CLI Basics"
     ]
   },
   {
-    "objectID": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#understanding-your-location-pwd-and-ls",
-    "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#understanding-your-location-pwd-and-ls",
-    "title": "Practical 1: Introduction to Command Line Interface",
-    "section": "2.1 Understanding Your Location (pwd and ls)",
-    "text": "2.1 Understanding Your Location (pwd and ls)\nBefore we start creating new things in our directory its a good idea to get a grip on your whereabouts within the working directory\n\npwd: Print working directory - shows your current location\nls: List contents of directories\n\nFind your current location and explore the directory\n# Run pwd\npwd\n\n# Run ls\nls \n\n# Run the ls help command, then find the option to let you\n# display the directory contents as a list with more details\nls --help\n\n# Then run that command\nls -la",
+    "objectID": "PRACTICAL_GIT_SESSION1.html#introduction",
+    "href": "PRACTICAL_GIT_SESSION1.html#introduction",
+    "title": "Git Fundamentals: Session 1",
+    "section": "",
+    "text": "In this first session, you will learn the Git workflow: initialize a repository, make clean commits, inspect history, ignore generated files, and do a simple branch-and-merge.\nWhy this matters for bioinformatics - Reproducibility: record exactly what changed and when. - Safety: experiment on branches without breaking your main work. - Collaboration: a clear, searchable history others can follow.\n\n\n\n\n\n\nLearning Outcomes\n\n\n\nBy the end of this session, you can: 1) Initialize a repo and configure your identity 2) Stage and commit with clear, focused messages 3) Inspect unstaged vs staged changes and view history 4) Use .gitignore to keep clutter out of Git 5) Create a short-lived feature branch, merge it, and clean up",
     "crumbs": [
       "Intro to Command Line",
       "Practical 1: CLI Basics"
     ]
   },
   {
-    "objectID": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#making-and-changing-directories-mkdir-and-cd",
-    "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#making-and-changing-directories-mkdir-and-cd",
-    "title": "Practical 1: Introduction to Command Line Interface",
-    "section": "2.2 Making and Changing Directories (mkdir and cd)",
-    "text": "2.2 Making and Changing Directories (mkdir and cd)\nSince the command line interface (CLI) can quickly become cluttered, we organize our work into directories. Let’s create a simple directory structure.\n\nmkdir: Create new directories\ncd: Change directory\nSpecial directories: . (current), .. (parent), ~ (home), / (root)\n\nCreate and navigate a genomics project structure\n# Create a main directory\nmkdir CLI_intro\n\n# Navigate into it\ncd CLI_intro\n\n# Create additional directories within the main directory\n# This can be done in multiple ways \n# For example, you could make multiple directories in one command:\nmkdir Escherichia\ncd Escherichia\nmkdir coli hermanni fergusonii\n\n# Check your structure\nls -la\n\n# Navigate around and try the special directory short-hands\ncd ~        # Go home\ncd ..        # Go back to previous directory",
+    "objectID": "PRACTICAL_GIT_SESSION1.html#main-concepts",
+    "href": "PRACTICAL_GIT_SESSION1.html#main-concepts",
+    "title": "Git Fundamentals: Session 1",
+    "section": "2 Main Concepts",
+    "text": "2 Main Concepts\n\nRepository (repo): a project folder that Git watches (contains a hidden .git/ directory).\nWorking tree: your actual files on disk.\nStaging area (index): a waiting room where you queue the exact changes for your next snapshot.\nCommit: a permanent snapshot with a message (what/why).\nBranch: a label that moves forward as you commit, representing a line of work (e.g., main, feature/x).\n.gitignore: patterns telling Git which files/folders not to track (e.g., results/).\n\n\n\n\n\n\n\nDid You Know?\n\n\n\nYou can set the default branch name to main globally:\ngit config --global init.defaultBranch main",
     "crumbs": [
       "Intro to Command Line",
       "Practical 1: CLI Basics"
     ]
   },
   {
-    "objectID": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#text-manipulation-echo-touch",
-    "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#text-manipulation-echo-touch",
-    "title": "Practical 1: Introduction to Command Line Interface",
-    "section": "3.1 Text manipulation (echo, touch)",
-    "text": "3.1 Text manipulation (echo, touch)\nBefore we start with file manipulation, we’ll first introduce text files the old school way via echo and touch\n\ntouch: Create empty files\necho: Print text provided in the prompts\n\nHandling text in CLI\n# First, lets use echo in the ye olde intro to programming way\necho \"Hello World!\"\n\n# Not the most exciting, but we can use it to add text to files via &gt; \n# Create a file using touch \ntouch test_file\n\n# Then add some text to the file \necho \"Some_text\" &gt; test_file\n\n# Now add some more text to the next line in the file\n# To add to a file you simply extend the &gt; operator to &gt;&gt; \necho \"Some_more_text\" &gt;&gt; test_file\n\n# Now lastly, try to wipe the file with some new text \necho \"New_text\" &gt; test_file",
+    "objectID": "PRACTICAL_GIT_SESSION1.html#before-you-begin",
+    "href": "PRACTICAL_GIT_SESSION1.html#before-you-begin",
+    "title": "Git Fundamentals: Session 1",
+    "section": "3 Before You Begin",
+    "text": "3 Before You Begin\nConfirm Git & shell\ngit --version\nwhich git\nYou should see a version like git version 2.x and a path.\nSet your identity (appears in commit history)\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"you@example.com\"\n# Beginner-friendly editor for commit messages\ngit config --global core.editor \"nano -w\"\n# Verify\ngit config --list --show-origin\nTerminal refresher\npwd        # print working directory\nls -la     # list files (detailed)\ncd &lt;dir&gt;   # change directory\nmkdir &lt;d&gt;  # make directory\nnano &lt;f&gt;   # edit file (CTRL+O save, Enter, CTRL+X exit)\n\n\n\n\n\n\nCommon Mistake\n\n\n\nWorking in a path with spaces can cause quoting issues (e.g., My Documents). Prefer ~/projects/git-lab.",
     "crumbs": [
       "Intro to Command Line",
       "Practical 1: CLI Basics"
     ]
   },
   {
-    "objectID": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#file-manipulation-cp-mv-rm",
-    "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#file-manipulation-cp-mv-rm",
-    "title": "Practical 1: Introduction to Command Line Interface",
-    "section": "3.2 File Manipulation (cp, mv, rm)",
-    "text": "3.2 File Manipulation (cp, mv, rm)\nNow let’s create some mock files that we will use downstream in the analysis, and learn how to use commands to copy, rename and remove files\n\nmv: Rename the absolute path of a file (moving it)\ncp: Copy a file\nrm: Remove a file (Irreversible, be careful!!)\n\nCreate sample files and practice file operations\n# Create some more directories to store everything in \nmkdir -p raw_data backups\n\n# Create some empty mock files for different data types that we'll use later \ntouch sequences.fasta\ntouch expression_data.csv\ntouch gene_annotations.csv\n\n# Add some mock sequence data \necho \"&gt;lacZ_beta-galactosidase\" &gt; sequences.fasta\necho \"ATGACCATGATTACGCCAAGCT\" &gt;&gt; sequences.fasta\necho \"&gt;rpoB_RNA_polymerase_beta\" &gt;&gt; sequences.fasta\necho \"ATGGTGACGACGACGACGATGCT\" &gt;&gt; sequences.fasta\necho \"&gt;gyrA_DNA_gyrase_subunit_A\" &gt;&gt; sequences.fasta\necho \"ATGGCTGCTGATCGATCGATGCTA\" &gt;&gt; sequences.fasta\necho \"&gt;ompA_outer_membrane_protein\" &gt;&gt; sequences.fasta\necho \"ATGCTGATCGATCGGCTAGCTAGC\" &gt;&gt; sequences.fasta\n\n# Add data to the gene annotation file \necho \"Gene_ID,Chromosome,Start,End,Strand,Product\" &gt; gene_annotations.csv\necho \"lacZ,plasmid,1000,2500,+,beta-galactosidase\" &gt;&gt; gene_annotations.csv\necho \"rpoB,chr,3000,4200,+,RNA polymerase beta subunit\" &gt;&gt; gene_annotations.csv\necho \"gyrA,chr,500,1800,-,DNA gyrase subunit A\" &gt;&gt; gene_annotations.csv\necho \"ompA,chr,2000,3500,+,outer membrane protein A\" &gt;&gt; gene_annotations.csv\necho \"LacY,plasmid,5000,6200,+,Lactose_permease\" &gt;&gt; gene_annotations.csv\necho \"tolC,chr,100,800,+,outer membrane channel protein\" &gt;&gt; gene_annotations.csv\n\n# Add some gene expression data\necho \"Gene_ID,Condition_A,Condition_B,Function\" &gt; expression_data.csv\necho \"lacZ,150,200,beta-galactosidase\" &gt;&gt; expression_data.csv\necho \"rpoB,89,95,RNA_polymerase\" &gt;&gt; expression_data.csv\necho \"gyrA,175,180,DNA_gyrase\" &gt;&gt; expression_data.csv\necho \"LacY,165,210,Lactose_permease\" &gt;&gt; expression_data.csv\necho \"ompA,45,52,outer_membrane_protein\" &gt;&gt; expression_data.csv\n\n# Copy files (backup your data!)\ncp sequences.fasta sequences_backup.fasta\n\n# Move files to organize your project\nmv sequences_backup.fasta backups/\n\n# mv can also be used to rename files, similar to the syntax of cp \n# You just remembered that these files were E.coli, rename them and think of good informative names\nmv raw_data/gene_annotation.csv raw_data/E_coli_gene_annotations.csv\n\n# remove files (be careful, no undo!)\nrm sequences_backup.fasta\n# rm can also be used with flags to remove directories and their contents\nrm -r backups/\n\n# Lastly lets sort a bit in your directories\n# Copy the entire raw_data directory with contents (find the right flag!)\ncp -r raw_data/ Escherichia/coli/\nNote: After this section is done, remember that you renamed the data files to include the species name (E.coli), rename them back for the subsequent sections if you want. Otherwise, make sure the change doesnt confuse you",
+    "objectID": "PRACTICAL_GIT_SESSION1.html#step-by-step-practical",
+    "href": "PRACTICAL_GIT_SESSION1.html#step-by-step-practical",
+    "title": "Git Fundamentals: Session 1",
+    "section": "4 Step-by-Step Practical",
+    "text": "4 Step-by-Step Practical\n\nWe’ll create a small, clean project called git-lab and practice the local Git cycle repeatedly.\n\n\n4.1 Create a Repository\nmkdir -p ~/projects/git-lab && cd ~/projects/git-lab\ngit init\nExpected output: a line like Initialized empty Git repository in .../.git/\ngit status\nExpected: “No commits yet” and nothing staged.\n\n\n\n\n\n\nBest Practice\n\n\n\nRun git status often. It tells you exactly what Git sees at every step.\n\n\n\n\n4.2 Add Initial Files\nCreate a README, a small config, and the folder layout:\ncat &gt; README.md &lt;&lt; 'EOF'\n# Git Lab\nThis mini project demonstrates local Git basics.\n\n## Quickstart\nSee below for commands and checkpoints.\nEOF\n\nmkdir -p config scripts results data\n\ncat &gt; config/config.yml &lt;&lt; 'EOF'\nproject: git-lab\nthreads: 2\ngenome_id: ST398\nEOF\nSelf-check\nls -la\n# Expect: README.md, config/, scripts/, results/, data/\ncat config/config.yml\n\n\n4.3 Stage and First Commit\ngit add README.md config/config.yml\ngit status          # these files should appear under \"Changes to be committed\"\n\ngit commit -m \"Add README and base config\"\nVerify history\ngit log --oneline -n 1\n# Expect: one commit with your message\n\n\n\n\n\n\nCommon Mistake\n\n\n\nSeeing “nothing to commit”? You probably forgot git add. Stage your changes first, then commit.\n\n\n\n\n4.4 .gitignore to Keep the Repo Clean\ncat &gt; .gitignore &lt;&lt; 'EOF'\nresults/\n*.tmp\n.DS_Store\n*.swp\nEOF\n\ngit add .gitignore\ngit commit -m \"Add .gitignore for results and temp files\"\nProve it works\nmkdir -p results && echo \"tmp\" &gt; results/test.tmp\ngit status   # results/ and *.tmp should NOT show up\n\n\n\n\n\n\nDid You Know?\n\n\n\nIf a file was tracked before you added it to .gitignore, Git keeps tracking it. Use git rm --cached &lt;file&gt; once to stop tracking.\n\n\n\n\n4.5 Inspecting Changes — Unstaged vs Staged\nMake and review edits:\n# Edit values (macOS and Linux differ; we try both variants)\nsed -i '' 's/threads: 2/threads: 4/' config/config.yml 2&gt;/dev/null || sed -i 's/threads: 2/threads: 4/' config/config.yml\n\ngit status       # shows modified but unstaged\ngit diff         # shows the exact diff\n\ngit add config/config.yml\ngit diff --staged  # shows what will be committed\n\ngit commit -m \"Increase threads to 4\"\nGood commit messages (rule of thumb) - Subject ≤ 50 chars, imperative: “Increase threads to 4” - Body (optional): wrap at 72 chars; explain why\n\n\n\n\n\n\nBest Practice\n\n\n\nUse git add -p to stage only the meaningful hunks when a file has multiple changes.\n\n\n\n\n4.6 Branching Basics & No-Conflict Merge\nCreate a branch, make a small change, merge to main, then delete the branch:\ngit switch -c feature/readme-usage\n\necho \"\n## Usage\n./scripts/qc.sh ST398 4 &gt; results/qc.log\" &gt;&gt; README.md\n\ngit add README.md\ngit commit -m \"Document basic usage with example command\"\n\ngit switch main\ngit merge feature/readme-usage\n\ngit branch -d feature/readme-usage\nVerify\ngit log --oneline --decorate --graph --all | head -n 10\nYou should see a merge into main and the feature branch deleted locally.\n\n\n\n\n\n\nCommon Mistake\n\n\n\nMerging fails if you have uncommitted work. Commit or stash changes first; then merge.",
     "crumbs": [
       "Intro to Command Line",
       "Practical 1: CLI Basics"
@@ -462,44 +462,44 @@
     ]
   },
   {
-    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#locate-by-nametypesize-with-find",
-    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#locate-by-nametypesize-with-find",
-    "title": "Practical 3 — Workspace & Data Management",
-    "section": "4.1 Locate by name/type/size with find",
-    "text": "4.1 Locate by name/type/size with find\ncd ~/CLI_intro\nfind . -name \"*.tsv\"           # all TSV files\nfind data -type f -size +1M    # files &gt; 1 MB in data/\nfind . -maxdepth 2 -type d     # directories up to depth 2",
+    "objectID": "PRACTICAL_GIT_SESSION1.html#self-check-quiz-quick",
+    "href": "PRACTICAL_GIT_SESSION1.html#self-check-quiz-quick",
+    "title": "Git Fundamentals: Session 1",
+    "section": "6 Self-Check Quiz (Quick)",
+    "text": "6 Self-Check Quiz (Quick)\n\nWhat’s the difference between unstaged and staged changes?\n\nWhat does .gitignore do? What doesn’t it do?\n\nWhy write commit messages in imperative mood (“Add”, “Fix”)?\n\nWhat command shows staged changes only?\n\nHow do you create and switch to a new branch in one command?\n\n(Answers: 1) Unstaged are edits on disk; staged are queued for the next commit. 2) Prevents new files matching patterns from being tracked; doesn’t untrack files already committed. 3) Reads as commands to the codebase—clear history. 4) git diff --staged. 5) git switch -c &lt;name&gt;.)",
     "crumbs": [
       "Intro to Command Line",
       "Practical 3: Workspace Management and Data Management"
     ]
   },
   {
-    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#peek-safely-with-head-tail-less",
-    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#peek-safely-with-head-tail-less",
-    "title": "Practical 3 — Workspace & Data Management",
-    "section": "4.2 Peek safely with head, tail, less",
-    "text": "4.2 Peek safely with head, tail, less\nWe assume data/metadata.tsv exists, but otherwise create it.\n# Show a small slice so it's visibly different from the full file:\n# If you need to create the metadata.tsv file: \ncat &gt; data/metadata.tsv &lt;&lt; 'EOF'\nSample_ID    Country Tissue\nS1   SE   gut\nS2   SE   gut\nS3   NO   skin\nS4   DK   gut\nS5   SE   skin\nEOF\n\nhead -n 2 data/metadata.tsv\ntail -n 2 data/metadata.tsv\nless data/metadata.tsv   # press 'q' to quit\n\n\n\n\n\n\nDefaults\n\n\n\nBy default, head and tail each print 10 lines if you don’t specify -n.",
+    "objectID": "PRACTICAL_GIT_SESSION1.html#troubleshooting-recovery",
+    "href": "PRACTICAL_GIT_SESSION1.html#troubleshooting-recovery",
+    "title": "Git Fundamentals: Session 1",
+    "section": "7 Troubleshooting & Recovery",
+    "text": "7 Troubleshooting & Recovery\n\n“fatal: not a git repository” → Run pwd and ensure you’re in ~/projects/git-lab. Use cd to enter the repo folder.\nsed -i complains → Open the file with nano config/config.yml, edit manually, save.\nAccidentally staged the wrong file → git restore --staged &lt;file&gt; (does not change file content).\nWant to start over → Move away from the folder (or delete it) and repeat from step 1. To un-Git a folder, remove the hidden .git/ directory.\n\n\n\n\n\n\n\nDid You Know?\n\n\n\ngit show &lt;commit&gt; reveals the patch and metadata for a single commit. Great for code review and learning from changes.",
     "crumbs": [
       "Intro to Command Line",
       "Practical 3: Workspace Management and Data Management"
     ]
   },
   {
-    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#search-inside-files-with-grep",
-    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#search-inside-files-with-grep",
-    "title": "Practical 3 — Workspace & Data Management",
-    "section": "4.3 Search inside files with grep",
-    "text": "4.3 Search inside files with grep\n# Case-insensitive search for the word \"case\" in metadata\ngrep -i \"case\" data/metadata.tsv\n\n# Count the number of FASTA headers (if you have a FASTA in refs/)\ngrep -c \"^&gt;\" refs/sequences.fasta\n\n\n\n\n\n\nCommon Mistake\n\n\n\nIf the command says “No such file or directory”, ensure you’re in ~/CLI_intro and the file really exists there. Use pwd and ls to verify.",
+    "objectID": "PRACTICAL_GIT_SESSION1.html#summary",
+    "href": "PRACTICAL_GIT_SESSION1.html#summary",
+    "title": "Git Fundamentals: Session 1",
+    "section": "8 Summary",
+    "text": "8 Summary\nYou created a clean repository, practiced the local cycle (status → diff → add → commit → log), used .gitignore to keep noise out, and completed a simple branch-and-merge. These habits set the foundation for Session 2 (conflicts, tags, remotes, and recovery).",
     "crumbs": [
       "Intro to Command Line",
       "Practical 3: Workspace Management and Data Management"
     ]
   },
   {
-    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#counts-and-quick-summaries-with-wc-sort-uniq",
-    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#counts-and-quick-summaries-with-wc-sort-uniq",
-    "title": "Practical 3 — Workspace & Data Management",
-    "section": "4.4 Counts and quick summaries with wc, sort, uniq",
-    "text": "4.4 Counts and quick summaries with wc, sort, uniq\n\nCorrect mental model:\nsort orders lines (alphabetically/numerically). uniq only removes adjacent duplicates — so you almost always sort first before uniq.\n\n# How many rows (lines) are in the metadata?\nwc -l data/metadata.tsv\n\n# STEP-BY-STEP (encouraged so you see each stage):\ncut -f2 data/metadata.tsv              # column 2 (e.g., country) from a TAB-separated file\ncut -f2 data/metadata.tsv | sort       # order values to cluster identical ones\ncut -f2 data/metadata.tsv | sort | uniq -c   # collapse adjacent duplicates and count\nNow that you’ve seen each stage, try the pipeline form that saves the result:\ncut -f2 data/metadata.tsv | sort | uniq -c | sort -nr &gt; results/country_counts.txt\nhead results/country_counts.txt\n\n\n\n\n\n\nDelimiter tip\n\n\n\ncut defaults to tab. If your file is CSV, add -d, (comma) and adjust field numbers accordingly.",
+    "objectID": "PRACTICAL_GIT_SESSION1.html#cheat-sheet",
+    "href": "PRACTICAL_GIT_SESSION1.html#cheat-sheet",
+    "title": "Git Fundamentals: Session 1",
+    "section": "9 Cheat Sheet",
+    "text": "9 Cheat Sheet\nInitialize:  git init\nIdentity:    git config --global user.name \"Name\"; git config --global user.email \"you@ex\"\nStatus:      git status\nStage:       git add &lt;file&gt;\nCommit:      git commit -m \"Message\"\nDiff:        git diff        (unstaged)   |   git diff --staged\nLog:         git log --oneline --decorate --graph\nIgnore:      echo pattern &gt;&gt; .gitignore; git add .gitignore; git commit -m \"Add .gitignore\"\nBranch:      git switch -c &lt;name&gt;; git switch main; git merge &lt;name&gt;; git branch -d &lt;name&gt;",
     "crumbs": [
       "Intro to Command Line",
       "Practical 3: Workspace Management and Data Management"
@@ -608,6 +608,328 @@
     "text": "5.2 Running MultiQC\n# Run MultiQC on all results to generate a comprehensive report\ncd multiqc_analysis\n\n# Generate MultiQC report with custom configuration\nmultiqc . --title \"BIO511 Practical 2 - QC and Classification Summary\" --filename \"practical2_multiqc_report\" --dirs --dirs-depth 2 --force\n\n# Open the report in your browser\n# The HTML file can be opened directly",
     "crumbs": [
       "Practical 1: Quality Control and Classification"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_GIT_SESSION2.html",
+    "href": "PRACTICAL_GIT_SESSION2.html",
+    "title": "Git Session 2 — Conflicts, Tags, Remotes (HTTPS & SSH), and Undo",
+    "section": "",
+    "text": "This second session teaches practical collaboration with Git, step by step:\n\nResolve a merge conflict safely\nMark important states with annotated tags\nShare your work to GitHub via HTTPS or SSH keys\nUse gentle undo to fix small mistakes without panic\n\nYou should already have the ~/projects/git-lab repository from Session 1.\n\n\n\n\n\n\nLearning Outcomes\n\n\n\nBy the end, you can: 1) Create and resolve a merge conflict by editing conflict markers\n2) Create and push annotated tags (v0.1, v0.2)\n3) Push your branch to GitHub via HTTPS, or set up SSH keys and push via SSH\n4) Use git restore and git restore --staged to undo safely",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 2: Git Fundamentals: Session 2"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_GIT_SESSION2.html#introduction",
+    "href": "PRACTICAL_GIT_SESSION2.html#introduction",
+    "title": "Git Session 2 — Conflicts, Tags, Remotes (HTTPS & SSH), and Undo",
+    "section": "",
+    "text": "This second session teaches practical collaboration with Git, step by step:\n\nResolve a merge conflict safely\nMark important states with annotated tags\nShare your work to GitHub via HTTPS or SSH keys\nUse gentle undo to fix small mistakes without panic\n\nYou should already have the ~/projects/git-lab repository from Session 1.\n\n\n\n\n\n\nLearning Outcomes\n\n\n\nBy the end, you can: 1) Create and resolve a merge conflict by editing conflict markers\n2) Create and push annotated tags (v0.1, v0.2)\n3) Push your branch to GitHub via HTTPS, or set up SSH keys and push via SSH\n4) Use git restore and git restore --staged to undo safely",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 2: Git Fundamentals: Session 2"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_GIT_SESSION2.html#what-you-need",
+    "href": "PRACTICAL_GIT_SESSION2.html#what-you-need",
+    "title": "Git Session 2 — Conflicts, Tags, Remotes (HTTPS & SSH), and Undo",
+    "section": "2 What You Need",
+    "text": "2 What You Need\n\nGit installed (git --version)\n\nA GitHub account (free)\n\nYour git-lab repo from Session 1 (or let the commands below scaffold it)\n\n# If needed, create/enter the repo now\nmkdir -p ~/projects/git-lab && cd ~/projects/git-lab\ngit init\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"you@example.com\"\nmkdir -p config\necho -e \"project: git-lab\\nthreads: 4\\ngenome_id: ST398\" &gt; config/config.yml\ngit add config/config.yml\ngit commit -m \"Start project with config\"",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 2: Git Fundamentals: Session 2"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_GIT_SESSION2.html#main-concepts",
+    "href": "PRACTICAL_GIT_SESSION2.html#main-concepts",
+    "title": "Git Session 2 — Conflicts, Tags, Remotes (HTTPS & SSH), and Undo",
+    "section": "3 Main Concepts",
+    "text": "3 Main Concepts\n\nRemote: a copy of your repository hosted elsewhere (e.g., GitHub). The default name is origin.\nTracking branch: a local branch that remembers which remote branch it tracks (set with git push -u origin main).\nMerge vs fast‑forward: a merge creates a new commit that combines two histories; a fast‑forward just moves a pointer.\nConflict markers: lines Git writes inside a file to show both sides of a conflicting change — you edit the file to the final content and remove the markers.\nAnnotated tag: a named label on a commit with a message and metadata, perfect for submissions/releases.\n\n\n\n\n\n\n\nDid You Know?\n\n\n\ngit pull ≈ git fetch + git merge. Prefer git fetch first when learning, so you can inspect before merging.",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 2: Git Fundamentals: Session 2"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_GIT_SESSION2.html#merge-conflict",
+    "href": "PRACTICAL_GIT_SESSION2.html#merge-conflict",
+    "title": "Git Session 2 — Conflicts, Tags, Remotes (HTTPS & SSH), and Undo",
+    "section": "4 Merge Conflict",
+    "text": "4 Merge Conflict\nWe’ll create a tiny conflict on one line, fix it, and finish the merge.\n1) Change on main\ngit switch -c main 2&gt;/dev/null || git switch main\necho \"genome_id: ST400\" &gt; config/config.yml\ngit add config/config.yml\ngit commit -m \"Set genome_id to ST400 on main\"\n2) Different change on a new branch\ngit switch -c feature/alt-genome\necho \"genome_id: ST401\" &gt; config/config.yml\ngit add config/config.yml\ngit commit -m \"Set genome_id to ST401 on feature branch\"\n3) Merge back into main (conflict expected)\ngit switch main\ngit merge feature/alt-genome\nOpen config/config.yml — you’ll see markers like:\n&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD\ngenome_id: ST400\n=======\ngenome_id: ST401\n&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/alt-genome\n4) Fix the file\nDecide the final line (e.g., keep genome_id: ST401). Delete the three marker lines (&lt;&lt;&lt;&lt;&lt;&lt;&lt;, =======, &gt;&gt;&gt;&gt;&gt;&gt;&gt;). Save.\n5) Tell Git you fixed it and complete the merge\ngit add config/config.yml\ngit commit   # completes the merge\nCheckpoint\ngit log --oneline --decorate --graph -n 5\n\n\n\n\n\n\nCommon Mistake\n\n\n\nLeaving conflict markers in the file (the &lt;&lt;&lt;&lt;&lt;&lt;&lt; ======= &gt;&gt;&gt;&gt;&gt;&gt;&gt; lines) will confuse you later. Remove them all before committing.",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 2: Git Fundamentals: Session 2"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_GIT_SESSION2.html#tag-important-states",
+    "href": "PRACTICAL_GIT_SESSION2.html#tag-important-states",
+    "title": "Git Session 2 — Conflicts, Tags, Remotes (HTTPS & SSH), and Undo",
+    "section": "5 Tag Important States",
+    "text": "5 Tag Important States\nThink of a tag as a sticky note on a specific snapshot.\ngit tag -a v0.1 -m \"First tagged version after conflict resolution\"\ngit tag          # should list v0.1\ngit show v0.1    # see what it points to\n\n\n\n\n\n\nBest Practice\n\n\n\nUse annotated tags (-a) with a short message to mark submissions, milestones, or results you cite.",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 2: Git Fundamentals: Session 2"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_GIT_SESSION2.html#share-to-github-https-or-ssh",
+    "href": "PRACTICAL_GIT_SESSION2.html#share-to-github-https-or-ssh",
+    "title": "Git Session 2 — Conflicts, Tags, Remotes (HTTPS & SSH), and Undo",
+    "section": "6 Share to GitHub — HTTPS or SSH",
+    "text": "6 Share to GitHub — HTTPS or SSH\n\n6.1 Option 1 — HTTPS\n\nCreate an empty GitHub repo named git-lab (do not add a README).\n\nConnect your local repo (replace YOURUSER):\n\ngit remote add origin https://github.com/YOURUSER/git-lab.git\ngit remote -v\n\nPush main and set tracking (you’ll sign in or use a token the first time):\n\ngit push -u origin main\n\nPush your tag(s):\n\ngit push --tags\n\n\n\n\n\n\nCommon Mistake\n\n\n\nIf you accidentally created the GitHub repo with a README, run git pull once before your first push.\n\n\n\n\n6.2 Option 2 — SSH (BONUS SECTION)\nThis is a one‑time setup per machine. Use it if you prefer entering a passphrase once and pushing without tokens.\nStep 1 — Do you already have a key?\nls -al ~/.ssh\n# If you see id_ed25519 and id_ed25519.pub, you likely already have a key.\nStep 2 — Create a key (if needed)\nssh-keygen -t ed25519 -C \"you@example.com\"\n# Press Enter to accept the default location (~/.ssh/id_ed25519)\n# Choose a passphrase (recommended) or press Enter for none\nStep 3 — Add the key to your ssh-agent\n# Start the agent (if not running) and add your key\neval \"$(ssh-agent -s)\"\nssh-add ~/.ssh/id_ed25519\nStep 4 — Copy your PUBLIC key and add it on GitHub\n# macOS: copy to clipboard\npbcopy &lt; ~/.ssh/id_ed25519.pub\n\n# If pbcopy isn't available, print and copy manually:\ncat ~/.ssh/id_ed25519.pub\nOn GitHub: Settings → SSH and GPG keys → New SSH key → paste → Save.\nStep 5 — Test your SSH connection\nssh -T git@github.com\n# Expect a greeting like: \"Hi &lt;username&gt;! You've successfully authenticated...\"\nStep 6 — Switch your remote from HTTPS to SSH and push\ngit remote set-url origin git@github.com:YOURUSER/git-lab.git\ngit remote -v\ngit push -u origin main\ngit push --tags\n\n\n\n\n\n\nCommon Mistakes\n\n\n\n\nDon’t paste your private key; paste the .pub file only.\n\n“Repository not found”? Check the username/repo and that it exists.\n\nLocked‑down networks may block SSH — switch back to HTTPS if needed: git remote set-url origin https://github.com/YOURUSER/git-lab.git",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 2: Git Fundamentals: Session 2"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_GIT_SESSION2.html#undoing",
+    "href": "PRACTICAL_GIT_SESSION2.html#undoing",
+    "title": "Git Session 2 — Conflicts, Tags, Remotes (HTTPS & SSH), and Undo",
+    "section": "7 Undoing",
+    "text": "7 Undoing\n\nUnstage a file (keep changes):\ngit restore --staged &lt;file&gt;\n\nDiscard local edits in a file (careful):\ngit restore &lt;file&gt;",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 2: Git Fundamentals: Session 2"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_GIT_SESSION2.html#collaboration-etiquette",
+    "href": "PRACTICAL_GIT_SESSION2.html#collaboration-etiquette",
+    "title": "Git Session 2 — Conflicts, Tags, Remotes (HTTPS & SSH), and Undo",
+    "section": "8 Collaboration Etiquette",
+    "text": "8 Collaboration Etiquette\n\nKeep branches short‑lived and focused.\n\nWrite imperative commit subjects (e.g., “Add README note”).\n\nPush early; open a short Pull Request describing the change in one sentence.\n\nTag milestones and note them in your README.",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 2: Git Fundamentals: Session 2"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_GIT_SESSION2.html#guided-practice",
+    "href": "PRACTICAL_GIT_SESSION2.html#guided-practice",
+    "title": "Git Session 2 — Conflicts, Tags, Remotes (HTTPS & SSH), and Undo",
+    "section": "9 Guided Practice",
+    "text": "9 Guided Practice\n\nConflict practice — Make a new branch feature/readme-title, edit the same line in README.md on main and the branch, merge, resolve markers, commit.\n\nTag & explain — Create v0.2 on your current main. Run git show v0.2 and add a one‑line note to README.md about what v0.2 represents. Commit.\n\nRemote sync — Push main, push v0.2. If you used HTTPS, try switching to SSH and push again.\n\nUndo drill — Stage a file by mistake, then unstage it with git restore --staged &lt;file&gt;. Make a test edit and discard it with git restore &lt;file&gt;.",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 2: Git Fundamentals: Session 2"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_GIT_SESSION2.html#troubleshooting-faq",
+    "href": "PRACTICAL_GIT_SESSION2.html#troubleshooting-faq",
+    "title": "Git Session 2 — Conflicts, Tags, Remotes (HTTPS & SSH), and Undo",
+    "section": "10 Troubleshooting & FAQ",
+    "text": "10 Troubleshooting & FAQ\n\n“Permission denied (publickey)” → Add your public key to GitHub and test with ssh -T git@github.com.\n\n“Repository not found” → Check the remote URL and your permissions; ensure the repo exists.\n\n“Updates were rejected” → The remote has work you don’t. Run git fetch, inspect with git log --oneline --decorate --graph --all, then git merge or git pull.\n\nAccidentally tagged the wrong commit → Delete the local tag with git tag -d v0.1, delete it on the remote with git push --delete origin v0.1, re‑create on the correct commit, push tags again.",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 2: Git Fundamentals: Session 2"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_GIT_SESSION2.html#summary",
+    "href": "PRACTICAL_GIT_SESSION2.html#summary",
+    "title": "Git Session 2 — Conflicts, Tags, Remotes (HTTPS & SSH), and Undo",
+    "section": "11 Summary",
+    "text": "11 Summary\nToday you practiced real collaboration moves: - Resolved a merge conflict - Created and pushed annotated tags - Shared your repo to GitHub via HTTPS or SSH - Used undoing to safely back out of small mistakes\nYou’re now ready to participate in simple team workflows and submit reproducible snapshots of your work.",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 2: Git Fundamentals: Session 2"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_GIT_SESSION2.html#cheat-sheet",
+    "href": "PRACTICAL_GIT_SESSION2.html#cheat-sheet",
+    "title": "Git Session 2 — Conflicts, Tags, Remotes (HTTPS & SSH), and Undo",
+    "section": "12 Cheat Sheet",
+    "text": "12 Cheat Sheet\nConflict:   git switch main → git merge &lt;branch&gt; → edit file → git add → git commit\nTags:       git tag -a &lt;name&gt; -m \"msg\"  |  git show &lt;name&gt;  |  git push --tags\nHTTPS:      git remote add origin https://github.com/USER/REPO.git  |  git push -u origin main\nSSH setup:  ssh-keygen -t ed25519 -C \"you@ex\"; pbcopy &lt; ~/.ssh/id_ed25519.pub; add key on GitHub\nSSH push:   git remote set-url origin git@github.com:USER/REPO.git  |  git push -u origin main\nUndo:       git restore --staged &lt;file&gt;   |   git restore &lt;file&gt;",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 2: Git Fundamentals: Session 2"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_BEST_CODING_PRACTISES.html",
+    "href": "PRACTICAL_BEST_CODING_PRACTISES.html",
+    "title": "Best Coding Practices for Command‑Line Programming",
+    "section": "",
+    "text": "This short guide introduces habits for writing reliable command‑line (Bash) scripts.\nWhy it matters - Scripts don’t crash silently. - You understand what the script did later in future too. - Results are reproducible and don’t get overwritten by accident.",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 3: Best Coding Practices"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_BEST_CODING_PRACTISES.html#introduction",
+    "href": "PRACTICAL_BEST_CODING_PRACTISES.html#introduction",
+    "title": "Best Coding Practices for Command‑Line Programming",
+    "section": "",
+    "text": "This short guide introduces habits for writing reliable command‑line (Bash) scripts.\nWhy it matters - Scripts don’t crash silently. - You understand what the script did later in future too. - Results are reproducible and don’t get overwritten by accident.",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 3: Best Coding Practices"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_BEST_CODING_PRACTISES.html#the-six-golden-rules",
+    "href": "PRACTICAL_BEST_CODING_PRACTISES.html#the-six-golden-rules",
+    "title": "Best Coding Practices for Command‑Line Programming",
+    "section": "2 The Six Golden Rules",
+    "text": "2 The Six Golden Rules\n\nStart every Bash script safely\nUse strict mode so mistakes fail fast.\n#!/usr/bin/env bash\nset -euo pipefail       # exit on error, unset var is error, fail on pipe errors\nIFS=$'\\n\\t'              # safer word splitting\nAlways offer help\nLet users see how to run the script.\nusage() {\n  echo \"Usage: $(basename \"$0\") -i INPUT -o OUTDIR [--force]\"\n  echo \"Example: $(basename \"$0\") -i data/sample.txt -o results\"\n}\n# Show help if asked\n[[ ${1:-} == \"-h\" || ${1:-} == \"--help\" ]] && { usage; exit 0; }\nUse project‑relative paths (not absolute)\nMake scripts portable by computing the project root from the script’s location.\nSCRIPT_DIR=$(cd -- \"$(dirname -- \"${BASH_SOURCE[0]}\")\" && pwd)\nPROJECT_ROOT=$(cd -- \"$SCRIPT_DIR/..\" && pwd)\nIN=\"$PROJECT_ROOT/data/input.txt\"\nOUTDIR=\"$PROJECT_ROOT/results\"\nNever overwrite outputs by accident\nCreate folders you need, and require --force to overwrite existing files.\nmkdir -p \"$OUTDIR\"\nOUT=\"$OUTDIR/summary.txt\"\nforce=false\n[[ ${1:-} == \"--force\" ]] && force=true\nif [[ -e \"$OUT\" && \"$force\" != true ]]; then\n  echo \"Refusing to overwrite $OUT (use --force)\"; exit 1\nfi\nLog what you do\nPrint key parameters and tool versions to a small log so runs are traceable.\n{\n  echo \"# Params\"; echo \"input=$IN\"; echo \"outdir=$OUTDIR\"; date\n  echo \"# Tool versions\"; bash --version | head -n1\n} | tee \"$OUTDIR/run.log\"\nQuote variables\nQuote \"$var\" to handle spaces.\n\n\n\n\n\n\n\nDid You Know?\n\n\n\n\nset -x prints each command as it runs — handy for debugging.\n\ncd - jumps back to your previous directory.\n\n\n\n\n\n\n\n\n\nBest Practice\n\n\n\nKeep scripts small and single‑purpose: one script = one task. Chain tasks with a Makefile later if needed.",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 3: Best Coding Practices"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_BEST_CODING_PRACTISES.html#common-mistakes-and-quick-fixes",
+    "href": "PRACTICAL_BEST_CODING_PRACTISES.html#common-mistakes-and-quick-fixes",
+    "title": "Best Coding Practices for Command‑Line Programming",
+    "section": "3 Common Mistakes (and quick fixes)",
+    "text": "3 Common Mistakes (and quick fixes)\n\nUnquoted variables → Always use \"$var\" (handles spaces safely).\n\nAbsolute paths → Use project‑relative paths like \"$PROJECT_ROOT/data\" instead.\n\nOverwriting results → Require --force or new output filenames.\n\nNo log → Write a minimal run.log with parameters and versions.\n\n\n\n\n\n\n\nCommon Mistake\n\n\n\nUsing rm -rf \"$SOME_VAR\" without checking that \"$SOME_VAR\" is non‑empty can delete the wrong folder. Always validate inputs first.",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 3: Best Coding Practices"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_BEST_CODING_PRACTISES.html#summary",
+    "href": "PRACTICAL_BEST_CODING_PRACTISES.html#summary",
+    "title": "Best Coding Practices for Command‑Line Programming",
+    "section": "4 Summary",
+    "text": "4 Summary\n\nStart safely (set -euo pipefail, quote variables).\n\nUse project‑relative paths and don’t overwrite results.\n\nLog what you do; test on a small sample first.\n\nKeep scripts simple, readable, and single‑purpose.",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 3: Best Coding Practices"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html",
+    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html",
+    "title": "Practical 3 — Workspace & Data Management",
+    "section": "",
+    "text": "The goal of this practical is to build good workspace habits on the command line so your projects are organized, reproducible, and HPC-friendly. You’ll practice:\n\nProject layouts that keep data, scripts, and results separate\n\nUsing symlinks to reference large/shared data (don’t duplicate!)\n\nFinding/searching files efficiently\n\nCombining commands with pipes and redirection\n\nManaging basic file permissions\n\nUnderstanding how these habits translate to the HPC filesystem\n\n\nImportant\nWe reuse the dataset you created in Practical 1 — the FASTA, gene annotations, and expression data files. Here, we will reorganize them into a structured project layout. If some of them still have different names (such as an E_coli prefix), please rename them back to the original filenames for consistency with this practical.\n\n\n\n\n\n\n\nDid You Know?\n\n\n\nMost bioinformatics tools are tiny LEGO bricks on the CLI. You connect bricks with pipes | to build powerful, reproducible analyses.",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 3: Workspace Management and Data Management"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#locate-by-nametypesize-with-find",
+    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#locate-by-nametypesize-with-find",
+    "title": "Practical 3 — Workspace & Data Management",
+    "section": "4.1 Locate by name/type/size with find",
+    "text": "4.1 Locate by name/type/size with find\ncd ~/CLI_intro\nfind . -name \"*.tsv\"           # all TSV files\nfind data -type f -size +1M    # files &gt; 1 MB in data/\nfind . -maxdepth 2 -type d     # directories up to depth 2",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 3: Workspace Management and Data Management"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#peek-safely-with-head-tail-less",
+    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#peek-safely-with-head-tail-less",
+    "title": "Practical 3 — Workspace & Data Management",
+    "section": "4.2 Peek safely with head, tail, less",
+    "text": "4.2 Peek safely with head, tail, less\nWe assume data/metadata.tsv exists, but otherwise create it.\n# Show a small slice so it's visibly different from the full file:\n# If you need to create the metadata.tsv file: \ncat &gt; data/metadata.tsv &lt;&lt; 'EOF'\nSample_ID    Country Tissue\nS1   SE   gut\nS2   SE   gut\nS3   NO   skin\nS4   DK   gut\nS5   SE   skin\nEOF\n\nhead -n 2 data/metadata.tsv\ntail -n 2 data/metadata.tsv\nless data/metadata.tsv   # press 'q' to quit\n\n\n\n\n\n\nDefaults\n\n\n\nBy default, head and tail each print 10 lines if you don’t specify -n.",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 3: Workspace Management and Data Management"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#search-inside-files-with-grep",
+    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#search-inside-files-with-grep",
+    "title": "Practical 3 — Workspace & Data Management",
+    "section": "4.3 Search inside files with grep",
+    "text": "4.3 Search inside files with grep\n# Case-insensitive search for the word \"case\" in metadata\ngrep -i \"case\" data/metadata.tsv\n\n# Count the number of FASTA headers (if you have a FASTA in refs/)\ngrep -c \"^&gt;\" refs/sequences.fasta\n\n\n\n\n\n\nCommon Mistake\n\n\n\nIf the command says “No such file or directory”, ensure you’re in ~/CLI_intro and the file really exists there. Use pwd and ls to verify.",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 3: Workspace Management and Data Management"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_WORKSPACE_MANAGEMENT.html#counts-and-quick-summaries-with-wc-sort-uniq",
+    "href": "PRACTICAL_WORKSPACE_MANAGEMENT.html#counts-and-quick-summaries-with-wc-sort-uniq",
+    "title": "Practical 3 — Workspace & Data Management",
+    "section": "4.4 Counts and quick summaries with wc, sort, uniq",
+    "text": "4.4 Counts and quick summaries with wc, sort, uniq\n\nCorrect mental model:\nsort orders lines (alphabetically/numerically). uniq only removes adjacent duplicates — so you almost always sort first before uniq.\n\n# How many rows (lines) are in the metadata?\nwc -l data/metadata.tsv\n\n# STEP-BY-STEP (encouraged so you see each stage):\ncut -f2 data/metadata.tsv              # column 2 (e.g., country) from a TAB-separated file\ncut -f2 data/metadata.tsv | sort       # order values to cluster identical ones\ncut -f2 data/metadata.tsv | sort | uniq -c   # collapse adjacent duplicates and count\nNow that you’ve seen each stage, try the pipeline form that saves the result:\ncut -f2 data/metadata.tsv | sort | uniq -c | sort -nr &gt; results/country_counts.txt\nhead results/country_counts.txt\n\n\n\n\n\n\nDelimiter tip\n\n\n\ncut defaults to tab. If your file is CSV, add -d, (comma) and adjust field numbers accordingly.",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 3: Workspace Management and Data Management"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "BIO511 Genomics - Practical Repository",
+    "section": "",
+    "text": "This repository contains practical exercises for the BIO511 Genomics course. Use this page, or the navbar to navigate to the different sections.\n\n\nHere are the practical exercises related to command line programming section of the course:\n\n\n\nPractical 1: CLI Basics\nPractical 2: Setting up the HPC\nPractical 3: Workspace Management and Data Management\nPractical 4: Scripting and Advanced Text Manipulation\nPractical 5: Software & Containers\n\n\n\n\n\nPractical 1: Git Fundamentals: Session 1\nPractical 2: Git Fundamentals: Session 2\nPractical 3: Best Coding Practices for Command‑Line Programming\n\n\n\n\n\nComing Soon…\n\n\n\nComing Soon…\n\nFor questions or issues, please contact the course instructors."
+  },
+  {
+    "objectID": "index.html#course-overview",
+    "href": "index.html#course-overview",
+    "title": "BIO511 Genomics - Practical Repository",
+    "section": "",
+    "text": "This repository contains practical exercises for the BIO511 Genomics course. Use this page, or the navbar to navigate to the different sections.\n\n\nHere are the practical exercises related to command line programming section of the course:\n\n\n\nPractical 1: CLI Basics\nPractical 2: Setting up the HPC\nPractical 3: Workspace Management and Data Management\nPractical 4: Scripting and Advanced Text Manipulation\nPractical 5: Software & Containers\n\n\n\n\n\nPractical 1: Git Fundamentals: Session 1\nPractical 2: Git Fundamentals: Session 2\nPractical 3: Best Coding Practices for Command‑Line Programming\n\n\n\n\n\nComing Soon…\n\n\n\nComing Soon…\n\nFor questions or issues, please contact the course instructors."
+  },
+  {
+    "objectID": "PRACTICAL_INTRO_TO_COMMAND_LINE.html",
+    "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html",
+    "title": "Practical 1: Introduction to Command Line Interface",
+    "section": "",
+    "text": "Doing bioinformatics often necessitates the handling of very large files, with complex structure and dense matrices. This makes them often unwieldy to pretty much impossible to handle in traditional GUI-based analysis tools (such as Excel), and as such we rely on original and lightweight file handling systems such as bash-based command line enviroments that allow us to interact with our computer on a more fundamental level.\nTypically the first thing you encounter on opening a new terminal instance is:\nuser@computer:~$\nThis is the terminal prompt where you’ll be able to issue commands to the computer, with the syntax (“grammar” of the code) of your command prompts often using the following structure:\nuser@computer:-$ command -option my_object\n\n# or you may have more advanced command prompts\n\nuser@computer:-$ command -threads 2 -output $My_Directory_Variable/ -prefix New_file_ -accessoryfile Additional_file my_object | nextcommand -cvfz New_file_my_object.tar.gz\nImagination (and resources, time complexity, optimization…) sets the limit of what you can do in the CLI\nIf you’re further curious on the history of shell and the command line.\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end of this practical, you should be able to:\n\nNavigate the file system using cd and ls\nCreate and manipulate directories with mkdir\nCreate, copy, move, and delete files using touch, cp, mv, and rm\nView file contents using cat, head, and tail\nSearch within files using grep\nDisplay text using echo\nTie these commands together using pipes",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 1: CLI Basics"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#understanding-your-location-pwd-and-ls",
+    "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#understanding-your-location-pwd-and-ls",
+    "title": "Practical 1: Introduction to Command Line Interface",
+    "section": "2.1 Understanding Your Location (pwd and ls)",
+    "text": "2.1 Understanding Your Location (pwd and ls)\nBefore we start creating new things in our directory its a good idea to get a grip on your whereabouts within the working directory\n\npwd: Print working directory - shows your current location\nls: List contents of directories\n\nFind your current location and explore the directory\n# Run pwd\npwd\n\n# Run ls\nls \n\n# Run the ls help command, then find the option to let you\n# display the directory contents as a list with more details\nls --help\n\n# Then run that command\nls -la",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 1: CLI Basics"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#making-and-changing-directories-mkdir-and-cd",
+    "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#making-and-changing-directories-mkdir-and-cd",
+    "title": "Practical 1: Introduction to Command Line Interface",
+    "section": "2.2 Making and Changing Directories (mkdir and cd)",
+    "text": "2.2 Making and Changing Directories (mkdir and cd)\nSince the command line interface (CLI) can quickly become cluttered, we organize our work into directories. Let’s create a simple directory structure.\n\nmkdir: Create new directories\ncd: Change directory\nSpecial directories: . (current), .. (parent), ~ (home), / (root)\n\nCreate and navigate a genomics project structure\n# Create a main directory\nmkdir CLI_intro\n\n# Navigate into it\ncd CLI_intro\n\n# Create additional directories within the main directory\n# This can be done in multiple ways \n# For example, you could make multiple directories in one command:\nmkdir Escherichia\ncd Escherichia\nmkdir coli hermanni fergusonii\n\n# Check your structure\nls -la\n\n# Navigate around and try the special directory short-hands\ncd ~        # Go home\ncd ..        # Go back to previous directory",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 1: CLI Basics"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#text-manipulation-echo-touch",
+    "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#text-manipulation-echo-touch",
+    "title": "Practical 1: Introduction to Command Line Interface",
+    "section": "3.1 Text manipulation (echo, touch)",
+    "text": "3.1 Text manipulation (echo, touch)\nBefore we start with file manipulation, we’ll first introduce text files the old school way via echo and touch\n\ntouch: Create empty files\necho: Print text provided in the prompts\n\nHandling text in CLI\n# First, lets use echo in the ye olde intro to programming way\necho \"Hello World!\"\n\n# Not the most exciting, but we can use it to add text to files via &gt; \n# Create a file using touch \ntouch test_file\n\n# Then add some text to the file \necho \"Some_text\" &gt; test_file\n\n# Now add some more text to the next line in the file\n# To add to a file you simply extend the &gt; operator to &gt;&gt; \necho \"Some_more_text\" &gt;&gt; test_file\n\n# Now lastly, try to wipe the file with some new text \necho \"New_text\" &gt; test_file",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 1: CLI Basics"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#file-manipulation-cp-mv-rm",
+    "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#file-manipulation-cp-mv-rm",
+    "title": "Practical 1: Introduction to Command Line Interface",
+    "section": "3.2 File Manipulation (cp, mv, rm)",
+    "text": "3.2 File Manipulation (cp, mv, rm)\nNow let’s create some mock files that we will use downstream in the analysis, and learn how to use commands to copy, rename and remove files\n\nmv: Rename the absolute path of a file (moving it)\ncp: Copy a file\nrm: Remove a file (Irreversible, be careful!!)\n\nCreate sample files and practice file operations\n# Create some more directories to store everything in \nmkdir -p raw_data backups\n\n# Create some empty mock files for different data types that we'll use later \ntouch sequences.fasta\ntouch expression_data.csv\ntouch gene_annotations.csv\n\n# Add some mock sequence data \necho \"&gt;lacZ_beta-galactosidase\" &gt; sequences.fasta\necho \"ATGACCATGATTACGCCAAGCT\" &gt;&gt; sequences.fasta\necho \"&gt;rpoB_RNA_polymerase_beta\" &gt;&gt; sequences.fasta\necho \"ATGGTGACGACGACGACGATGCT\" &gt;&gt; sequences.fasta\necho \"&gt;gyrA_DNA_gyrase_subunit_A\" &gt;&gt; sequences.fasta\necho \"ATGGCTGCTGATCGATCGATGCTA\" &gt;&gt; sequences.fasta\necho \"&gt;ompA_outer_membrane_protein\" &gt;&gt; sequences.fasta\necho \"ATGCTGATCGATCGGCTAGCTAGC\" &gt;&gt; sequences.fasta\n\n# Add data to the gene annotation file \necho \"Gene_ID,Chromosome,Start,End,Strand,Product\" &gt; gene_annotations.csv\necho \"lacZ,plasmid,1000,2500,+,beta-galactosidase\" &gt;&gt; gene_annotations.csv\necho \"rpoB,chr,3000,4200,+,RNA polymerase beta subunit\" &gt;&gt; gene_annotations.csv\necho \"gyrA,chr,500,1800,-,DNA gyrase subunit A\" &gt;&gt; gene_annotations.csv\necho \"ompA,chr,2000,3500,+,outer membrane protein A\" &gt;&gt; gene_annotations.csv\necho \"LacY,plasmid,5000,6200,+,Lactose_permease\" &gt;&gt; gene_annotations.csv\necho \"tolC,chr,100,800,+,outer membrane channel protein\" &gt;&gt; gene_annotations.csv\n\n# Add some gene expression data\necho \"Gene_ID,Condition_A,Condition_B,Function\" &gt; expression_data.csv\necho \"lacZ,150,200,beta-galactosidase\" &gt;&gt; expression_data.csv\necho \"rpoB,89,95,RNA_polymerase\" &gt;&gt; expression_data.csv\necho \"gyrA,175,180,DNA_gyrase\" &gt;&gt; expression_data.csv\necho \"LacY,165,210,Lactose_permease\" &gt;&gt; expression_data.csv\necho \"ompA,45,52,outer_membrane_protein\" &gt;&gt; expression_data.csv\n\n# Copy files (backup your data!)\ncp sequences.fasta sequences_backup.fasta\n\n# Move files to organize your project\nmv sequences_backup.fasta backups/\n\n# mv can also be used to rename files, similar to the syntax of cp \n# You just remembered that these files were E.coli, rename them and think of good informative names\nmv raw_data/gene_annotation.csv raw_data/E_coli_gene_annotations.csv\n\n# remove files (be careful, no undo!)\nrm sequences_backup.fasta\n# rm can also be used with flags to remove directories and their contents\nrm -r backups/\n\n# Lastly lets sort a bit in your directories\n# Copy the entire raw_data directory with contents (find the right flag!)\ncp -r raw_data/ Escherichia/coli/\nNote: After this section is done, remember that you renamed the data files to include the species name (E.coli), rename them back for the subsequent sections if you want. Otherwise, make sure the change doesnt confuse you",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 1: CLI Basics"
     ]
   },
   {

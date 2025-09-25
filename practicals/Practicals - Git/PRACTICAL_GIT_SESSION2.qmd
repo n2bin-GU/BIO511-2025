@@ -1,0 +1,255 @@
+---
+title: "Git Session 2 — Conflicts, Tags, Remotes (HTTPS & SSH), and Undo"
+author: "Stuti Jain, Tor Kling"
+format:
+  html:
+    theme: cosmo
+number-sections: true
+toc: true
+---
+
+## Introduction
+
+This second session teaches **practical collaboration** with Git, step by step:
+
+- Resolve a **merge conflict** safely
+- Mark important states with **annotated tags**
+- Share your work to GitHub via **HTTPS** or **SSH keys** 
+- Use **gentle undo** to fix small mistakes without panic
+
+You should already have the `~/projects/git-lab` repository from Session 1.
+
+::: {.callout-tip title="Learning Outcomes"}
+By the end, you can:
+1) Create and resolve a merge conflict by editing conflict markers  
+2) Create and push **annotated tags** (`v0.1`, `v0.2`)  
+3) Push your branch to GitHub via **HTTPS**, or set up **SSH keys** and push via SSH  
+4) Use `git restore` and `git restore --staged` to undo safely
+:::
+
+## What You Need 
+
+- Git installed (`git --version`)  
+- A GitHub account (free)  
+- Your `git-lab` repo from Session 1 (or let the commands below scaffold it)
+
+```bash
+# If needed, create/enter the repo now
+mkdir -p ~/projects/git-lab && cd ~/projects/git-lab
+git init
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+mkdir -p config
+echo -e "project: git-lab\nthreads: 4\ngenome_id: ST398" > config/config.yml
+git add config/config.yml
+git commit -m "Start project with config"
+```
+
+## Main Concepts
+
+- **Remote:** a copy of your repository hosted elsewhere (e.g., GitHub). The default name is `origin`.
+- **Tracking branch:** a local branch that remembers which remote branch it tracks (set with `git push -u origin main`).
+- **Merge vs fast‑forward:** a merge creates a new commit that combines two histories; a fast‑forward just moves a pointer.
+- **Conflict markers:** lines Git writes inside a file to show both sides of a conflicting change — you edit the file to the final content and remove the markers.
+- **Annotated tag:** a named label on a commit with a message and metadata, perfect for submissions/releases.
+
+::: {.callout-note title="Did You Know?"}
+`git pull` ≈ `git fetch` + `git merge`. Prefer `git fetch` first when learning, so you can inspect before merging.
+:::
+
+## Merge Conflict
+
+We’ll create a tiny conflict on **one line**, fix it, and finish the merge.
+
+**1) Change on `main`**
+```bash
+git switch -c main 2>/dev/null || git switch main
+echo "genome_id: ST400" > config/config.yml
+git add config/config.yml
+git commit -m "Set genome_id to ST400 on main"
+```
+
+**2) Different change on a new branch**
+```bash
+git switch -c feature/alt-genome
+echo "genome_id: ST401" > config/config.yml
+git add config/config.yml
+git commit -m "Set genome_id to ST401 on feature branch"
+```
+
+**3) Merge back into `main` (conflict expected)**
+```bash
+git switch main
+git merge feature/alt-genome
+```
+
+Open `config/config.yml` — you’ll see markers like:
+```
+<<<<<<< HEAD
+genome_id: ST400
+=======
+genome_id: ST401
+>>>>>>> feature/alt-genome
+```
+
+**4) Fix the file**  
+Decide the final line (e.g., keep `genome_id: ST401`). **Delete the three marker lines** (`<<<<<<<`, `=======`, `>>>>>>>`). Save.
+
+**5) Tell Git you fixed it and complete the merge**
+```bash
+git add config/config.yml
+git commit   # completes the merge
+```
+
+**Checkpoint**
+```bash
+git log --oneline --decorate --graph -n 5
+```
+
+::: {.callout-warning title="Common Mistake"}
+Leaving conflict markers in the file (the `<<<<<<<` `=======` `>>>>>>>` lines) will confuse you later. **Remove them all** before committing.
+:::
+
+## Tag Important States
+
+Think of a **tag** as a sticky note on a specific snapshot.
+
+```bash
+git tag -a v0.1 -m "First tagged version after conflict resolution"
+git tag          # should list v0.1
+git show v0.1    # see what it points to
+```
+
+::: {.callout-tip title="Best Practice"}
+Use **annotated** tags (`-a`) with a short message to mark submissions, milestones, or results you cite.
+:::
+
+## Share to GitHub — HTTPS or SSH 
+
+### Option 1 — HTTPS 
+
+1) Create an **empty** GitHub repo named `git-lab` (do **not** add a README).  
+2) Connect your local repo (replace `YOURUSER`):
+
+```bash
+git remote add origin https://github.com/YOURUSER/git-lab.git
+git remote -v
+```
+
+3) Push `main` and set tracking (you’ll sign in or use a token the first time):
+```bash
+git push -u origin main
+```
+
+4) Push your tag(s):
+```bash
+git push --tags
+```
+
+::: {.callout-warning title="Common Mistake"}
+If you accidentally created the GitHub repo **with** a README, run `git pull` once before your first push.
+:::
+
+### Option 2 — SSH (BONUS SECTION)
+
+This is a **one‑time setup** per machine. Use it if you prefer entering a passphrase once and pushing without tokens.
+
+**Step 1 — Do you already have a key?**
+```bash
+ls -al ~/.ssh
+# If you see id_ed25519 and id_ed25519.pub, you likely already have a key.
+```
+
+**Step 2 — Create a key (if needed)**
+```bash
+ssh-keygen -t ed25519 -C "you@example.com"
+# Press Enter to accept the default location (~/.ssh/id_ed25519)
+# Choose a passphrase (recommended) or press Enter for none
+```
+
+**Step 3 — Add the key to your ssh-agent**
+```bash
+# Start the agent (if not running) and add your key
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+```
+
+**Step 4 — Copy your PUBLIC key and add it on GitHub**
+```bash
+# macOS: copy to clipboard
+pbcopy < ~/.ssh/id_ed25519.pub
+
+# If pbcopy isn't available, print and copy manually:
+cat ~/.ssh/id_ed25519.pub
+```
+On GitHub: **Settings → SSH and GPG keys → New SSH key** → paste → Save.
+
+**Step 5 — Test your SSH connection**
+```bash
+ssh -T git@github.com
+# Expect a greeting like: "Hi <username>! You've successfully authenticated..."
+```
+
+**Step 6 — Switch your remote from HTTPS to SSH and push**
+```bash
+git remote set-url origin git@github.com:YOURUSER/git-lab.git
+git remote -v
+git push -u origin main
+git push --tags
+```
+
+::: {.callout-warning title="Common Mistakes"}
+- Don’t paste your **private** key; paste the `.pub` file only.  
+- “Repository not found”? Check the username/repo and that it exists.  
+- Locked‑down networks may block SSH — switch back to HTTPS if needed:
+  `git remote set-url origin https://github.com/YOURUSER/git-lab.git`
+:::
+
+## Undoing
+
+- **Unstage** a file (keep changes):  
+  `git restore --staged <file>`  
+- **Discard** local edits in a file (careful):  
+  `git restore <file>`
+
+## Collaboration Etiquette
+
+- Keep branches **short‑lived** and focused.  
+- Write **imperative** commit subjects (e.g., “Add README note”).  
+- Push early; open a short **Pull Request** describing the change in one sentence.  
+- Tag milestones and note them in your README.
+
+## Guided Practice
+
+1) **Conflict practice** — Make a new branch `feature/readme-title`, edit the **same line** in `README.md` on `main` and the branch, merge, resolve markers, commit.  
+2) **Tag & explain** — Create `v0.2` on your current `main`. Run `git show v0.2` and add a one‑line note to `README.md` about what `v0.2` represents. Commit.  
+3) **Remote sync** — Push `main`, push `v0.2`. If you used HTTPS, try switching to SSH and push again.  
+4) **Undo drill** — Stage a file by mistake, then unstage it with `git restore --staged <file>`. Make a test edit and discard it with `git restore <file>`.
+
+## Troubleshooting & FAQ
+
+- **“Permission denied (publickey)”** → Add your public key to GitHub and test with `ssh -T git@github.com`.  
+- **“Repository not found”** → Check the remote URL and your permissions; ensure the repo exists.  
+- **“Updates were rejected”** → The remote has work you don’t. Run `git fetch`, inspect with `git log --oneline --decorate --graph --all`, then `git merge` or `git pull`.  
+- **Accidentally tagged the wrong commit** → Delete the local tag with `git tag -d v0.1`, delete it on the remote with `git push --delete origin v0.1`, re‑create on the correct commit, push tags again.
+
+## Summary
+
+Today you practiced real collaboration moves:
+- Resolved a **merge conflict**
+- Created and pushed **annotated tags**
+- Shared your repo to GitHub via **HTTPS** or **SSH**
+- Used **undoing** to safely back out of small mistakes
+
+You’re now ready to participate in simple team workflows and submit reproducible snapshots of your work.
+
+## Cheat Sheet
+
+```text
+Conflict:   git switch main → git merge <branch> → edit file → git add → git commit
+Tags:       git tag -a <name> -m "msg"  |  git show <name>  |  git push --tags
+HTTPS:      git remote add origin https://github.com/USER/REPO.git  |  git push -u origin main
+SSH setup:  ssh-keygen -t ed25519 -C "you@ex"; pbcopy < ~/.ssh/id_ed25519.pub; add key on GitHub
+SSH push:   git remote set-url origin git@github.com:USER/REPO.git  |  git push -u origin main
+Undo:       git restore --staged <file>   |   git restore <file>
+```
