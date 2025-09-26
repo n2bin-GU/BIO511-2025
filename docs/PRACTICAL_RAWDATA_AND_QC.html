@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Tor Kling">
-<meta name="dcterms.date" content="2025-09-25">
+<meta name="dcterms.date" content="2025-09-26">
 
 <title>Practical 1: Raw Read Data and Quality Control – BIO511 Genomics - Practical Repository</title>
 <style>
@@ -274,7 +274,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 25, 2025</p>
+      <p class="date">September 26, 2025</p>
     </div>
   </div>
   
@@ -300,11 +300,16 @@ REMEMBER: Create a separate project folder
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/yourdir/practical_1</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/yourdir/practical_1</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Then symlink the data directory in the n2bin-gu project dir </span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span>  /cephyr/NOBACKUP/groups/n2bin_gu/data/fastq ./data </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make this practical directory in your home directory on HPC AND your local computer</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/yourdir/practical_1</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/yourdir/practical_1</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Then symlink the data directory in the n2bin-gu project dir for easy access on the HPC</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span>  /cephyr/NOBACKUP/groups/n2bin_gu/BIO511/data/fastq ./data</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy the files you need to your local computer as well, but DONT overwrite the original files!</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># You can use scp or rsync for this</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="at">-r</span> CID@vera2.c3se.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/data/fastq ./data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -334,13 +339,18 @@ Learning Objectives
 <section id="obtaining-sample-data" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="obtaining-sample-data"><span class="header-section-number">2.1</span> Obtaining sample data</h2>
 <p>For this excersise, we offer a set of fastq file for you to Use Begin by navigating to your symlinked data directory and look at the Files</p>
-<p>You wont need to copy the files to your working directory, but make sure that any edits you make dont overwrite the original files!</p>
+<p>You wont need to copy the files to your working directory, but make sure that any edits you make dont overwrite the original files! If you want you can also do this step on your local computer!</p>
 </section>
 <section id="examining-fastq-structure" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="examining-fastq-structure"><span class="header-section-number">2.2</span> Examining FASTQ structure</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the first few reads from a compressed file</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Use this code example for each of the sample files in the data dir</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> sample1_R1.fastq <span class="kw">|</span> <span class="fu">head</span> <span class="at">-8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Either untar the files first, or use zcat to read them directly</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xvzf</span> sample1_R1.fastq.gz</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> sample1_R1.fastq <span class="kw">|</span> <span class="fu">head</span> <span class="at">-8</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># or </span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> sample1_R1.fastq.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Each sequencing read in a FASTQ file consists of four lines:</p>
 <pre><code>@read_identifier_and_description
 ATCGATCGATCGATCG...
@@ -371,6 +381,7 @@ Key Questions
 <p>fastp is a modern version of what FastQC used to do (in case youve used that before), it is an all-in-one preprocessing tool that combines quality assessment, adapter trimming, and quality filtering in a single program. Unlike the traditional FastQC + Trim Galore workflow, fastp provides integrated analysis with excellent performance. As you likely remember, we set up fastp on your computer locally last practical, so lets use it now.</p>
 <section id="fastp-analysis" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="fastp-analysis"><span class="header-section-number">3.1</span> Fastp analysis</h2>
+<p>This step must be done on your local computer, make sure you download the data with scp first!</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Begin by creating an output directory for your QC results</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> fastp_results</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
