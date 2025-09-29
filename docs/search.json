@@ -1,178 +1,301 @@
 [
   {
-    "objectID": "PRACTICAL_SETTING_UP_THE_HPC.html",
-    "href": "PRACTICAL_SETTING_UP_THE_HPC.html",
-    "title": "Practical 2: Connecting to the HPC",
+    "objectID": "PRACTICAL_ASSEMBLY_AND_MAPPING.html",
+    "href": "PRACTICAL_ASSEMBLY_AND_MAPPING.html",
+    "title": "Practical 2: De novo Assembly and Mapping",
     "section": "",
-    "text": "1 Introduction\nThis tutorial is to take you through the final steps of setting up and accessing the c3se High Performance Computing infrastructure. The specific cluster we will use is called Vera. You will be introduced to this cluster in the lecture and here you can find more information about it, including what resources that are available, how to run jobs and other documentation.\nWe will walk you through step by step in this tutorial so that we (hopefully) can assist if there are any problems.\n\n\n\n\n\n\nPre-course setup\n\n\n\nTo be able to follow these steps you first have to have followed the steps of the Pre-course Setup including registration at SUPR and application to the course HPC project.\n\n\n\n\n\n2 Adding Vera/c3se at SUPR\n\nLog in to SUPR\nClick “Accounts” in the left side menu\nRequest access to Vera/c3se\n\n\n\n\n3 Setting up a Chalmers ID\n\nNavigate to https://myaccount.chalmers.se/.\nLog in with your GU account.\nChoose “Activate CID” and follow the instructions to activate your account\n\n\n\n\n\n\n\nRemember your password!\n\n\n\nThe CID username and password are the ones you will use to log in to the cluster\n\n\n\n\n\n4 Setting up Chalmers VPN\nTo be able to access c3se from other networks than in GU or Chalmers, you will need a Chalmers VPN\n\nNavigate to https://chalmers.topdesk.net/tas/public/ssp/content/detail/knowledgeitem?unid=07e6154089a648d09711ccc42a42fc88\nFollow the instructions to set up the Chalmers VPN\n\n\n\n\n5 Connecting to the HPC using ssh in VSCode\nTo be able to connect to the HPC in a manner that will let you use the full suite of tools available (or most of them at least) in VSCode, you will need to install the Remote - SSH extension.\n\nOpen VSCode\nGo to the Extensions view by clicking on the Extensions icon in the Activity Bar on the side of the window or by pressing Ctrl+Shift+X\nSearch for “Remote - SSH” and install the extension by Microsoft (if youre unsure how install extensions, see here)\nAfter installation, you will see a new icon in the Activity Bar on the side of the window. Click on it to open the Remote Explorer view.\n\nIf the SSH Targets are not visible, click on the drop down to expand the view\n\nClick on the + (“New Remote”) icon next to SSH header to add a new SSH host\nIn the input box that appears, enter the SSH connection string for Vera: &lt;your_chalmers_id&gt;@vera1.c3se.chalmers.se (replace &lt;your_chalmers_id&gt; with your actual Chalmers ID)\nPress Enter to confirm\nYou will be prompted to select the SSH configuration file to update. Choose the default option (usually ~/.ssh/config)\n\nOnce you have added the SSH host, you can connect to Vera:\n\nIn the Remote Explorer view, find the Vera entry under SSH Targets (or by clicking on the blue “remote window” icon in the bottom left corner of VSCode)\n\nClick on the “Connect to Host” icon (an arrow if you want the same window, square if you want a new one) next to the Vera entry\nIf you clicked on the blue “remote window” icon, select “Remote-SSH: Connect to Host…” and then select the Vera entry\n\nA new VSCode window will open, and you will be prompted to enter your Chalmers ID password\nAfter entering your password, you should be connected to Vera, and you can start working on the HPC cluster directly from VSCode. Make sure that you open your home folder on Vera to open up a workspace.\nYou can verify that you are connected to Vera by opening a new terminal in VSCode (Terminal &gt; New Terminal) and checking the hostname in the terminal prompt. It should show something like your_chalmers_id@vera:~$",
+    "text": "After quality control, the next critical step in genomic analysis is either mapping reads to a reference genome or performing de novo assembly to reconstruct genomes from scratch. This practical will guide you through both processes, focusing on de novo assembly using long reads from Oxford Nanopore Technologies (ONT) and assessing assembly quality. We will use tools like Flye for assembly, Quast for quality assessment, and MultiQC for comprehensive reporting. Additionally, we will also explore hybrid assembly techniques that combine long and short reads for improved accuracy, which will introduce you to the concept of mapping reads.\n\n\n\n\n\n\nREMEMBER: Create a separate project folder\n\n\n\n# Remember to make separate project folders for this practical\n# How you structure your workspace is up to you, but make sure to adjust the paths in the scripts below accordingly\n# EXAMPLE:\nmkdir -p ~yourdir/bio511/practical_2\n\n# Symlink the data folder to your project directory\nln -s /cephyr/NOBACKUP/groups/n2bin_gu/BIO511/data ./data\n\n# Or if you need to use the data locally, copy it\nscp -r CID@vera2.c3se.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/data ./data\n\n\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end of this practical, you will be able to:\n\nUnderstand the differences between reference mapping and de novo assembly\nPerform de novo assembly using Flye for long reads\nAssess assembly quality using Quast\nGenerate comprehensive reports with MultiQC\nCombine long and short reads for hybrid assembly and polishing (optional)",
     "crumbs": [
-      "Intro to Command Line",
-      "Practical 2: Setting up the HPC"
+      "Practical 2: Genome Assembly and Mapping"
     ]
   },
   {
-    "objectID": "PRACTICAL_GIT_SESSION1.html",
-    "href": "PRACTICAL_GIT_SESSION1.html",
-    "title": "Git Fundamentals: Session 1",
+    "objectID": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#a-summary",
+    "href": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#a-summary",
+    "title": "Practical 2: De novo Assembly and Mapping",
+    "section": "2.1 A summary",
+    "text": "2.1 A summary\nDe Novo Assembly is used commonly when:\n\nNo reference genome exists for your organism, or the reference is hard to get good coverage (ie. bacteria with high pangenomic diversity)\nStudying structural variations or novel sequences\nWorking with metagenomes or mixed communities (where maybe the a total genome is not really needed, rather the genetic content)\n\nReference Mapping is preferred when:\n\nA high-quality reference genome is available\nThe goal is to identify variants relative to a known sequence\nWorking with well-characterized organisms\nOften less relevant to bacteria, due to the aforementioned pangenomic diversity",
+    "crumbs": [
+      "Practical 2: Genome Assembly and Mapping"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#data-requirements-and-considerations",
+    "href": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#data-requirements-and-considerations",
+    "title": "Practical 2: De novo Assembly and Mapping",
+    "section": "2.2 Data requirements and considerations",
+    "text": "2.2 Data requirements and considerations\nFor this practical, we’ll work with long reads to better prepare you for your own projects. We will mainly focus on de novo assembly using Flye. If you have time to do the optional advanced exercise, you can also explore hybrid assembly approaches that combine long and short reads in order to polish the assembly; it also introduces the concept of mapping reads to an assembly.",
+    "crumbs": [
+      "Practical 2: Genome Assembly and Mapping"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#job-1-basic-ont-assembly",
+    "href": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#job-1-basic-ont-assembly",
+    "title": "Practical 2: De novo Assembly and Mapping",
+    "section": "3.1 Job 1: Basic ONT Assembly",
+    "text": "3.1 Job 1: Basic ONT Assembly\nFirst, let’s create a job script for a basic assembly with no polishing:\n#!/bin/bash\n#SBATCH -A C3SE408-25-2\n#SBATCH -J flye_basic\n#SBATCH -p vera\n#SBATCH -N 1 --cpus-per-task=16\n#SBATCH -t 01:30:00\n#SBATCH --output=/cephyr/users/ktor/Vera/practical_2/logs/flye_basic_%j.out\n#SBATCH --error=/cephyr/users/ktor/Vera/practical_2/logs/flye_basic_%j.err\n\n# Set paths - ADJUST THESE TO YOUR ACTUAL PATHS\nDATA_PATH=\"/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/data/fastq/Assembly_reads\"\nRESULTS_PATH=\"/cephyr/NOBACKUP/groups/n2bin_gu/students/yourname/practical_2\"\nSINGULARITY_PATH=\"/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/singularity_images/flye.sif\"\n\n# Set bind paths for Singularity\nexport SINGULARITY_BINDPATH=\"${DATA_PATH}:/data,${RESULTS_PATH}:/results\"\n\n# Set sample and output paths\nONT_READS=\"${DATA_PATH}/CAN-290_ONT.fastq.gz\"\nOUTPUT_DIR=\"${RESULTS_PATH}/assembly/flye_basic\"\n\n# Create output directories\nmkdir -p ${OUTPUT_DIR}\n\n# Run Flye assembly with basic settings\nsingularity exec ${SINGULARITY_PATH} flye --nano-raw /data/CAN-290_ONT.fastq.gz \\\n     --out-dir /results/assembly/flye_basic \\\n     --threads 16 \\\n     --iterations 0\n\necho \"Basic ONT assembly completed\"",
+    "crumbs": [
+      "Practical 2: Genome Assembly and Mapping"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#job-2-polished-ont-assembly",
+    "href": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#job-2-polished-ont-assembly",
+    "title": "Practical 2: De novo Assembly and Mapping",
+    "section": "3.2 Job 2: Polished ONT Assembly",
+    "text": "3.2 Job 2: Polished ONT Assembly\nNow create a second job with more aggressive polishing parameters:\n#!/bin/bash\n#SBATCH -A C3SE408-25-2\n#SBATCH -J flye_polished\n#SBATCH -p vera  \n#SBATCH -N 1 --cpus-per-task=12\n#SBATCH -t 02:30:00\n#SBATCH --output=/cephyr/users/ktor/Vera/practical_2/logs/flye_polished_%j.out\n#SBATCH --error=/cephyr/users/ktor/Vera/practical_2/logs/flye_polished_%j.err\n\n# Set paths - ADJUST THESE TO YOUR ACTUAL PATHS  \nDATA_PATH=\"/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/data/fastq/Assembly_reads\"\nRESULTS_PATH=\"/cephyr/NOBACKUP/groups/n2bin_gu/students/yourname/practical_2\"\nSINGULARITY_PATH=\"/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/singularity_images/flye.sif\"\n\n# Set bind paths for Singularity\nexport SINGULARITY_BINDPATH=\"${DATA_PATH}:/data,${RESULTS_PATH}:/results\"\n\n# Set sample and output paths\nONT_READS=\"${DATA_PATH}/CAN-290_ONT.fastq.gz\"\nOUTPUT_DIR=\"${RESULTS_PATH}/assembly/flye_polished\"\n\n# Create output directories\nmkdir -p ${OUTPUT_DIR}\n\n# Run Flye assembly with enhanced polishing\nsingularity exec ${SINGULARITY_PATH} flye --nano-raw /data/CAN-290_ONT.fastq.gz \\\n     --out-dir /results/assembly/flye_polished \\\n     --threads 12 \\\n     --iterations 5 \\\n\necho \"Polished ONT assembly completed\"\nSubmit both jobs:\n# Submit the assembly jobs\nsbatch flye_basic_job.slurm\nsbatch flye_polished_job.slurm\n\n# Monitor job status\nsqueue -u $USER",
+    "crumbs": [
+      "Practical 2: Genome Assembly and Mapping"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#running-quast-for-assembly-statistics",
+    "href": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#running-quast-for-assembly-statistics",
+    "title": "Practical 2: De novo Assembly and Mapping",
+    "section": "4.1 Running QUAST for Assembly Statistics",
+    "text": "4.1 Running QUAST for Assembly Statistics\nQUAST provides comprehensive assembly statistics and quality metrics:\n#!/bin/bash\n#SBATCH -A C3SE408-25-2\n#SBATCH -J quast_analysis\n#SBATCH -p vera\n#SBATCH -N 1 --cpus-per-task=4\n#SBATCH -t 01:00:00\n#SBATCH --output=/cephyr/users/ktor/Vera/practical_2/logs/quast_%j.out\n#SBATCH --error=/cephyr/users/ktor/Vera/practical_2/logs/quast_%j.err\n\n# Load or use containerized QUAST\nCONTAINER_PATH=\"/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/singularity_images/quast.sif\"\n\n# Set paths - ADJUST THESE TO YOUR ACTUAL PATHS\nDATA_PATH=\"/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/data/fastq/Assembly_reads\"\nRESULTS_PATH=\"/cephyr/NOBACKUP/groups/n2bin_gu/students/yourname/practical_2\"\nOUTPUT_DIR=\"${RESULTS_PATH}/results/quast_results\"\n\n# Set the path to the assemblies\nASSEMBLIES_DIR=\"${RESULTS_PATH}/assembly\"\n\n# Bind paths for container\nexport SINGULARITY_BINDPATH=\"${ASSEMBLIES_DIR}:/assemblies,${OUTPUT_DIR}:/output\"\n\n# Create output directory\nmkdir -p ${OUTPUT_DIR}\n\n# Run QUAST on both assemblies\nsingularity exec ${CONTAINER_PATH} quast.py \\\n    -o ${OUTPUT_DIR} \\\n    --threads 4 \\\n    --plots-format png \\\n    --labels \"Basic,Polished\" \\\n    /assemblies/flye_basic/assembly.fasta \\\n    /assemblies/flye_polished/assembly.fasta\n\necho \"QUAST analysis completed\"",
+    "crumbs": [
+      "Practical 2: Genome Assembly and Mapping"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#look-at-base-assembly-statistics",
+    "href": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#look-at-base-assembly-statistics",
+    "title": "Practical 2: De novo Assembly and Mapping",
+    "section": "4.2 Look at base assembly statistics",
+    "text": "4.2 Look at base assembly statistics\nWhile waiting for the QUAST job to finish, you can look at some basic assembly statistics provided by Flye in the assembly_info.txt file located in each assembly output directory, if you want. Make sure that you understand what each metric means. Google any terms you are unfamiliar with!",
+    "crumbs": [
+      "Practical 2: Genome Assembly and Mapping"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#preparing-data-for-multiqc",
+    "href": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#preparing-data-for-multiqc",
+    "title": "Practical 2: De novo Assembly and Mapping",
+    "section": "5.1 Preparing Data for MultiQC",
+    "text": "5.1 Preparing Data for MultiQC\n# Create a comprehensive results directory structure\nmkdir -p multiqc_analysis/{assembly_qc,quast_results,kraken2_results}\n\n# Copy QUAST results\nscp -r CID@vera2.c3se.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/students/name/results/quast_results/* multiqc_analysis/quast_results/\n\n# We have also prepared some kraken2 results for the reads that you can include in your report\nscp -r CID@vera2.c3se.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/teachers/Tor/extra_data/kraken2_results/* multiqc_analysis/kraken2_results/",
+    "crumbs": [
+      "Practical 2: Genome Assembly and Mapping"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#running-multiqc",
+    "href": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#running-multiqc",
+    "title": "Practical 2: De novo Assembly and Mapping",
+    "section": "5.2 Running MultiQC",
+    "text": "5.2 Running MultiQC\n# Navigate to analysis directory\ncd multiqc_analysis\n\n# Run MultiQC to aggregate all results\nmultiqc . \\\n    --title \"BIO511 Practical 2 - Assembly Analysis\" \\\n    --filename \"practical2_assembly_report\" \\\n    --dirs \\\n    --dirs-depth 2 \\\n    --force",
+    "crumbs": [
+      "Practical 2: Genome Assembly and Mapping"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#assembly-quality-metrics",
+    "href": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#assembly-quality-metrics",
+    "title": "Practical 2: De novo Assembly and Mapping",
+    "section": "6.1 Assembly Quality Metrics",
+    "text": "6.1 Assembly Quality Metrics\nUse your QUAST reports and MultiQC output to answer:\n\nWhat is the total assembly size for each assembly? How many contigs were generated in each assembly?\nWhat is the N50 value for each? What is L50, or L90? What do these metrics tell you about the assembly quality?\nHow do the basic and polished assemblies compare? Which assembly has better contiguity (fewer, longer contigs)?\nHow does the assembly size compare to the expected genome size? What is the expected genome size for H. pylori?\nWhat additional data or methods would you recommend to improve this assembly?",
+    "crumbs": [
+      "Practical 2: Genome Assembly and Mapping"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#understanding-hybrid-assembly",
+    "href": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#understanding-hybrid-assembly",
+    "title": "Practical 2: De novo Assembly and Mapping",
+    "section": "7.1 Understanding Hybrid Assembly",
+    "text": "7.1 Understanding Hybrid Assembly\nAn example of a hybrid assembly workflow is:\n\nInitial assembly with long reads (Flye)\nMapping short reads to the assembly (BWA)\nFiltering alignments for optimal polishing\nPolishing the assembly using the filtered short reads (Polypolish)",
+    "crumbs": [
+      "Practical 2: Genome Assembly and Mapping"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#setting-up-hybrid-assembly",
+    "href": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#setting-up-hybrid-assembly",
+    "title": "Practical 2: De novo Assembly and Mapping",
+    "section": "7.2 Setting up Hybrid Assembly",
+    "text": "7.2 Setting up Hybrid Assembly\n#!/bin/bash\n#SBATCH -A C3SE408-25-2\n#SBATCH -J hybrid_assembly\n#SBATCH -p vera\n#SBATCH -N 1 --cpus-per-task=12\n#SBATCH -t 03:00:00\n#SBATCH --output=/cephyr/users/ktor/Vera/practical_2/logs/hybrid_%j.out\n#SBATCH --error=/cephyr/users/ktor/Vera/practical_2/logs/hybrid_%j.err\n\n# Set paths - ADJUST THESE TO YOUR ACTUAL PATHS\nDATA_PATH=\"/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/data/fastq/Assembly_reads\"\nRESULTS_PATH=\"/cephyr/NOBACKUP/groups/n2bin_gu/students/yourname/practical_2\"\nFLYE_CONTAINER=\"/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/singularity_images/flye.sif\"\nPP_CONTAINER=\"/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/singularity_images/polypolish.sif\"\n\n# Set bind paths for Singularity\nexport SINGULARITY_BINDPATH=\"${DATA_PATH}:/data,${RESULTS_PATH}:/results\"\n\n# Set sample and output paths\nONT_READS=\"${DATA_PATH}/CAN-290_ONT.fastq.gz\"\nSHORT_R1=\"${DATA_PATH}/CAN-290_R1.fastp.fq.gz\"\nSHORT_R2=\"${DATA_PATH}/CAN-290_R2.fastp.fq.gz\"\nOUTPUT_DIR=\"${RESULTS_PATH}/hybrid_assembly/results\"\nSAMPLE_NAME=\"hybrid_assembly\"\n\n# Create output directory\nmkdir -p ${OUTPUT_DIR}\n\n# Run the first Flye assembly (if not already done)\n# If you have already done the Flye assembly in previous steps, you can skip this step by commenting it out\necho \"Step 1: Running initial Flye assembly with ONT reads...\"\nsingularity exec ${FLYE_CONTAINER} flye --nano-raw /data/CAN-290_ONT.fastq.gz \\\n     --out-dir /results/hybrid_assembly/results/flye_initial \\\n     --threads 12 \\\n     --iterations 2\n\n# Step 2: Map short reads to the assembly using BWA\n# Mapping the short reads to the draft assembly is essential to identify mismatched regions for polishing\necho \"Step 2: Mapping short reads to assembly with BWA...\"\nsingularity exec ${PP_CONTAINER} bwa index ${OUTPUT_DIR}/flye_initial/assembly.fasta\n\nsingularity exec ${PP_CONTAINER} bwa mem -t 12 ${OUTPUT_DIR}/flye_initial/assembly.fasta \\\n         ${SHORT_R1} &gt; ${OUTPUT_DIR}/aligned_R1.sam\nsingularity exec ${PP_CONTAINER} bwa mem -t 12 ${OUTPUT_DIR}/flye_initial/assembly.fasta \\\n         ${SHORT_R2} &gt; ${OUTPUT_DIR}/aligned_R2.sam\n\n# Step 3: Filter alignments for Polypolish\n# By filtering the alignments, we ensure that only high-quality mappings are used for polishing\necho \"Step 3: Filtering alignments for Polypolish...\"\nsingularity exec ${PP_CONTAINER} polypolish filter \\\n    --in1 ${OUTPUT_DIR}/aligned_R1.sam --in2 ${OUTPUT_DIR}/aligned_R2.sam \\\n    --out1 ${OUTPUT_DIR}/filtered_R1.sam --out2 ${OUTPUT_DIR}/filtered_R2.sam \n\n# Step 4: Polish the assembly with Polypolish\n# Finally, we use Polypolish to correct errors in the assembly based on the filtered short-read alignments\necho \"Step 4: Polishing assembly with Polypolish...\"\nsingularity exec ${PP_CONTAINER} polypolish polish \\\n    ${OUTPUT_DIR}/flye_initial/assembly.fasta \\\n    ${OUTPUT_DIR}/filtered_R1.sam ${OUTPUT_DIR}/filtered_R2.sam &gt; ${OUTPUT_DIR}/${SAMPLE_NAME}.fasta\n\necho \"Hybrid assembly completed: ${SAMPLE_NAME}.fasta\"\n# Submit the hybrid assembly job\nsbatch hybrid_assembly_job.slurm",
+    "crumbs": [
+      "Practical 2: Genome Assembly and Mapping"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#comparing-three-assembly-approaches",
+    "href": "PRACTICAL_ASSEMBLY_AND_MAPPING.html#comparing-three-assembly-approaches",
+    "title": "Practical 2: De novo Assembly and Mapping",
+    "section": "7.3 Comparing Three Assembly Approaches",
+    "text": "7.3 Comparing Three Assembly Approaches\nAfter the hybrid assembly completes, you can compare all three approaches:\n#!/bin/bash\n#SBATCH -A C3SE408-25-2\n#SBATCH -J quast_all\n#SBATCH -p vera\n#SBATCH -N 1 --cpus-per-task=4\n#SBATCH -t 01:00:00\n#SBATCH --output=/cephyr/users/ktor/Vera/practical_2/logs/quast_all_%j.out\n#SBATCH --error=/cephyr/users/ktor/Vera/practical_2/logs/quast_all_%j.err\n\n# Set paths - ADJUST THESE TO YOUR ACTUAL PATHS\nCONTAINER_PATH=\"/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/singularity_images/quast.sif\"\nRESULTS_PATH=\"/cephyr/NOBACKUP/groups/n2bin_gu/students/yourname/practical_2\"\nOUTPUT_DIR=\"${RESULTS_PATH}/results/quast_all_results\"\n\n# Set the path to the assemblies\nASSEMBLIES_DIR=\"${RESULTS_PATH}/assembly\"\nASSEMBLIES_DIR_HYBRID=\"${RESULTS_PATH}/hybrid_assembly/results\"\n\n# Bind paths for container\nexport SINGULARITY_BINDPATH=\"${ASSEMBLIES_DIR}:/assemblies,${ASSEMBLIES_DIR_HYBRID}:/assemblies_hybrid,${OUTPUT_DIR}:/output\"\n\nmkdir -p ${OUTPUT_DIR}\n\n# Run QUAST on all three assemblies\nsingularity exec ${CONTAINER_PATH} quast.py \\\n    -o ${OUTPUT_DIR} \\\n    --threads 4 \\\n    --plots-format png \\\n    --labels \"Basic,Polished,Hybrid\" \\\n    /assemblies/flye_basic/assembly.fasta \\\n    /assemblies/flye_polished/assembly.fasta \\\n    /assemblies_hybrid/hybrid_assembly.fasta\n\necho \"Complete QUAST analysis finished\"\n\n\n\n\n\n\n\nKey Takeaways\n\n\n\n\nAssembly vs. Mapping: Choose based on your research questions and available references, in many cases both are needed or useful\nQuality Assessment: Multiple metrics are needed to evaluate assembly and mapping quality\nTool Selection: Different tools excel in different scenarios - Flye for long reads, BWA for accurate short-read alignment in polishing workflows\nIterative Process: Assembly and mapping often require parameter optimization and multiple iterations of the same workflow, also polishing steps may sometimes need more or less iterations to generate balanced results\nComprehensive Reporting: As assemblies are rich in data, tools like MultiQC help gather results for quick and big picture interpretation",
+    "crumbs": [
+      "Practical 2: Genome Assembly and Mapping"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html",
+    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html",
+    "title": "Practical 5: Software Installation and Containers",
     "section": "",
-    "text": "In this first session, you will learn the Git workflow: initialize a repository, make clean commits, inspect history, ignore generated files, and do a simple branch-and-merge.\nWhy this matters for bioinformatics - Reproducibility: record exactly what changed and when. - Safety: experiment on branches without breaking your main work. - Collaboration: a clear, searchable history others can follow.\n\n\n\n\n\n\nLearning Outcomes\n\n\n\nBy the end of this session, you can: 1) Initialize a repo and configure your identity 2) Stage and commit with clear, focused messages 3) Inspect unstaged vs staged changes and view history 4) Use .gitignore to keep clutter out of Git 5) Create a short-lived feature branch, merge it, and clean up",
+    "text": "Up until now youve had to make everything by yourself (sort of, at least using base programs that come with your unix distro). This approach, while flexible, defeats one of they key benefits of modern bioinformatics; Open source and collaborative solutions to large data handling. Thanks to a lot of effort, there are countless of free, open-source tools available in various repositiories on the internet.\nHowever these tools, while saving us a lot of time, may be tricky to find and set up correctly. Different tools require different dependencies, versions, or system libraries. This often leads to complex webs of libraries and packages that act as the backbone of your code, which can be difficult to manage and reproduce on other systems. In this practical, you’ll learn where to find tools, various ways of installing an managing them (conda, apt), cloning repos from GitHub, and—most importantly—how to package tools in a Singularity/Apptainer containers that you can copy to, and run, anywhere (including HPC environments).\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end of this practical you should be able to:\n\nFind and identify bioinformatics tools in public repositories\nInstall software locally using package managers (apt, conda)\nCreate and manage conda environments for isolated software setups\nWrite a basic Singularity definition file to create a container from a base image\nBuild and test a Singularity container locally\nTransfer and run a Singularity container on an HPC using SLURM\n\n\n\n\n\n\n\n\n\n\nREMEMBER: Create a separate project folder\n\n\n\nmkdir -p ~/yourdir/practical_5\ncd ~/yourdir/practical_5",
     "crumbs": [
-      "Coding Best Practices",
-      "Practical 1: Git Fundamentals: Session 1"
+      "Intro to Command Line",
+      "Practical 5: Software & Containers"
     ]
   },
   {
-    "objectID": "PRACTICAL_GIT_SESSION1.html#introduction",
-    "href": "PRACTICAL_GIT_SESSION1.html#introduction",
-    "title": "Git Fundamentals: Session 1",
+    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#exercises-discover-tools",
+    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#exercises-discover-tools",
+    "title": "Practical 5: Software Installation and Containers",
+    "section": "2.1 Exercises: Discover tools",
+    "text": "2.1 Exercises: Discover tools\n# Explore apt \n# Find which apt subcommand lists packages for the following queries:\napt search kraken2\napt search singularity\napt search prokka\n\n# Lets look a little closer at prokka:\napt show prokka\n\n# Explore a tool on GitHub:\n#   1) Find the repository for 'BAKTA'\n#   2) Locate the installation methods, what options are available?\n#   3) Identify dependencies and OS requirements",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 5: Software & Containers"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#setting-up-conda",
+    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#setting-up-conda",
+    "title": "Practical 5: Software Installation and Containers",
+    "section": "3.1 Setting up Conda",
+    "text": "3.1 Setting up Conda\nTo begin with, we will install Miniconda, a minimal installer for Conda. Conda is an open-source package management system and environment management system that runs on Windows, macOS, and Linux. It quickly installs, runs, and updates packages and their dependencies. Conda also creates, saves, loads, and switches between environments on your local computer. This is particularly useful in bioinformatics, where different projects may require different versions of software and libraries.\n# Install Miniconda\n# For this we need to fetch files from the internet via wget \nwget -O Miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh\nbash Miniconda.sh -b -p $HOME/miniconda3\n\n# Initialize shell and set channels\neval \"$($HOME/miniconda3/bin/conda shell.bash hook)\"\nconda init\n\n# Open a new shell terminal\n\n# Configure channels for bioconda packages, a specialized repository for bioinformatics software\nconda config --add channels conda-forge\nconda config --add channels bioconda\nconda config --set channel_priority strict",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 5: Software & Containers"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#install-fastp-locally-via-apt",
+    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#install-fastp-locally-via-apt",
+    "title": "Practical 5: Software Installation and Containers",
+    "section": "3.2 Install fastp locally via apt",
+    "text": "3.2 Install fastp locally via apt\nNext up, we will install fastp locally using apt, the default package manager for Debian-based Linux distributions. You will encounter fastp later in the genomics workflow praticals, its a tool inteded for quality control and preprocessing of FASTQ read files.\n# Before we install anything via apt, its always a good idea to update the package lists\n# This ensures you get the latest versions available in the repositories\nsudo apt update\n\n# Search for fastp package in apt repositories\napt search fastp\n\n# Install fastp\nsudo apt install -y fastp\n\n# Verify installation\nfastp --version",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 5: Software & Containers"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#use-conda-to-install-multiqc-locally",
+    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#use-conda-to-install-multiqc-locally",
+    "title": "Practical 5: Software Installation and Containers",
+    "section": "3.3 Use Conda to install MultiQC locally",
+    "text": "3.3 Use Conda to install MultiQC locally\nFor this segment we will install MultiQC, a tool that aggregates results from bioinformatics analyses across many samples into a single report. This is particularly useful for summarizing the output of tools like FastQC. Our install will be done in a conda enviroment, installing the version hosted on bioconda.\n# Create a new conda environment named MultiQC with python 3.9\nconda create -n MultiQC python=3.9\n\n# Activate the environment\nconda activate MultiQC\n\n# Install MultiQC from bioconda\nconda install multiqc\n\n# Verify installation\nmultiqc --version",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 5: Software & Containers"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#containerization-with-singularity",
+    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#containerization-with-singularity",
+    "title": "Practical 5: Software Installation and Containers",
+    "section": "4.1 Containerization with Singularity",
+    "text": "4.1 Containerization with Singularity\nContainers are a way to package software and its dependencies into a single, portable unit that can run consistently across different computing environments. Unlike virtual machines, containers share the host system’s kernel, making them more lightweight and efficient. This is particularly useful in bioinformatics, where software often has complex dependencies and needs to run on various systems, including high-performance computing (HPC) clusters.\nOn HPC you usually cannot sudo and may not be allowed to build images on the login/compute nodes. Best practice is then: - Build the image locally (or via a remote builder). - Copy the .sif to the HPC. - Bind-mount data and databases at runtime.",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 5: Software & Containers"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#a-minimal-kraken2-singularity-definition-file",
+    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#a-minimal-kraken2-singularity-definition-file",
+    "title": "Practical 5: Software Installation and Containers",
+    "section": "4.2 A minimal kraken2 Singularity definition file",
+    "text": "4.2 A minimal kraken2 Singularity definition file\nThe first step to creating a singularity container is to write a definition file. This file describes the base image, metadata, and the steps needed to install and configure the software inside the container. In many cases it will be simple, if an already hosted image exists (e.g. on BioContainers), luckily kraken2 is one of those cases. if you want to learn more about writing definition files, check out the Singularity documentation.\nCreate a file named kraken2.def with the contents below. It uses the BioContainers kraken2 image as a base.\n# kraken2.def\nBootstrap: docker\nFrom: quay.io/biocontainers/kraken2:2.1.6--pl5321h077b44d_0\n\n%labels\n    maintainer Y/N\n    org.opencontainers.image.title \"kraken2\"\n    org.opencontainers.image.source \"https://github.com/DerrickWood/kraken2\"\n\n%help\n    # Help exists to provide users with information about the container.\n    # Running `singularity run-help kraken2.sif` will display this message.\n    \n    Kraken 2 in a Singularity/Apptainer container.\n    \n    Bind your database at runtime, e.g. --bind /path/to/db:/db and use --db /db.\n\n    Used for the BIO511 Genomics course at Univsersity of Gothenburg.\n\n%post\n  # Here is where you would install additional software if needed and make config changes.\n  # However, the BioContainers image already has kraken2 installed.\n\n  # But for the hell of it, put a little text file in /home\n    echo \"This is a kraken2 container built from BioContainers base image.\" &gt; /home/kraken2_info.txt\n\n    # Echo a message to indicate successful build\n    echo \"kraken2 installed. Use --bind to mount a database at runtime.\"\n\n%environment\n    # Here is where you would usually set environment variables.\n    # However, the BioContainers image already has kraken2 in PATH. so nothing needed here.",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 5: Software & Containers"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#build-test-and-run-locally",
+    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#build-test-and-run-locally",
+    "title": "Practical 5: Software Installation and Containers",
+    "section": "4.3 Build, test, and run locally",
+    "text": "4.3 Build, test, and run locally\n# Build a read-only image from the def file (locally)\nsingularity build kraken2.sif kraken2.def\n\n# Test that kraken works by running a version check\nsingularity exec kraken2.sif kraken2 --version\n\n# We also made a little text file in /home, lets check that too\n# For this, try to shell into the container and once your in try to print the contents of the file to stdout\nsingularity shell kraken2.sif",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 5: Software & Containers"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#slurm-job-script-to-invoke-singularity-container-based-software",
+    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#slurm-job-script-to-invoke-singularity-container-based-software",
+    "title": "Practical 5: Software Installation and Containers",
+    "section": "5.1 SLURM job script to invoke singularity container based software",
+    "text": "5.1 SLURM job script to invoke singularity container based software\nAs you already know, running software in the login node of an HPC is frowned upon. Instead, you should submit jobs to the scheduler (SLURM in this case), which allows you to take up space on one of the production nodes in the cluster. Below is a example of a SLURM job script that i (Tor) have used to run a Roary pangenome analysis on another cluster. Se if you can configure it to run kraken2 instead. All HPCs are different, so make sure to adjust paths, partitions, memory, time, etc to fit your HPC. The manual for Vera can be found here.\n#!/bin/bash -l\n#SBATCH -A nbin2-gu               # Project ID\n#SBATCH -J Roary_Pangenome        # Job name\n#SBATCH -t 20:00:00               # Time limit \n#SBATCH -n 1                      # Number of tasks (processes)\n#SBATCH -p main                   # Partition to submit to\n#SBATCH --mem=200G                # Memory per node\n#SBATCH --output=/cfs/klemming/projects/supr/naiss2024-22-639/05_PANGENOME_ANALYSIS/logs/roary_%j.out  # Standard output\n#SBATCH --error=/cfs/klemming/projects/supr/naiss2024-22-639/05_PANGENOME_ANALYSIS/logs/roary_%j.err   # Standard error\n\n# Load necessary modules (Do you need to load any modules for singularity on your HPC?)\nml singularity/4.1.1-cpeGNU-23.12\n\n# Define paths to script and container\nSINGULARITY_CONTAINER=\"/cfs/klemming/projects/supr/naiss2024-22-639/DBGWAS_test\"\"\n\n# Execute script within singularity environment\nsrun singularity exec -B /cfs/klemming/projects/supr/nbin2-gu:/mnt/data $SINGULARITY_CONTAINER roary -e --mafft -p 8 -f /mnt/data/05_PANGENOME_ANALYSIS/output/ /mnt/data/05_PANGENOME_ANALYSIS/input/*.gff\nOnce a jobscript is done, you can submit it to SLURM with the sbatch command, monitor its progress with squeue, and check the output files once its done.\nWe wont be running a jobscript for kraken2 here, but try to set one up yourself. You can use the jobscript above as a template Well run kraken2 for real in the next practical\n# Example of submitting a jobscript\nsbatch job_kraken2.slurm\n\n# Monitor\nsqueue -u $USER\n# or \nscontrol show job JOBID\n\n# Check output files\ntail -20 kraken2_12345.out\n\n\n\n\n\n\n\nKey Takeaways\n\n\n\n\nPackage managers (apt, conda) simplify software installation and dependency management.\nConda environments allow for isolated setups, preventing conflicts between projects.\nContainers (Singularity/Apptainer) provide portability and reproducibility across different systems.\nAlways bind necessary directories (data, databases) when running containers on HPC.\n\n\n\n\n\n\n\n\n\nPro Tips\n\n\n\n\nTest containers locally before HPC deployment. Run exec, shell, and run commands to ensure functionality.\nKeep containers minimal; BioContainers images are a quick and reliable base.\nUse %help and labels in your definition file; inspect with singularity run-help and singularity inspect. This helps reproducibility for other users.\nBind data with --bind host_dir:container_dir; pass multiple directories with variables\nIn some cases, you may need additional config for your runs. Instead of making complex invokes in the jobscript, consider writing a script to run the analysis, and then invoke that script within the container.",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 5: Software & Containers"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_RAWDATA_AND_QC.html",
+    "href": "PRACTICAL_RAWDATA_AND_QC.html",
+    "title": "Practical 1: Raw Read Data and Quality Control",
     "section": "",
-    "text": "In this first session, you will learn the Git workflow: initialize a repository, make clean commits, inspect history, ignore generated files, and do a simple branch-and-merge.\nWhy this matters for bioinformatics - Reproducibility: record exactly what changed and when. - Safety: experiment on branches without breaking your main work. - Collaboration: a clear, searchable history others can follow.\n\n\n\n\n\n\nLearning Outcomes\n\n\n\nBy the end of this session, you can: 1) Initialize a repo and configure your identity 2) Stage and commit with clear, focused messages 3) Inspect unstaged vs staged changes and view history 4) Use .gitignore to keep clutter out of Git 5) Create a short-lived feature branch, merge it, and clean up",
+    "text": "Next-generation sequencing (NGS) technologies generate millions of short DNA sequences called reads. You’ve already become quite familiar with Nanopore sequencing by this point, and are aware that NGS reads are error-prone. Hence it is essential that before we do any further sequence analysis, we first assess the quality of our read data using command line tools that provide both efficiency and reproducibility.\nIn this practical, we’ll use command line tools to perform quality assessment and filtering, followed by taxonomic classification to understand what organisms are present in our samples. We will provide short-read files for you to use, as well as the code needed to perform the analyses. However, you will need to adapt paths and filenames to your own working environment, as well as select your own data and think about the biological significance of the results.\n\n\n\n\n\n\nREMEMBER: Create a separate project folder\n\n\n\n# Make this practical directory in your home directory on HPC AND your local computer\nmkdir -p ~/yourdir/practical_1\ncd ~/yourdir/practical_1\n\n# Then symlink the data directory in the n2bin-gu project dir for easy access on the HPC\nln -s  /cephyr/NOBACKUP/groups/n2bin_gu/BIO511/data/fastq ./data\n\n# Copy the files you need to your local computer as well, but DONT overwrite the original files!\n# You can use scp or rsync for this\nscp -r CID@vera2.c3se.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/data/fastq ./data\n\n\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end of this practical, you will be able to:\n\nUnderstand the structure and format of raw sequencing data (FASTQ files)\nUse fastp for integrated quality assessment and filtering\nInterpret quality control metrics and HTML reports\nApply quality trimming and adapter removal in a single step\nPerform taxonomic classification using kraken2 in a Singularity container",
     "crumbs": [
-      "Coding Best Practices",
-      "Practical 1: Git Fundamentals: Session 1"
+      "Practical 1: Quality Control and Classification"
     ]
   },
   {
-    "objectID": "PRACTICAL_GIT_SESSION1.html#main-concepts",
-    "href": "PRACTICAL_GIT_SESSION1.html#main-concepts",
-    "title": "Git Fundamentals: Session 1",
-    "section": "2 Main Concepts",
-    "text": "2 Main Concepts\n\nRepository (repo): a project folder that Git watches (contains a hidden .git/ directory).\nWorking tree: your actual files on disk.\nStaging area (index): a waiting room where you queue the exact changes for your next snapshot.\nCommit: a permanent snapshot with a message (what/why).\nBranch: a label that moves forward as you commit, representing a line of work (e.g., main, feature/x).\n.gitignore: patterns telling Git which files/folders not to track (e.g., results/).\n\n\n\n\n\n\n\nDid You Know?\n\n\n\nYou can set the default branch name to main globally:\ngit config --global init.defaultBranch main",
+    "objectID": "PRACTICAL_RAWDATA_AND_QC.html#obtaining-sample-data",
+    "href": "PRACTICAL_RAWDATA_AND_QC.html#obtaining-sample-data",
+    "title": "Practical 1: Raw Read Data and Quality Control",
+    "section": "2.1 Obtaining sample data",
+    "text": "2.1 Obtaining sample data\nFor this excersise, we offer a set of fastq file for you to Use Begin by navigating to your symlinked data directory and look at the Files\nYou wont need to copy the files to your working directory, but make sure that any edits you make dont overwrite the original files! If you want you can also do this step on your local computer!",
     "crumbs": [
-      "Coding Best Practices",
-      "Practical 1: Git Fundamentals: Session 1"
+      "Practical 1: Quality Control and Classification"
     ]
   },
   {
-    "objectID": "PRACTICAL_GIT_SESSION1.html#before-you-begin",
-    "href": "PRACTICAL_GIT_SESSION1.html#before-you-begin",
-    "title": "Git Fundamentals: Session 1",
-    "section": "3 Before You Begin",
-    "text": "3 Before You Begin\nConfirm Git & shell\ngit --version\nwhich git\nYou should see a version like git version 2.x and a path.\nSet your identity (appears in commit history)\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"you@example.com\"\n# Beginner-friendly editor for commit messages\ngit config --global core.editor \"nano -w\"\n# Verify\ngit config --list --show-origin\nTerminal refresher\npwd        # print working directory\nls -la     # list files (detailed)\ncd &lt;dir&gt;   # change directory\nmkdir &lt;d&gt;  # make directory\nnano &lt;f&gt;   # edit file (CTRL+O save, Enter, CTRL+X exit)\n\n\n\n\n\n\nCommon Mistake\n\n\n\nWorking in a path with spaces can cause quoting issues (e.g., My Documents). Prefer ~/projects/git-lab.",
+    "objectID": "PRACTICAL_RAWDATA_AND_QC.html#examining-fastq-structure",
+    "href": "PRACTICAL_RAWDATA_AND_QC.html#examining-fastq-structure",
+    "title": "Practical 1: Raw Read Data and Quality Control",
+    "section": "2.2 Examining FASTQ structure",
+    "text": "2.2 Examining FASTQ structure\n# Look at the first few reads from a compressed file\n# Use this code example for each of the sample files in the data dir\n# Either untar the files first, or use zcat to read them directly\ntar -xvzf sample1_R1.fastq.gz\ncat sample1_R1.fastq | head -8\n\n# or \nzcat sample1_R1.fastq.gz | head -8\nEach sequencing read in a FASTQ file consists of four lines:\n@read_identifier_and_description\nATCGATCGATCGATCG...\n+\n!\"#$%&'()*+,-./0...\n#########################DIVIDER#########################\n\n\n\n\n\n\nKey Questions\n\n\n\n\nWhy is the bottom line encoded? What does it represent?\nHow can you identify paired-end reads?",
     "crumbs": [
-      "Coding Best Practices",
-      "Practical 1: Git Fundamentals: Session 1"
+      "Practical 1: Quality Control and Classification"
     ]
   },
   {
-    "objectID": "PRACTICAL_GIT_SESSION1.html#step-by-step-practical",
-    "href": "PRACTICAL_GIT_SESSION1.html#step-by-step-practical",
-    "title": "Git Fundamentals: Session 1",
-    "section": "4 Step-by-Step Practical",
-    "text": "4 Step-by-Step Practical\n\nWe’ll create a small, clean project called git-lab and practice the local Git cycle repeatedly.\n\n\n4.1 Create a Repository\nmkdir -p ~/projects/git-lab && cd ~/projects/git-lab\ngit init\nExpected output: a line like Initialized empty Git repository in .../.git/\ngit status\nExpected: “No commits yet” and nothing staged.\n\n\n\n\n\n\nBest Practice\n\n\n\nRun git status often. It tells you exactly what Git sees at every step.\n\n\n\n\n4.2 Add Initial Files\nCreate a README, a small config, and the folder layout:\ncat &gt; README.md &lt;&lt; 'EOF'\n# Git Lab\nThis mini project demonstrates local Git basics.\n\n## Quickstart\nSee below for commands and checkpoints.\nEOF\n\nmkdir -p config scripts results data\n\ncat &gt; config/config.yml &lt;&lt; 'EOF'\nproject: git-lab\nthreads: 2\ngenome_id: ST398\nEOF\nSelf-check\nls -la\n# Expect: README.md, config/, scripts/, results/, data/\ncat config/config.yml\n\n\n4.3 Stage and First Commit\ngit add README.md config/config.yml\ngit status          # these files should appear under \"Changes to be committed\"\n\ngit commit -m \"Add README and base config\"\nVerify history\ngit log --oneline -n 1\n# Expect: one commit with your message\n\n\n\n\n\n\nCommon Mistake\n\n\n\nSeeing “nothing to commit”? You probably forgot git add. Stage your changes first, then commit.\n\n\n\n\n4.4 .gitignore to Keep the Repo Clean\ncat &gt; .gitignore &lt;&lt; 'EOF'\nresults/\n*.tmp\n.DS_Store\n*.swp\nEOF\n\ngit add .gitignore\ngit commit -m \"Add .gitignore for results and temp files\"\nProve it works\nmkdir -p results && echo \"tmp\" &gt; results/test.tmp\ngit status   # results/ and *.tmp should NOT show up\n\n\n\n\n\n\nDid You Know?\n\n\n\nIf a file was tracked before you added it to .gitignore, Git keeps tracking it. Use git rm --cached &lt;file&gt; once to stop tracking.\n\n\n\n\n4.5 Inspecting Changes — Unstaged vs Staged\nMake and review edits:\n# Edit values (macOS and Linux differ; we try both variants)\nsed -i '' 's/threads: 2/threads: 4/' config/config.yml 2&gt;/dev/null || sed -i 's/threads: 2/threads: 4/' config/config.yml\n\ngit status       # shows modified but unstaged\ngit diff         # shows the exact diff\n\ngit add config/config.yml\ngit diff --staged  # shows what will be committed\n\ngit commit -m \"Increase threads to 4\"\nGood commit messages (rule of thumb) - Subject ≤ 50 chars, imperative: “Increase threads to 4” - Body (optional): wrap at 72 chars; explain why\n\n\n\n\n\n\nBest Practice\n\n\n\nUse git add -p to stage only the meaningful hunks when a file has multiple changes.\n\n\n\n\n4.6 Branching Basics & No-Conflict Merge\nCreate a branch, make a small change, merge to main, then delete the branch:\ngit switch -c feature/readme-usage\n\necho \"\n## Usage\n./scripts/qc.sh ST398 4 &gt; results/qc.log\" &gt;&gt; README.md\n\ngit add README.md\ngit commit -m \"Document basic usage with example command\"\n\ngit switch main\ngit merge feature/readme-usage\n\ngit branch -d feature/readme-usage\nVerify\ngit log --oneline --decorate --graph --all | head -n 10\nYou should see a merge into main and the feature branch deleted locally.\n\n\n\n\n\n\nCommon Mistake\n\n\n\nMerging fails if you have uncommitted work. Commit or stash changes first; then merge.",
+    "objectID": "PRACTICAL_RAWDATA_AND_QC.html#fastp-analysis",
+    "href": "PRACTICAL_RAWDATA_AND_QC.html#fastp-analysis",
+    "title": "Practical 1: Raw Read Data and Quality Control",
+    "section": "3.1 Fastp analysis",
+    "text": "3.1 Fastp analysis\nThis step must be done on your local computer, make sure you download the data with scp first!\n# Begin by creating an output directory for your QC results\nmkdir -p fastp_results\n\n# Run fastp on paired-end reads with default settings\nfastp -i sample1_R1.fastq.gz -I sample1_R2.fastq.gz -o sample1_R1_filtered.fastq.gz -O sample1_R2_filtered.fastq.gz -h sample1_fastp_report.html -j sample1_fastp_report.json\n\n# Go to the output directory and check the results\n# View the HTML report in your browser \nKey metrics to examine in the HTML reports:\n\nRead quality: Before and after filtering quality distributions\nBase content: Per-position base composition\nAdapter content: Automatic adapter detection and removal\nFiltering results: Number of reads removed and why\nInsert size: The size of the DNA fragments sequenced (between the adapters and paired reads combined)\n\n\n\n\n\n\n\nKey Questions\n\n\n\n\nWhat percentage of reads were filtered out in each sample?\nWhat was the main reason for read filtering?\nHow did the quality distributions change after filtering?\nWere any adapters detected and removed?\n\n\n\nIn some cases, you may want to customize the filtering parameters, such as hard-trimming a specific number of bases from the start or end of reads, or setting a minimum read length. You can do this by adding additional flags to the fastp command. For example, a good agnostic approach is to trim to a fixed quality threshold at the 3’ end of the reads, and filter out any reads that are too short after trimming.\n# Here is an example command with additional trimming and filtering options, for a quality threshold of 30 and minimum length of 50bp\nfastp -i sample1_R1.fastq.gz -I sample1_R2.fastq.gz -o sample1_R1_filtered.fastq.gz -O sample1_R2_filtered.fastq.gz -h sample1_fastp_report.html -j sample1_fastp_report.json --cut_right --cut_mean_quality 30 --length_required 20\n\n\n\n\n\n\nKey Questions\n\n\n\n\nDid this improve or change the quality of the reads?\nWe set a minimum length of 20bp, what are the pros and cons of this choice?",
     "crumbs": [
-      "Coding Best Practices",
-      "Practical 1: Git Fundamentals: Session 1"
+      "Practical 1: Quality Control and Classification"
     ]
   },
   {
-    "objectID": "PRACTICAL_GIT_SESSION1.html#guided-practice-you-do-it",
-    "href": "PRACTICAL_GIT_SESSION1.html#guided-practice-you-do-it",
-    "title": "Git Fundamentals: Session 1",
-    "section": "5 Guided Practice (You Do It)",
-    "text": "5 Guided Practice (You Do It)\nComplete these tasks in your git-lab repo. Use the self-checks and commands shown earlier.\n\nParameter tweak\nEdit config/config.yml to add memory_gb: 8. Stage and commit with a clear message.\nSecond feature branch\nCreate feature/genome-note, append notes: update genome soon to config/config.yml, commit, merge into main, and delete the branch.\nProve .gitignore works\nCreate results/run1.log and scratch.tmp. Show that git status ignores them.\nInspect history\nRun git log --oneline --decorate --graph -n 5 and briefly explain (in your own words) what the last 3 commits did.\n\n\n\n\n\n\n\nBest Practice\n\n\n\nKeep branches short-lived and focused on one small change. Merge when done; delete the branch to avoid clutter.",
+    "objectID": "PRACTICAL_RAWDATA_AND_QC.html#hpc-job-script-for-kraken2-classification",
+    "href": "PRACTICAL_RAWDATA_AND_QC.html#hpc-job-script-for-kraken2-classification",
+    "title": "Practical 1: Raw Read Data and Quality Control",
+    "section": "4.1 HPC job script for kraken2 classification",
+    "text": "4.1 HPC job script for kraken2 classification\nLets begin by creating the job script that we will submit to the HPC cluster. Make sure to adjust paths to your actual directories and database locations. You can either create and edit the file on the cluster, or create it locally and then upload it to the cluster if you want. ALso this jobscript will allow you to run a single sample at a time, so you will need to change the sample name for each run, or make a loop to run multiple samples if you feel up for it.\n# Create SLURM job script for kraken2 analysis\n\n#!/bin/bash\n#SBATCH -A C3SE408-25-2\n#SBATCH -J kraken2_job\n#SBATCH -p vera\n#SBATCH -N 1 --cpus-per-task=12 # Request 1 node with 12 CPUs\n#SBATCH -t 01:00:00\n#SBATCH --output=/cephyr/users/ktor/Vera/practical_1/logs/kraken2_%j.out  # Standard output\n#SBATCH --error=/cephyr/users/ktor/Vera/practical_1/logs/kraken2_%j.err   # Standard error\n\n# Set paths - ADJUST THESE TO YOUR ACTUAL PATHS\nCONTAINER_PATH=\"/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/singularity_images/kraken2.sif\"\nDB_PATH=\"/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/ref_dbs/kraken2db\"\nDATA_PATH=\"/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/data/fastq\"\nRESULTS_PATH=\"/cephyr/NOBACKUP/groups/n2bin_gu/teachers/Tor/results\"\n\n# Bind paths for container\nexport SINGULARITY_BINDPATH=\"${DB_PATH}:/db,${DATA_PATH}:/data,${RESULTS_PATH}:/results\"\n\n# Create results directory\nmkdir -p ${RESULTS_PATH}\n\n# Identify sample\nsample=\"A210\"\necho \"Processing sample: ${sample}\"\n\n# Run Kraken2 classification\nsrun singularity exec ${CONTAINER_PATH} kraken2 \\\n        --db /db \\\n        --threads 8 \\\n        --paired \\\n        --output /results/${sample}_kraken2_output.txt \\\n        --report /results/${sample}_kraken2_report.txt \\\n        --classified-out /results/${sample}_classified#.fastq \\\n        --unclassified-out /results/${sample}_unclassified#.fastq \\\n        /data/${sample}_R1.fastq.gz /data/${sample}_R2.fastq.gz\n\necho \"Completed classification for ${sample}\"\n\necho \"All samples processed successfully\"",
     "crumbs": [
-      "Coding Best Practices",
-      "Practical 1: Git Fundamentals: Session 1"
+      "Practical 1: Quality Control and Classification"
     ]
   },
   {
-    "objectID": "PRACTICAL_GIT_SESSION1.html#self-check-quiz-quick",
-    "href": "PRACTICAL_GIT_SESSION1.html#self-check-quiz-quick",
-    "title": "Git Fundamentals: Session 1",
-    "section": "6 Self-Check Quiz (Quick)",
-    "text": "6 Self-Check Quiz (Quick)\n\nWhat’s the difference between unstaged and staged changes?\n\nWhat does .gitignore do? What doesn’t it do?\n\nWhy write commit messages in imperative mood (“Add”, “Fix”)?\n\nWhat command shows staged changes only?\n\nHow do you create and switch to a new branch in one command?\n\n(Answers: 1) Unstaged are edits on disk; staged are queued for the next commit. 2) Prevents new files matching patterns from being tracked; doesn’t untrack files already committed. 3) Reads as commands to the codebase—clear history. 4) git diff --staged. 5) git switch -c &lt;name&gt;.)",
+    "objectID": "PRACTICAL_RAWDATA_AND_QC.html#preparing-results-for-multiqc",
+    "href": "PRACTICAL_RAWDATA_AND_QC.html#preparing-results-for-multiqc",
+    "title": "Practical 1: Raw Read Data and Quality Control",
+    "section": "5.1 Preparing results for MultiQC",
+    "text": "5.1 Preparing results for MultiQC\nMultiQC works best when all results are organized in a clear directory structure. Let’s organize our outputs properly.\n# Create a comprehensive results directory\nmkdir -p multiqc_analysis/{fastp_reports,kraken2_reports}\n\n# Copy fastp outputs to the correct directory\n# Copy kraken2 outputs to the correct directory\n\n# Verify all files are present\nls -la multiqc_analysis/*/",
     "crumbs": [
-      "Coding Best Practices",
-      "Practical 1: Git Fundamentals: Session 1"
+      "Practical 1: Quality Control and Classification"
     ]
   },
   {
-    "objectID": "PRACTICAL_GIT_SESSION1.html#troubleshooting-recovery",
-    "href": "PRACTICAL_GIT_SESSION1.html#troubleshooting-recovery",
-    "title": "Git Fundamentals: Session 1",
-    "section": "7 Troubleshooting & Recovery",
-    "text": "7 Troubleshooting & Recovery\n\n“fatal: not a git repository” → Run pwd and ensure you’re in ~/projects/git-lab. Use cd to enter the repo folder.\nsed -i complains → Open the file with nano config/config.yml, edit manually, save.\nAccidentally staged the wrong file → git restore --staged &lt;file&gt; (does not change file content).\nWant to start over → Move away from the folder (or delete it) and repeat from step 1. To un-Git a folder, remove the hidden .git/ directory.\n\n\n\n\n\n\n\nDid You Know?\n\n\n\ngit show &lt;commit&gt; reveals the patch and metadata for a single commit. Great for code review and learning from changes.",
+    "objectID": "PRACTICAL_RAWDATA_AND_QC.html#running-multiqc",
+    "href": "PRACTICAL_RAWDATA_AND_QC.html#running-multiqc",
+    "title": "Practical 1: Raw Read Data and Quality Control",
+    "section": "5.2 Running MultiQC",
+    "text": "5.2 Running MultiQC\n# Run MultiQC on all results to generate a comprehensive report\ncd multiqc_analysis\n\n# Generate MultiQC report with custom configuration\nmultiqc . --title \"BIO511 Practical 2 - QC and Classification Summary\" --filename \"practical2_multiqc_report\" --dirs --dirs-depth 2 --force\n\n# Open the report in your browser\n# The HTML file can be opened directly",
     "crumbs": [
-      "Coding Best Practices",
-      "Practical 1: Git Fundamentals: Session 1"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_GIT_SESSION1.html#summary",
-    "href": "PRACTICAL_GIT_SESSION1.html#summary",
-    "title": "Git Fundamentals: Session 1",
-    "section": "8 Summary",
-    "text": "8 Summary\nYou created a clean repository, practiced the local cycle (status → diff → add → commit → log), used .gitignore to keep noise out, and completed a simple branch-and-merge. These habits set the foundation for Session 2 (conflicts, tags, remotes, and recovery).",
-    "crumbs": [
-      "Coding Best Practices",
-      "Practical 1: Git Fundamentals: Session 1"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_GIT_SESSION1.html#cheat-sheet",
-    "href": "PRACTICAL_GIT_SESSION1.html#cheat-sheet",
-    "title": "Git Fundamentals: Session 1",
-    "section": "9 Cheat Sheet",
-    "text": "9 Cheat Sheet\nInitialize:  git init\nIdentity:    git config --global user.name \"Name\"; git config --global user.email \"you@ex\"\nStatus:      git status\nStage:       git add &lt;file&gt;\nCommit:      git commit -m \"Message\"\nDiff:        git diff        (unstaged)   |   git diff --staged\nLog:         git log --oneline --decorate --graph\nIgnore:      echo pattern &gt;&gt; .gitignore; git add .gitignore; git commit -m \"Add .gitignore\"\nBranch:      git switch -c &lt;name&gt;; git switch main; git merge &lt;name&gt;; git branch -d &lt;name&gt;",
-    "crumbs": [
-      "Coding Best Practices",
-      "Practical 1: Git Fundamentals: Session 1"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_INTRO_TO_COMMAND_LINE.html",
-    "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html",
-    "title": "Practical 1: Introduction to Command Line Interface",
-    "section": "",
-    "text": "Doing bioinformatics often necessitates the handling of very large files, with complex structure and dense matrices. This makes them often unwieldy to pretty much impossible to handle in traditional GUI-based analysis tools (such as Excel), and as such we rely on original and lightweight file handling systems such as bash-based command line enviroments that allow us to interact with our computer on a more fundamental level.\nTypically the first thing you encounter on opening a new terminal instance is:\nuser@computer:~$\nThis is the terminal prompt where you’ll be able to issue commands to the computer, with the syntax (“grammar” of the code) of your command prompts often using the following structure:\nuser@computer:-$ command -option my_object\n\n# or you may have more advanced command prompts\n\nuser@computer:-$ command -threads 2 -output $My_Directory_Variable/ -prefix New_file_ -accessoryfile Additional_file my_object | nextcommand -cvfz New_file_my_object.tar.gz\nImagination (and resources, time complexity, optimization…) sets the limit of what you can do in the CLI\nIf you’re further curious on the history of shell and the command line.\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end of this practical, you should be able to:\n\nNavigate the file system using cd and ls\nCreate and manipulate directories with mkdir\nCreate, copy, move, and delete files using touch, cp, mv, and rm\nView file contents using cat, head, and tail\nSearch within files using grep\nDisplay text using echo\nTie these commands together using pipes",
-    "crumbs": [
-      "Intro to Command Line",
-      "Practical 1: CLI Basics"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#understanding-your-location-pwd-and-ls",
-    "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#understanding-your-location-pwd-and-ls",
-    "title": "Practical 1: Introduction to Command Line Interface",
-    "section": "2.1 Understanding Your Location (pwd and ls)",
-    "text": "2.1 Understanding Your Location (pwd and ls)\nBefore we start creating new things in our directory its a good idea to get a grip on your whereabouts within the working directory\n\npwd: Print working directory - shows your current location\nls: List contents of directories\n\nFind your current location and explore the directory\n# Run pwd\npwd\n\n# Run ls\nls \n\n# Run the ls help command, then find the option to let you\n# display the directory contents as a list with more details\nls --help\n\n# Then run that command\nls -la",
-    "crumbs": [
-      "Intro to Command Line",
-      "Practical 1: CLI Basics"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#making-and-changing-directories-mkdir-and-cd",
-    "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#making-and-changing-directories-mkdir-and-cd",
-    "title": "Practical 1: Introduction to Command Line Interface",
-    "section": "2.2 Making and Changing Directories (mkdir and cd)",
-    "text": "2.2 Making and Changing Directories (mkdir and cd)\nSince the command line interface (CLI) can quickly become cluttered, we organize our work into directories. Let’s create a simple directory structure.\n\nmkdir: Create new directories\ncd: Change directory\nSpecial directories: . (current), .. (parent), ~ (home), / (root)\n\nCreate and navigate a genomics project structure\n# Create a main directory\nmkdir CLI_intro\n\n# Navigate into it\ncd CLI_intro\n\n# Create additional directories within the main directory\n# This can be done in multiple ways \n# For example, you could make multiple directories in one command:\nmkdir Escherichia\ncd Escherichia\nmkdir coli hermanni fergusonii\n\n# Check your structure\nls -la\n\n# Navigate around and try the special directory short-hands\ncd ~        # Go home\ncd ..        # Go back to previous directory",
-    "crumbs": [
-      "Intro to Command Line",
-      "Practical 1: CLI Basics"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#text-manipulation-echo-touch",
-    "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#text-manipulation-echo-touch",
-    "title": "Practical 1: Introduction to Command Line Interface",
-    "section": "3.1 Text manipulation (echo, touch)",
-    "text": "3.1 Text manipulation (echo, touch)\nBefore we start with file manipulation, we’ll first introduce text files the old school way via echo and touch\n\ntouch: Create empty files\necho: Print text provided in the prompts\n\nHandling text in CLI\n# First, lets use echo in the ye olde intro to programming way\necho \"Hello World!\"\n\n# Not the most exciting, but we can use it to add text to files via &gt; \n# Create a file using touch \ntouch test_file\n\n# Then add some text to the file \necho \"Some_text\" &gt; test_file\n\n# Now add some more text to the next line in the file\n# To add to a file you simply extend the &gt; operator to &gt;&gt; \necho \"Some_more_text\" &gt;&gt; test_file\n\n# Now lastly, try to wipe the file with some new text \necho \"New_text\" &gt; test_file",
-    "crumbs": [
-      "Intro to Command Line",
-      "Practical 1: CLI Basics"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#file-manipulation-cp-mv-rm",
-    "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#file-manipulation-cp-mv-rm",
-    "title": "Practical 1: Introduction to Command Line Interface",
-    "section": "3.2 File Manipulation (cp, mv, rm)",
-    "text": "3.2 File Manipulation (cp, mv, rm)\nNow let’s create some mock files that we will use downstream in the analysis, and learn how to use commands to copy, rename and remove files\n\nmv: Rename the absolute path of a file (moving it)\ncp: Copy a file\nrm: Remove a file (Irreversible, be careful!!)\n\nCreate sample files and practice file operations\n# Create some more directories to store everything in \nmkdir -p raw_data backups\n\n# Create some empty mock files for different data types that we'll use later \ntouch sequences.fasta\ntouch expression_data.csv\ntouch gene_annotations.csv\n\n# Add some mock sequence data \necho \"&gt;lacZ_beta-galactosidase\" &gt; sequences.fasta\necho \"ATGACCATGATTACGCCAAGCT\" &gt;&gt; sequences.fasta\necho \"&gt;rpoB_RNA_polymerase_beta\" &gt;&gt; sequences.fasta\necho \"ATGGTGACGACGACGACGATGCT\" &gt;&gt; sequences.fasta\necho \"&gt;gyrA_DNA_gyrase_subunit_A\" &gt;&gt; sequences.fasta\necho \"ATGGCTGCTGATCGATCGATGCTA\" &gt;&gt; sequences.fasta\necho \"&gt;ompA_outer_membrane_protein\" &gt;&gt; sequences.fasta\necho \"ATGCTGATCGATCGGCTAGCTAGC\" &gt;&gt; sequences.fasta\n\n# Add data to the gene annotation file \necho \"Gene_ID,Chromosome,Start,End,Strand,Product\" &gt; gene_annotations.csv\necho \"lacZ,plasmid,1000,2500,+,beta-galactosidase\" &gt;&gt; gene_annotations.csv\necho \"rpoB,chr,3000,4200,+,RNA polymerase beta subunit\" &gt;&gt; gene_annotations.csv\necho \"gyrA,chr,500,1800,-,DNA gyrase subunit A\" &gt;&gt; gene_annotations.csv\necho \"ompA,chr,2000,3500,+,outer membrane protein A\" &gt;&gt; gene_annotations.csv\necho \"LacY,plasmid,5000,6200,+,Lactose_permease\" &gt;&gt; gene_annotations.csv\necho \"tolC,chr,100,800,+,outer membrane channel protein\" &gt;&gt; gene_annotations.csv\n\n# Add some gene expression data\necho \"Gene_ID,Condition_A,Condition_B,Function\" &gt; expression_data.csv\necho \"lacZ,150,200,beta-galactosidase\" &gt;&gt; expression_data.csv\necho \"rpoB,89,95,RNA_polymerase\" &gt;&gt; expression_data.csv\necho \"gyrA,175,180,DNA_gyrase\" &gt;&gt; expression_data.csv\necho \"LacY,165,210,Lactose_permease\" &gt;&gt; expression_data.csv\necho \"ompA,45,52,outer_membrane_protein\" &gt;&gt; expression_data.csv\n\n# Copy files (backup your data!)\ncp sequences.fasta sequences_backup.fasta\n\n# Move files to organize your project\nmv sequences_backup.fasta backups/\n\n# mv can also be used to rename files, similar to the syntax of cp \n# You just remembered that these files were E.coli, rename them and think of good informative names\nmv raw_data/gene_annotation.csv raw_data/E_coli_gene_annotations.csv\n\n# remove files (be careful, no undo!)\nrm sequences_backup.fasta\n# rm can also be used with flags to remove directories and their contents\nrm -r backups/\n\n# Lastly lets sort a bit in your directories\n# Copy the entire raw_data directory with contents (find the right flag!)\ncp -r raw_data/ Escherichia/coli/\nNote: After this section is done, remember that you renamed the data files to include the species name (E.coli), rename them back for the subsequent sections if you want. Otherwise, make sure the change doesnt confuse you",
-    "crumbs": [
-      "Intro to Command Line",
-      "Practical 1: CLI Basics"
+      "Practical 1: Quality Control and Classification"
     ]
   },
   {
@@ -510,203 +633,189 @@
     "href": "index.html",
     "title": "BIO511 Genomics - Practical Repository",
     "section": "",
-    "text": "This repository contains practical exercises for the BIO511 Genomics course. Use this page, or the navbar to navigate to the different sections.\n\n\nHere are the practical exercises related to command line programming section of the course:\n\n\n\nPractical 1: CLI Basics\nPractical 2: Setting up the HPC\nPractical 3: Workspace Management and Data Management\nPractical 4: Scripting and Advanced Text Manipulation\nPractical 5: Software & Containers\n\n\n\n\n\nPractical 1: Git Fundamentals: Session 1\nPractical 2: Git Fundamentals: Session 2\nPractical 3: Best Coding Practices for Command‑Line Programming\n\n\n\n\n\n\nPractical 1: Quality Control and Classification\n\n\n\n\nComing Soon…\n\nFor questions or issues, please contact the course instructors."
+    "text": "This repository contains practical exercises for the BIO511 Genomics course. Use this page, or the navbar to navigate to the different sections.\n\n\nHere are the practical exercises related to command line programming section of the course:\n\n\n\nPractical 1: CLI Basics\nPractical 2: Setting up the HPC\nPractical 3: Workspace Management and Data Management\nPractical 4: Scripting and Advanced Text Manipulation\nPractical 5: Software & Containers\n\n\n\n\n\nPractical 1: Git Fundamentals: Session 1\nPractical 2: Git Fundamentals: Session 2\nPractical 3: Best Coding Practices for Command‑Line Programming\n\n\n\n\n\n\nPractical 1: Quality Control and Classification\nPractical 2: Genome Assembly and Mapping\n\n\n\n\nComing Soon…\n\nFor questions or issues, please contact the course instructors."
   },
   {
     "objectID": "index.html#course-overview",
     "href": "index.html#course-overview",
     "title": "BIO511 Genomics - Practical Repository",
     "section": "",
-    "text": "This repository contains practical exercises for the BIO511 Genomics course. Use this page, or the navbar to navigate to the different sections.\n\n\nHere are the practical exercises related to command line programming section of the course:\n\n\n\nPractical 1: CLI Basics\nPractical 2: Setting up the HPC\nPractical 3: Workspace Management and Data Management\nPractical 4: Scripting and Advanced Text Manipulation\nPractical 5: Software & Containers\n\n\n\n\n\nPractical 1: Git Fundamentals: Session 1\nPractical 2: Git Fundamentals: Session 2\nPractical 3: Best Coding Practices for Command‑Line Programming\n\n\n\n\n\n\nPractical 1: Quality Control and Classification\n\n\n\n\nComing Soon…\n\nFor questions or issues, please contact the course instructors."
+    "text": "This repository contains practical exercises for the BIO511 Genomics course. Use this page, or the navbar to navigate to the different sections.\n\n\nHere are the practical exercises related to command line programming section of the course:\n\n\n\nPractical 1: CLI Basics\nPractical 2: Setting up the HPC\nPractical 3: Workspace Management and Data Management\nPractical 4: Scripting and Advanced Text Manipulation\nPractical 5: Software & Containers\n\n\n\n\n\nPractical 1: Git Fundamentals: Session 1\nPractical 2: Git Fundamentals: Session 2\nPractical 3: Best Coding Practices for Command‑Line Programming\n\n\n\n\n\n\nPractical 1: Quality Control and Classification\nPractical 2: Genome Assembly and Mapping\n\n\n\n\nComing Soon…\n\nFor questions or issues, please contact the course instructors."
   },
   {
-    "objectID": "CHEAT_SHEETS.html",
-    "href": "CHEAT_SHEETS.html",
-    "title": "Best Coding Practices for Command‑Line Programming",
+    "objectID": "PRACTICAL_INTRO_TO_COMMAND_LINE.html",
+    "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html",
+    "title": "Practical 1: Introduction to Command Line Interface",
     "section": "",
-    "text": "Here are some useful cheat sheets for Bash commands and bioinformatics file formats.\n\n\nDownload PDF file.\n\n\n\nDownload PDF file."
+    "text": "Doing bioinformatics often necessitates the handling of very large files, with complex structure and dense matrices. This makes them often unwieldy to pretty much impossible to handle in traditional GUI-based analysis tools (such as Excel), and as such we rely on original and lightweight file handling systems such as bash-based command line enviroments that allow us to interact with our computer on a more fundamental level.\nTypically the first thing you encounter on opening a new terminal instance is:\nuser@computer:~$\nThis is the terminal prompt where you’ll be able to issue commands to the computer, with the syntax (“grammar” of the code) of your command prompts often using the following structure:\nuser@computer:-$ command -option my_object\n\n# or you may have more advanced command prompts\n\nuser@computer:-$ command -threads 2 -output $My_Directory_Variable/ -prefix New_file_ -accessoryfile Additional_file my_object | nextcommand -cvfz New_file_my_object.tar.gz\nImagination (and resources, time complexity, optimization…) sets the limit of what you can do in the CLI\nIf you’re further curious on the history of shell and the command line.\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end of this practical, you should be able to:\n\nNavigate the file system using cd and ls\nCreate and manipulate directories with mkdir\nCreate, copy, move, and delete files using touch, cp, mv, and rm\nView file contents using cat, head, and tail\nSearch within files using grep\nDisplay text using echo\nTie these commands together using pipes",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 1: CLI Basics"
+    ]
   },
   {
-    "objectID": "CHEAT_SHEETS.html#bash-commands-cheat-sheet",
-    "href": "CHEAT_SHEETS.html#bash-commands-cheat-sheet",
-    "title": "Best Coding Practices for Command‑Line Programming",
+    "objectID": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#understanding-your-location-pwd-and-ls",
+    "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#understanding-your-location-pwd-and-ls",
+    "title": "Practical 1: Introduction to Command Line Interface",
+    "section": "2.1 Understanding Your Location (pwd and ls)",
+    "text": "2.1 Understanding Your Location (pwd and ls)\nBefore we start creating new things in our directory its a good idea to get a grip on your whereabouts within the working directory\n\npwd: Print working directory - shows your current location\nls: List contents of directories\n\nFind your current location and explore the directory\n# Run pwd\npwd\n\n# Run ls\nls \n\n# Run the ls help command, then find the option to let you\n# display the directory contents as a list with more details\nls --help\n\n# Then run that command\nls -la",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 1: CLI Basics"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#making-and-changing-directories-mkdir-and-cd",
+    "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#making-and-changing-directories-mkdir-and-cd",
+    "title": "Practical 1: Introduction to Command Line Interface",
+    "section": "2.2 Making and Changing Directories (mkdir and cd)",
+    "text": "2.2 Making and Changing Directories (mkdir and cd)\nSince the command line interface (CLI) can quickly become cluttered, we organize our work into directories. Let’s create a simple directory structure.\n\nmkdir: Create new directories\ncd: Change directory\nSpecial directories: . (current), .. (parent), ~ (home), / (root)\n\nCreate and navigate a genomics project structure\n# Create a main directory\nmkdir CLI_intro\n\n# Navigate into it\ncd CLI_intro\n\n# Create additional directories within the main directory\n# This can be done in multiple ways \n# For example, you could make multiple directories in one command:\nmkdir Escherichia\ncd Escherichia\nmkdir coli hermanni fergusonii\n\n# Check your structure\nls -la\n\n# Navigate around and try the special directory short-hands\ncd ~        # Go home\ncd ..        # Go back to previous directory",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 1: CLI Basics"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#text-manipulation-echo-touch",
+    "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#text-manipulation-echo-touch",
+    "title": "Practical 1: Introduction to Command Line Interface",
+    "section": "3.1 Text manipulation (echo, touch)",
+    "text": "3.1 Text manipulation (echo, touch)\nBefore we start with file manipulation, we’ll first introduce text files the old school way via echo and touch\n\ntouch: Create empty files\necho: Print text provided in the prompts\n\nHandling text in CLI\n# First, lets use echo in the ye olde intro to programming way\necho \"Hello World!\"\n\n# Not the most exciting, but we can use it to add text to files via &gt; \n# Create a file using touch \ntouch test_file\n\n# Then add some text to the file \necho \"Some_text\" &gt; test_file\n\n# Now add some more text to the next line in the file\n# To add to a file you simply extend the &gt; operator to &gt;&gt; \necho \"Some_more_text\" &gt;&gt; test_file\n\n# Now lastly, try to wipe the file with some new text \necho \"New_text\" &gt; test_file",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 1: CLI Basics"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#file-manipulation-cp-mv-rm",
+    "href": "PRACTICAL_INTRO_TO_COMMAND_LINE.html#file-manipulation-cp-mv-rm",
+    "title": "Practical 1: Introduction to Command Line Interface",
+    "section": "3.2 File Manipulation (cp, mv, rm)",
+    "text": "3.2 File Manipulation (cp, mv, rm)\nNow let’s create some mock files that we will use downstream in the analysis, and learn how to use commands to copy, rename and remove files\n\nmv: Rename the absolute path of a file (moving it)\ncp: Copy a file\nrm: Remove a file (Irreversible, be careful!!)\n\nCreate sample files and practice file operations\n# Create some more directories to store everything in \nmkdir -p raw_data backups\n\n# Create some empty mock files for different data types that we'll use later \ntouch sequences.fasta\ntouch expression_data.csv\ntouch gene_annotations.csv\n\n# Add some mock sequence data \necho \"&gt;lacZ_beta-galactosidase\" &gt; sequences.fasta\necho \"ATGACCATGATTACGCCAAGCT\" &gt;&gt; sequences.fasta\necho \"&gt;rpoB_RNA_polymerase_beta\" &gt;&gt; sequences.fasta\necho \"ATGGTGACGACGACGACGATGCT\" &gt;&gt; sequences.fasta\necho \"&gt;gyrA_DNA_gyrase_subunit_A\" &gt;&gt; sequences.fasta\necho \"ATGGCTGCTGATCGATCGATGCTA\" &gt;&gt; sequences.fasta\necho \"&gt;ompA_outer_membrane_protein\" &gt;&gt; sequences.fasta\necho \"ATGCTGATCGATCGGCTAGCTAGC\" &gt;&gt; sequences.fasta\n\n# Add data to the gene annotation file \necho \"Gene_ID,Chromosome,Start,End,Strand,Product\" &gt; gene_annotations.csv\necho \"lacZ,plasmid,1000,2500,+,beta-galactosidase\" &gt;&gt; gene_annotations.csv\necho \"rpoB,chr,3000,4200,+,RNA polymerase beta subunit\" &gt;&gt; gene_annotations.csv\necho \"gyrA,chr,500,1800,-,DNA gyrase subunit A\" &gt;&gt; gene_annotations.csv\necho \"ompA,chr,2000,3500,+,outer membrane protein A\" &gt;&gt; gene_annotations.csv\necho \"LacY,plasmid,5000,6200,+,Lactose_permease\" &gt;&gt; gene_annotations.csv\necho \"tolC,chr,100,800,+,outer membrane channel protein\" &gt;&gt; gene_annotations.csv\n\n# Add some gene expression data\necho \"Gene_ID,Condition_A,Condition_B,Function\" &gt; expression_data.csv\necho \"lacZ,150,200,beta-galactosidase\" &gt;&gt; expression_data.csv\necho \"rpoB,89,95,RNA_polymerase\" &gt;&gt; expression_data.csv\necho \"gyrA,175,180,DNA_gyrase\" &gt;&gt; expression_data.csv\necho \"LacY,165,210,Lactose_permease\" &gt;&gt; expression_data.csv\necho \"ompA,45,52,outer_membrane_protein\" &gt;&gt; expression_data.csv\n\n# Copy files (backup your data!)\ncp sequences.fasta sequences_backup.fasta\n\n# Move files to organize your project\nmv sequences_backup.fasta backups/\n\n# mv can also be used to rename files, similar to the syntax of cp \n# You just remembered that these files were E.coli, rename them and think of good informative names\nmv raw_data/gene_annotation.csv raw_data/E_coli_gene_annotations.csv\n\n# remove files (be careful, no undo!)\nrm sequences_backup.fasta\n# rm can also be used with flags to remove directories and their contents\nrm -r backups/\n\n# Lastly lets sort a bit in your directories\n# Copy the entire raw_data directory with contents (find the right flag!)\ncp -r raw_data/ Escherichia/coli/\nNote: After this section is done, remember that you renamed the data files to include the species name (E.coli), rename them back for the subsequent sections if you want. Otherwise, make sure the change doesnt confuse you",
+    "crumbs": [
+      "Intro to Command Line",
+      "Practical 1: CLI Basics"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_GIT_SESSION1.html",
+    "href": "PRACTICAL_GIT_SESSION1.html",
+    "title": "Git Fundamentals: Session 1",
     "section": "",
-    "text": "Download PDF file."
+    "text": "In this first session, you will learn the Git workflow: initialize a repository, make clean commits, inspect history, ignore generated files, and do a simple branch-and-merge.\nWhy this matters for bioinformatics - Reproducibility: record exactly what changed and when. - Safety: experiment on branches without breaking your main work. - Collaboration: a clear, searchable history others can follow.\n\n\n\n\n\n\nLearning Outcomes\n\n\n\nBy the end of this session, you can: 1) Initialize a repo and configure your identity 2) Stage and commit with clear, focused messages 3) Inspect unstaged vs staged changes and view history 4) Use .gitignore to keep clutter out of Git 5) Create a short-lived feature branch, merge it, and clean up",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 1: Git Fundamentals: Session 1"
+    ]
   },
   {
-    "objectID": "CHEAT_SHEETS.html#bioinformatics-file-formats-cheat-sheet",
-    "href": "CHEAT_SHEETS.html#bioinformatics-file-formats-cheat-sheet",
-    "title": "Best Coding Practices for Command‑Line Programming",
+    "objectID": "PRACTICAL_GIT_SESSION1.html#introduction",
+    "href": "PRACTICAL_GIT_SESSION1.html#introduction",
+    "title": "Git Fundamentals: Session 1",
     "section": "",
-    "text": "Download PDF file."
+    "text": "In this first session, you will learn the Git workflow: initialize a repository, make clean commits, inspect history, ignore generated files, and do a simple branch-and-merge.\nWhy this matters for bioinformatics - Reproducibility: record exactly what changed and when. - Safety: experiment on branches without breaking your main work. - Collaboration: a clear, searchable history others can follow.\n\n\n\n\n\n\nLearning Outcomes\n\n\n\nBy the end of this session, you can: 1) Initialize a repo and configure your identity 2) Stage and commit with clear, focused messages 3) Inspect unstaged vs staged changes and view history 4) Use .gitignore to keep clutter out of Git 5) Create a short-lived feature branch, merge it, and clean up",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 1: Git Fundamentals: Session 1"
+    ]
   },
   {
-    "objectID": "PRACTICAL_RAWDATA_AND_QC.html",
-    "href": "PRACTICAL_RAWDATA_AND_QC.html",
-    "title": "Practical 1: Raw Read Data and Quality Control",
+    "objectID": "PRACTICAL_GIT_SESSION1.html#main-concepts",
+    "href": "PRACTICAL_GIT_SESSION1.html#main-concepts",
+    "title": "Git Fundamentals: Session 1",
+    "section": "2 Main Concepts",
+    "text": "2 Main Concepts\n\nRepository (repo): a project folder that Git watches (contains a hidden .git/ directory).\nWorking tree: your actual files on disk.\nStaging area (index): a waiting room where you queue the exact changes for your next snapshot.\nCommit: a permanent snapshot with a message (what/why).\nBranch: a label that moves forward as you commit, representing a line of work (e.g., main, feature/x).\n.gitignore: patterns telling Git which files/folders not to track (e.g., results/).\n\n\n\n\n\n\n\nDid You Know?\n\n\n\nYou can set the default branch name to main globally:\ngit config --global init.defaultBranch main",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 1: Git Fundamentals: Session 1"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_GIT_SESSION1.html#before-you-begin",
+    "href": "PRACTICAL_GIT_SESSION1.html#before-you-begin",
+    "title": "Git Fundamentals: Session 1",
+    "section": "3 Before You Begin",
+    "text": "3 Before You Begin\nConfirm Git & shell\ngit --version\nwhich git\nYou should see a version like git version 2.x and a path.\nSet your identity (appears in commit history)\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"you@example.com\"\n# Beginner-friendly editor for commit messages\ngit config --global core.editor \"nano -w\"\n# Verify\ngit config --list --show-origin\nTerminal refresher\npwd        # print working directory\nls -la     # list files (detailed)\ncd &lt;dir&gt;   # change directory\nmkdir &lt;d&gt;  # make directory\nnano &lt;f&gt;   # edit file (CTRL+O save, Enter, CTRL+X exit)\n\n\n\n\n\n\nCommon Mistake\n\n\n\nWorking in a path with spaces can cause quoting issues (e.g., My Documents). Prefer ~/projects/git-lab.",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 1: Git Fundamentals: Session 1"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_GIT_SESSION1.html#step-by-step-practical",
+    "href": "PRACTICAL_GIT_SESSION1.html#step-by-step-practical",
+    "title": "Git Fundamentals: Session 1",
+    "section": "4 Step-by-Step Practical",
+    "text": "4 Step-by-Step Practical\n\nWe’ll create a small, clean project called git-lab and practice the local Git cycle repeatedly.\n\n\n4.1 Create a Repository\nmkdir -p ~/projects/git-lab && cd ~/projects/git-lab\ngit init\nExpected output: a line like Initialized empty Git repository in .../.git/\ngit status\nExpected: “No commits yet” and nothing staged.\n\n\n\n\n\n\nBest Practice\n\n\n\nRun git status often. It tells you exactly what Git sees at every step.\n\n\n\n\n4.2 Add Initial Files\nCreate a README, a small config, and the folder layout:\ncat &gt; README.md &lt;&lt; 'EOF'\n# Git Lab\nThis mini project demonstrates local Git basics.\n\n## Quickstart\nSee below for commands and checkpoints.\nEOF\n\nmkdir -p config scripts results data\n\ncat &gt; config/config.yml &lt;&lt; 'EOF'\nproject: git-lab\nthreads: 2\ngenome_id: ST398\nEOF\nSelf-check\nls -la\n# Expect: README.md, config/, scripts/, results/, data/\ncat config/config.yml\n\n\n4.3 Stage and First Commit\ngit add README.md config/config.yml\ngit status          # these files should appear under \"Changes to be committed\"\n\ngit commit -m \"Add README and base config\"\nVerify history\ngit log --oneline -n 1\n# Expect: one commit with your message\n\n\n\n\n\n\nCommon Mistake\n\n\n\nSeeing “nothing to commit”? You probably forgot git add. Stage your changes first, then commit.\n\n\n\n\n4.4 .gitignore to Keep the Repo Clean\ncat &gt; .gitignore &lt;&lt; 'EOF'\nresults/\n*.tmp\n.DS_Store\n*.swp\nEOF\n\ngit add .gitignore\ngit commit -m \"Add .gitignore for results and temp files\"\nProve it works\nmkdir -p results && echo \"tmp\" &gt; results/test.tmp\ngit status   # results/ and *.tmp should NOT show up\n\n\n\n\n\n\nDid You Know?\n\n\n\nIf a file was tracked before you added it to .gitignore, Git keeps tracking it. Use git rm --cached &lt;file&gt; once to stop tracking.\n\n\n\n\n4.5 Inspecting Changes — Unstaged vs Staged\nMake and review edits:\n# Edit values (macOS and Linux differ; we try both variants)\nsed -i '' 's/threads: 2/threads: 4/' config/config.yml 2&gt;/dev/null || sed -i 's/threads: 2/threads: 4/' config/config.yml\n\ngit status       # shows modified but unstaged\ngit diff         # shows the exact diff\n\ngit add config/config.yml\ngit diff --staged  # shows what will be committed\n\ngit commit -m \"Increase threads to 4\"\nGood commit messages (rule of thumb) - Subject ≤ 50 chars, imperative: “Increase threads to 4” - Body (optional): wrap at 72 chars; explain why\n\n\n\n\n\n\nBest Practice\n\n\n\nUse git add -p to stage only the meaningful hunks when a file has multiple changes.\n\n\n\n\n4.6 Branching Basics & No-Conflict Merge\nCreate a branch, make a small change, merge to main, then delete the branch:\ngit switch -c feature/readme-usage\n\necho \"\n## Usage\n./scripts/qc.sh ST398 4 &gt; results/qc.log\" &gt;&gt; README.md\n\ngit add README.md\ngit commit -m \"Document basic usage with example command\"\n\ngit switch main\ngit merge feature/readme-usage\n\ngit branch -d feature/readme-usage\nVerify\ngit log --oneline --decorate --graph --all | head -n 10\nYou should see a merge into main and the feature branch deleted locally.\n\n\n\n\n\n\nCommon Mistake\n\n\n\nMerging fails if you have uncommitted work. Commit or stash changes first; then merge.",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 1: Git Fundamentals: Session 1"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_GIT_SESSION1.html#guided-practice-you-do-it",
+    "href": "PRACTICAL_GIT_SESSION1.html#guided-practice-you-do-it",
+    "title": "Git Fundamentals: Session 1",
+    "section": "5 Guided Practice (You Do It)",
+    "text": "5 Guided Practice (You Do It)\nComplete these tasks in your git-lab repo. Use the self-checks and commands shown earlier.\n\nParameter tweak\nEdit config/config.yml to add memory_gb: 8. Stage and commit with a clear message.\nSecond feature branch\nCreate feature/genome-note, append notes: update genome soon to config/config.yml, commit, merge into main, and delete the branch.\nProve .gitignore works\nCreate results/run1.log and scratch.tmp. Show that git status ignores them.\nInspect history\nRun git log --oneline --decorate --graph -n 5 and briefly explain (in your own words) what the last 3 commits did.\n\n\n\n\n\n\n\nBest Practice\n\n\n\nKeep branches short-lived and focused on one small change. Merge when done; delete the branch to avoid clutter.",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 1: Git Fundamentals: Session 1"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_GIT_SESSION1.html#self-check-quiz-quick",
+    "href": "PRACTICAL_GIT_SESSION1.html#self-check-quiz-quick",
+    "title": "Git Fundamentals: Session 1",
+    "section": "6 Self-Check Quiz (Quick)",
+    "text": "6 Self-Check Quiz (Quick)\n\nWhat’s the difference between unstaged and staged changes?\n\nWhat does .gitignore do? What doesn’t it do?\n\nWhy write commit messages in imperative mood (“Add”, “Fix”)?\n\nWhat command shows staged changes only?\n\nHow do you create and switch to a new branch in one command?\n\n(Answers: 1) Unstaged are edits on disk; staged are queued for the next commit. 2) Prevents new files matching patterns from being tracked; doesn’t untrack files already committed. 3) Reads as commands to the codebase—clear history. 4) git diff --staged. 5) git switch -c &lt;name&gt;.)",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 1: Git Fundamentals: Session 1"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_GIT_SESSION1.html#troubleshooting-recovery",
+    "href": "PRACTICAL_GIT_SESSION1.html#troubleshooting-recovery",
+    "title": "Git Fundamentals: Session 1",
+    "section": "7 Troubleshooting & Recovery",
+    "text": "7 Troubleshooting & Recovery\n\n“fatal: not a git repository” → Run pwd and ensure you’re in ~/projects/git-lab. Use cd to enter the repo folder.\nsed -i complains → Open the file with nano config/config.yml, edit manually, save.\nAccidentally staged the wrong file → git restore --staged &lt;file&gt; (does not change file content).\nWant to start over → Move away from the folder (or delete it) and repeat from step 1. To un-Git a folder, remove the hidden .git/ directory.\n\n\n\n\n\n\n\nDid You Know?\n\n\n\ngit show &lt;commit&gt; reveals the patch and metadata for a single commit. Great for code review and learning from changes.",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 1: Git Fundamentals: Session 1"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_GIT_SESSION1.html#summary",
+    "href": "PRACTICAL_GIT_SESSION1.html#summary",
+    "title": "Git Fundamentals: Session 1",
+    "section": "8 Summary",
+    "text": "8 Summary\nYou created a clean repository, practiced the local cycle (status → diff → add → commit → log), used .gitignore to keep noise out, and completed a simple branch-and-merge. These habits set the foundation for Session 2 (conflicts, tags, remotes, and recovery).",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 1: Git Fundamentals: Session 1"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_GIT_SESSION1.html#cheat-sheet",
+    "href": "PRACTICAL_GIT_SESSION1.html#cheat-sheet",
+    "title": "Git Fundamentals: Session 1",
+    "section": "9 Cheat Sheet",
+    "text": "9 Cheat Sheet\nInitialize:  git init\nIdentity:    git config --global user.name \"Name\"; git config --global user.email \"you@ex\"\nStatus:      git status\nStage:       git add &lt;file&gt;\nCommit:      git commit -m \"Message\"\nDiff:        git diff        (unstaged)   |   git diff --staged\nLog:         git log --oneline --decorate --graph\nIgnore:      echo pattern &gt;&gt; .gitignore; git add .gitignore; git commit -m \"Add .gitignore\"\nBranch:      git switch -c &lt;name&gt;; git switch main; git merge &lt;name&gt;; git branch -d &lt;name&gt;",
+    "crumbs": [
+      "Coding Best Practices",
+      "Practical 1: Git Fundamentals: Session 1"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SETTING_UP_THE_HPC.html",
+    "href": "PRACTICAL_SETTING_UP_THE_HPC.html",
+    "title": "Practical 2: Connecting to the HPC",
     "section": "",
-    "text": "Next-generation sequencing (NGS) technologies generate millions of short DNA sequences called reads. You’ve already become quite familiar with Nanopore sequencing by this point, and are aware that NGS reads are error-prone. Hence it is essential that before we do any further sequence analysis, we first assess the quality of our read data using command line tools that provide both efficiency and reproducibility.\nIn this practical, we’ll use command line tools to perform quality assessment and filtering, followed by taxonomic classification to understand what organisms are present in our samples. We will provide short-read files for you to use, as well as the code needed to perform the analyses. However, you will need to adapt paths and filenames to your own working environment, as well as select your own data and think about the biological significance of the results.\n\n\n\n\n\n\nREMEMBER: Create a separate project folder\n\n\n\n# Make this practical directory in your home directory on HPC AND your local computer\nmkdir -p ~/yourdir/practical_1\ncd ~/yourdir/practical_1\n\n# Then symlink the data directory in the n2bin-gu project dir for easy access on the HPC\nln -s  /cephyr/NOBACKUP/groups/n2bin_gu/BIO511/data/fastq ./data\n\n# Copy the files you need to your local computer as well, but DONT overwrite the original files!\n# You can use scp or rsync for this\nscp -r CID@vera2.c3se.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/data/fastq ./data\n\n\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end of this practical, you will be able to:\n\nUnderstand the structure and format of raw sequencing data (FASTQ files)\nUse fastp for integrated quality assessment and filtering\nInterpret quality control metrics and HTML reports\nApply quality trimming and adapter removal in a single step\nPerform taxonomic classification using kraken2 in a Singularity container",
-    "crumbs": [
-      "Practical 1: Quality Control and Classification"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_RAWDATA_AND_QC.html#obtaining-sample-data",
-    "href": "PRACTICAL_RAWDATA_AND_QC.html#obtaining-sample-data",
-    "title": "Practical 1: Raw Read Data and Quality Control",
-    "section": "2.1 Obtaining sample data",
-    "text": "2.1 Obtaining sample data\nFor this excersise, we offer a set of fastq file for you to Use Begin by navigating to your symlinked data directory and look at the Files\nYou wont need to copy the files to your working directory, but make sure that any edits you make dont overwrite the original files! If you want you can also do this step on your local computer!",
-    "crumbs": [
-      "Practical 1: Quality Control and Classification"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_RAWDATA_AND_QC.html#examining-fastq-structure",
-    "href": "PRACTICAL_RAWDATA_AND_QC.html#examining-fastq-structure",
-    "title": "Practical 1: Raw Read Data and Quality Control",
-    "section": "2.2 Examining FASTQ structure",
-    "text": "2.2 Examining FASTQ structure\n# Look at the first few reads from a compressed file\n# Use this code example for each of the sample files in the data dir\n# Either untar the files first, or use zcat to read them directly\ntar -xvzf sample1_R1.fastq.gz\ncat sample1_R1.fastq | head -8\n\n# or \nzcat sample1_R1.fastq.gz | head -8\nEach sequencing read in a FASTQ file consists of four lines:\n@read_identifier_and_description\nATCGATCGATCGATCG...\n+\n!\"#$%&'()*+,-./0...\n#########################DIVIDER#########################\n\n\n\n\n\n\nKey Questions\n\n\n\n\nWhy is the bottom line encoded? What does it represent?\nHow can you identify paired-end reads?",
-    "crumbs": [
-      "Practical 1: Quality Control and Classification"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_RAWDATA_AND_QC.html#fastp-analysis",
-    "href": "PRACTICAL_RAWDATA_AND_QC.html#fastp-analysis",
-    "title": "Practical 1: Raw Read Data and Quality Control",
-    "section": "3.1 Fastp analysis",
-    "text": "3.1 Fastp analysis\nThis step must be done on your local computer, make sure you download the data with scp first!\n# Begin by creating an output directory for your QC results\nmkdir -p fastp_results\n\n# Run fastp on paired-end reads with default settings\nfastp -i sample1_R1.fastq.gz -I sample1_R2.fastq.gz -o sample1_R1_filtered.fastq.gz -O sample1_R2_filtered.fastq.gz -h sample1_fastp_report.html -j sample1_fastp_report.json\n\n# Go to the output directory and check the results\n# View the HTML report in your browser \nKey metrics to examine in the HTML reports:\n\nRead quality: Before and after filtering quality distributions\nBase content: Per-position base composition\nAdapter content: Automatic adapter detection and removal\nFiltering results: Number of reads removed and why\nInsert size: The size of the DNA fragments sequenced (between the adapters and paired reads combined)\n\n\n\n\n\n\n\nKey Questions\n\n\n\n\nWhat percentage of reads were filtered out in each sample?\nWhat was the main reason for read filtering?\nHow did the quality distributions change after filtering?\nWere any adapters detected and removed?\n\n\n\nIn some cases, you may want to customize the filtering parameters, such as hard-trimming a specific number of bases from the start or end of reads, or setting a minimum read length. You can do this by adding additional flags to the fastp command. For example, a good agnostic approach is to trim to a fixed quality threshold at the 3’ end of the reads, and filter out any reads that are too short after trimming.\n# Here is an example command with additional trimming and filtering options, for a quality threshold of 30 and minimum length of 50bp\nfastp -i sample1_R1.fastq.gz -I sample1_R2.fastq.gz -o sample1_R1_filtered.fastq.gz -O sample1_R2_filtered.fastq.gz -h sample1_fastp_report.html -j sample1_fastp_report.json --cut_right --cut_mean_quality 30 --length_required 20\n\n\n\n\n\n\nKey Questions\n\n\n\n\nDid this improve or change the quality of the reads?\nWe set a minimum length of 20bp, what are the pros and cons of this choice?",
-    "crumbs": [
-      "Practical 1: Quality Control and Classification"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_RAWDATA_AND_QC.html#hpc-job-script-for-kraken2-classification",
-    "href": "PRACTICAL_RAWDATA_AND_QC.html#hpc-job-script-for-kraken2-classification",
-    "title": "Practical 1: Raw Read Data and Quality Control",
-    "section": "4.1 HPC job script for kraken2 classification",
-    "text": "4.1 HPC job script for kraken2 classification\nLets begin by creating the job script that we will submit to the HPC cluster. Make sure to adjust paths to your actual directories and database locations. You can either create and edit the file on the cluster, or create it locally and then upload it to the cluster if you want. ALso this jobscript will allow you to run a single sample at a time, so you will need to change the sample name for each run, or make a loop to run multiple samples if you feel up for it.\n# Create SLURM job script for kraken2 analysis\n\n#!/bin/bash\n#SBATCH -A C3SE408-25-2\n#SBATCH -J kraken2_job\n#SBATCH -p vera\n#SBATCH -N 1 --cpus-per-task=12 # Request 1 node with 12 CPUs\n#SBATCH -t 01:00:00\n#SBATCH --output=/cephyr/users/ktor/Vera/practical_1/logs/kraken2_%j.out  # Standard output\n#SBATCH --error=/cephyr/users/ktor/Vera/practical_1/logs/kraken2_%j.err   # Standard error\n\n# Set paths - ADJUST THESE TO YOUR ACTUAL PATHS\nCONTAINER_PATH=\"/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/singularity_images/kraken2.sif\"\nDB_PATH=\"/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/ref_dbs/kraken2db\"\nDATA_PATH=\"/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/data/fastq\"\nRESULTS_PATH=\"/cephyr/NOBACKUP/groups/n2bin_gu/teachers/Tor/results\"\n\n# Bind paths for container\nexport SINGULARITY_BINDPATH=\"${DB_PATH}:/db,${DATA_PATH}:/data,${RESULTS_PATH}:/results\"\n\n# Create results directory\nmkdir -p ${RESULTS_PATH}\n\n# Identify sample\nsample=\"A210\"\necho \"Processing sample: ${sample}\"\n\n# Run Kraken2 classification\nsrun singularity exec ${CONTAINER_PATH} kraken2 \\\n        --db /db \\\n        --threads 8 \\\n        --paired \\\n        --output /results/${sample}_kraken2_output.txt \\\n        --report /results/${sample}_kraken2_report.txt \\\n        --classified-out /results/${sample}_classified#.fastq \\\n        --unclassified-out /results/${sample}_unclassified#.fastq \\\n        /data/${sample}_R1.fastq.gz /data/${sample}_R2.fastq.gz\n\necho \"Completed classification for ${sample}\"\n\necho \"All samples processed successfully\"",
-    "crumbs": [
-      "Practical 1: Quality Control and Classification"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_RAWDATA_AND_QC.html#preparing-results-for-multiqc",
-    "href": "PRACTICAL_RAWDATA_AND_QC.html#preparing-results-for-multiqc",
-    "title": "Practical 1: Raw Read Data and Quality Control",
-    "section": "5.1 Preparing results for MultiQC",
-    "text": "5.1 Preparing results for MultiQC\nMultiQC works best when all results are organized in a clear directory structure. Let’s organize our outputs properly.\n# Create a comprehensive results directory\nmkdir -p multiqc_analysis/{fastp_reports,kraken2_reports}\n\n# Copy fastp outputs to the correct directory\n# Copy kraken2 outputs to the correct directory\n\n# Verify all files are present\nls -la multiqc_analysis/*/",
-    "crumbs": [
-      "Practical 1: Quality Control and Classification"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_RAWDATA_AND_QC.html#running-multiqc",
-    "href": "PRACTICAL_RAWDATA_AND_QC.html#running-multiqc",
-    "title": "Practical 1: Raw Read Data and Quality Control",
-    "section": "5.2 Running MultiQC",
-    "text": "5.2 Running MultiQC\n# Run MultiQC on all results to generate a comprehensive report\ncd multiqc_analysis\n\n# Generate MultiQC report with custom configuration\nmultiqc . --title \"BIO511 Practical 2 - QC and Classification Summary\" --filename \"practical2_multiqc_report\" --dirs --dirs-depth 2 --force\n\n# Open the report in your browser\n# The HTML file can be opened directly",
-    "crumbs": [
-      "Practical 1: Quality Control and Classification"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html",
-    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html",
-    "title": "Practical 5: Software Installation and Containers",
-    "section": "",
-    "text": "Up until now youve had to make everything by yourself (sort of, at least using base programs that come with your unix distro). This approach, while flexible, defeats one of they key benefits of modern bioinformatics; Open source and collaborative solutions to large data handling. Thanks to a lot of effort, there are countless of free, open-source tools available in various repositiories on the internet.\nHowever these tools, while saving us a lot of time, may be tricky to find and set up correctly. Different tools require different dependencies, versions, or system libraries. This often leads to complex webs of libraries and packages that act as the backbone of your code, which can be difficult to manage and reproduce on other systems. In this practical, you’ll learn where to find tools, various ways of installing an managing them (conda, apt), cloning repos from GitHub, and—most importantly—how to package tools in a Singularity/Apptainer containers that you can copy to, and run, anywhere (including HPC environments).\n\n\n\n\n\n\nLearning Objectives\n\n\n\nBy the end of this practical you should be able to:\n\nFind and identify bioinformatics tools in public repositories\nInstall software locally using package managers (apt, conda)\nCreate and manage conda environments for isolated software setups\nWrite a basic Singularity definition file to create a container from a base image\nBuild and test a Singularity container locally\nTransfer and run a Singularity container on an HPC using SLURM\n\n\n\n\n\n\n\n\n\n\nREMEMBER: Create a separate project folder\n\n\n\nmkdir -p ~/yourdir/practical_5\ncd ~/yourdir/practical_5",
+    "text": "1 Introduction\nThis tutorial is to take you through the final steps of setting up and accessing the c3se High Performance Computing infrastructure. The specific cluster we will use is called Vera. You will be introduced to this cluster in the lecture and here you can find more information about it, including what resources that are available, how to run jobs and other documentation.\nWe will walk you through step by step in this tutorial so that we (hopefully) can assist if there are any problems.\n\n\n\n\n\n\nPre-course setup\n\n\n\nTo be able to follow these steps you first have to have followed the steps of the Pre-course Setup including registration at SUPR and application to the course HPC project.\n\n\n\n\n\n2 Adding Vera/c3se at SUPR\n\nLog in to SUPR\nClick “Accounts” in the left side menu\nRequest access to Vera/c3se\n\n\n\n\n3 Setting up a Chalmers ID\n\nNavigate to https://myaccount.chalmers.se/.\nLog in with your GU account.\nChoose “Activate CID” and follow the instructions to activate your account\n\n\n\n\n\n\n\nRemember your password!\n\n\n\nThe CID username and password are the ones you will use to log in to the cluster\n\n\n\n\n\n4 Setting up Chalmers VPN\nTo be able to access c3se from other networks than in GU or Chalmers, you will need a Chalmers VPN\n\nNavigate to https://chalmers.topdesk.net/tas/public/ssp/content/detail/knowledgeitem?unid=07e6154089a648d09711ccc42a42fc88\nFollow the instructions to set up the Chalmers VPN\n\n\n\n\n5 Connecting to the HPC using ssh in VSCode\nTo be able to connect to the HPC in a manner that will let you use the full suite of tools available (or most of them at least) in VSCode, you will need to install the Remote - SSH extension.\n\nOpen VSCode\nGo to the Extensions view by clicking on the Extensions icon in the Activity Bar on the side of the window or by pressing Ctrl+Shift+X\nSearch for “Remote - SSH” and install the extension by Microsoft (if youre unsure how install extensions, see here)\nAfter installation, you will see a new icon in the Activity Bar on the side of the window. Click on it to open the Remote Explorer view.\n\nIf the SSH Targets are not visible, click on the drop down to expand the view\n\nClick on the + (“New Remote”) icon next to SSH header to add a new SSH host\nIn the input box that appears, enter the SSH connection string for Vera: &lt;your_chalmers_id&gt;@vera1.c3se.chalmers.se (replace &lt;your_chalmers_id&gt; with your actual Chalmers ID)\nPress Enter to confirm\nYou will be prompted to select the SSH configuration file to update. Choose the default option (usually ~/.ssh/config)\n\nOnce you have added the SSH host, you can connect to Vera:\n\nIn the Remote Explorer view, find the Vera entry under SSH Targets (or by clicking on the blue “remote window” icon in the bottom left corner of VSCode)\n\nClick on the “Connect to Host” icon (an arrow if you want the same window, square if you want a new one) next to the Vera entry\nIf you clicked on the blue “remote window” icon, select “Remote-SSH: Connect to Host…” and then select the Vera entry\n\nA new VSCode window will open, and you will be prompted to enter your Chalmers ID password\nAfter entering your password, you should be connected to Vera, and you can start working on the HPC cluster directly from VSCode. Make sure that you open your home folder on Vera to open up a workspace.\nYou can verify that you are connected to Vera by opening a new terminal in VSCode (Terminal &gt; New Terminal) and checking the hostname in the terminal prompt. It should show something like your_chalmers_id@vera:~$",
     "crumbs": [
       "Intro to Command Line",
-      "Practical 5: Software & Containers"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#exercises-discover-tools",
-    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#exercises-discover-tools",
-    "title": "Practical 5: Software Installation and Containers",
-    "section": "2.1 Exercises: Discover tools",
-    "text": "2.1 Exercises: Discover tools\n# Explore apt \n# Find which apt subcommand lists packages for the following queries:\napt search kraken2\napt search singularity\napt search prokka\n\n# Lets look a little closer at prokka:\napt show prokka\n\n# Explore a tool on GitHub:\n#   1) Find the repository for 'BAKTA'\n#   2) Locate the installation methods, what options are available?\n#   3) Identify dependencies and OS requirements",
-    "crumbs": [
-      "Intro to Command Line",
-      "Practical 5: Software & Containers"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#setting-up-conda",
-    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#setting-up-conda",
-    "title": "Practical 5: Software Installation and Containers",
-    "section": "3.1 Setting up Conda",
-    "text": "3.1 Setting up Conda\nTo begin with, we will install Miniconda, a minimal installer for Conda. Conda is an open-source package management system and environment management system that runs on Windows, macOS, and Linux. It quickly installs, runs, and updates packages and their dependencies. Conda also creates, saves, loads, and switches between environments on your local computer. This is particularly useful in bioinformatics, where different projects may require different versions of software and libraries.\n# Install Miniconda\n# For this we need to fetch files from the internet via wget \nwget -O Miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh\nbash Miniconda.sh -b -p $HOME/miniconda3\n\n# Initialize shell and set channels\neval \"$($HOME/miniconda3/bin/conda shell.bash hook)\"\nconda init\n\n# Open a new shell terminal\n\n# Configure channels for bioconda packages, a specialized repository for bioinformatics software\nconda config --add channels conda-forge\nconda config --add channels bioconda\nconda config --set channel_priority strict",
-    "crumbs": [
-      "Intro to Command Line",
-      "Practical 5: Software & Containers"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#install-fastp-locally-via-apt",
-    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#install-fastp-locally-via-apt",
-    "title": "Practical 5: Software Installation and Containers",
-    "section": "3.2 Install fastp locally via apt",
-    "text": "3.2 Install fastp locally via apt\nNext up, we will install fastp locally using apt, the default package manager for Debian-based Linux distributions. You will encounter fastp later in the genomics workflow praticals, its a tool inteded for quality control and preprocessing of FASTQ read files.\n# Before we install anything via apt, its always a good idea to update the package lists\n# This ensures you get the latest versions available in the repositories\nsudo apt update\n\n# Search for fastp package in apt repositories\napt search fastp\n\n# Install fastp\nsudo apt install -y fastp\n\n# Verify installation\nfastp --version",
-    "crumbs": [
-      "Intro to Command Line",
-      "Practical 5: Software & Containers"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#use-conda-to-install-multiqc-locally",
-    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#use-conda-to-install-multiqc-locally",
-    "title": "Practical 5: Software Installation and Containers",
-    "section": "3.3 Use Conda to install MultiQC locally",
-    "text": "3.3 Use Conda to install MultiQC locally\nFor this segment we will install MultiQC, a tool that aggregates results from bioinformatics analyses across many samples into a single report. This is particularly useful for summarizing the output of tools like FastQC. Our install will be done in a conda enviroment, installing the version hosted on bioconda.\n# Create a new conda environment named MultiQC with python 3.9\nconda create -n MultiQC python=3.9\n\n# Activate the environment\nconda activate MultiQC\n\n# Install MultiQC from bioconda\nconda install multiqc\n\n# Verify installation\nmultiqc --version",
-    "crumbs": [
-      "Intro to Command Line",
-      "Practical 5: Software & Containers"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#containerization-with-singularity",
-    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#containerization-with-singularity",
-    "title": "Practical 5: Software Installation and Containers",
-    "section": "4.1 Containerization with Singularity",
-    "text": "4.1 Containerization with Singularity\nContainers are a way to package software and its dependencies into a single, portable unit that can run consistently across different computing environments. Unlike virtual machines, containers share the host system’s kernel, making them more lightweight and efficient. This is particularly useful in bioinformatics, where software often has complex dependencies and needs to run on various systems, including high-performance computing (HPC) clusters.\nOn HPC you usually cannot sudo and may not be allowed to build images on the login/compute nodes. Best practice is then: - Build the image locally (or via a remote builder). - Copy the .sif to the HPC. - Bind-mount data and databases at runtime.",
-    "crumbs": [
-      "Intro to Command Line",
-      "Practical 5: Software & Containers"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#a-minimal-kraken2-singularity-definition-file",
-    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#a-minimal-kraken2-singularity-definition-file",
-    "title": "Practical 5: Software Installation and Containers",
-    "section": "4.2 A minimal kraken2 Singularity definition file",
-    "text": "4.2 A minimal kraken2 Singularity definition file\nThe first step to creating a singularity container is to write a definition file. This file describes the base image, metadata, and the steps needed to install and configure the software inside the container. In many cases it will be simple, if an already hosted image exists (e.g. on BioContainers), luckily kraken2 is one of those cases. if you want to learn more about writing definition files, check out the Singularity documentation.\nCreate a file named kraken2.def with the contents below. It uses the BioContainers kraken2 image as a base.\n# kraken2.def\nBootstrap: docker\nFrom: quay.io/biocontainers/kraken2:2.1.6--pl5321h077b44d_0\n\n%labels\n    maintainer Y/N\n    org.opencontainers.image.title \"kraken2\"\n    org.opencontainers.image.source \"https://github.com/DerrickWood/kraken2\"\n\n%help\n    # Help exists to provide users with information about the container.\n    # Running `singularity run-help kraken2.sif` will display this message.\n    \n    Kraken 2 in a Singularity/Apptainer container.\n    \n    Bind your database at runtime, e.g. --bind /path/to/db:/db and use --db /db.\n\n    Used for the BIO511 Genomics course at Univsersity of Gothenburg.\n\n%post\n  # Here is where you would install additional software if needed and make config changes.\n  # However, the BioContainers image already has kraken2 installed.\n\n  # But for the hell of it, put a little text file in /home\n    echo \"This is a kraken2 container built from BioContainers base image.\" &gt; /home/kraken2_info.txt\n\n    # Echo a message to indicate successful build\n    echo \"kraken2 installed. Use --bind to mount a database at runtime.\"\n\n%environment\n    # Here is where you would usually set environment variables.\n    # However, the BioContainers image already has kraken2 in PATH. so nothing needed here.",
-    "crumbs": [
-      "Intro to Command Line",
-      "Practical 5: Software & Containers"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#build-test-and-run-locally",
-    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#build-test-and-run-locally",
-    "title": "Practical 5: Software Installation and Containers",
-    "section": "4.3 Build, test, and run locally",
-    "text": "4.3 Build, test, and run locally\n# Build a read-only image from the def file (locally)\nsingularity build kraken2.sif kraken2.def\n\n# Test that kraken works by running a version check\nsingularity exec kraken2.sif kraken2 --version\n\n# We also made a little text file in /home, lets check that too\n# For this, try to shell into the container and once your in try to print the contents of the file to stdout\nsingularity shell kraken2.sif",
-    "crumbs": [
-      "Intro to Command Line",
-      "Practical 5: Software & Containers"
-    ]
-  },
-  {
-    "objectID": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#slurm-job-script-to-invoke-singularity-container-based-software",
-    "href": "PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html#slurm-job-script-to-invoke-singularity-container-based-software",
-    "title": "Practical 5: Software Installation and Containers",
-    "section": "5.1 SLURM job script to invoke singularity container based software",
-    "text": "5.1 SLURM job script to invoke singularity container based software\nAs you already know, running software in the login node of an HPC is frowned upon. Instead, you should submit jobs to the scheduler (SLURM in this case), which allows you to take up space on one of the production nodes in the cluster. Below is a example of a SLURM job script that i (Tor) have used to run a Roary pangenome analysis on another cluster. Se if you can configure it to run kraken2 instead. All HPCs are different, so make sure to adjust paths, partitions, memory, time, etc to fit your HPC. The manual for Vera can be found here.\n#!/bin/bash -l\n#SBATCH -A nbin2-gu               # Project ID\n#SBATCH -J Roary_Pangenome        # Job name\n#SBATCH -t 20:00:00               # Time limit \n#SBATCH -n 1                      # Number of tasks (processes)\n#SBATCH -p main                   # Partition to submit to\n#SBATCH --mem=200G                # Memory per node\n#SBATCH --output=/cfs/klemming/projects/supr/naiss2024-22-639/05_PANGENOME_ANALYSIS/logs/roary_%j.out  # Standard output\n#SBATCH --error=/cfs/klemming/projects/supr/naiss2024-22-639/05_PANGENOME_ANALYSIS/logs/roary_%j.err   # Standard error\n\n# Load necessary modules (Do you need to load any modules for singularity on your HPC?)\nml singularity/4.1.1-cpeGNU-23.12\n\n# Define paths to script and container\nSINGULARITY_CONTAINER=\"/cfs/klemming/projects/supr/naiss2024-22-639/DBGWAS_test\"\"\n\n# Execute script within singularity environment\nsrun singularity exec -B /cfs/klemming/projects/supr/nbin2-gu:/mnt/data $SINGULARITY_CONTAINER roary -e --mafft -p 8 -f /mnt/data/05_PANGENOME_ANALYSIS/output/ /mnt/data/05_PANGENOME_ANALYSIS/input/*.gff\nOnce a jobscript is done, you can submit it to SLURM with the sbatch command, monitor its progress with squeue, and check the output files once its done.\nWe wont be running a jobscript for kraken2 here, but try to set one up yourself. You can use the jobscript above as a template Well run kraken2 for real in the next practical\n# Example of submitting a jobscript\nsbatch job_kraken2.slurm\n\n# Monitor\nsqueue -u $USER\n# or \nscontrol show job JOBID\n\n# Check output files\ntail -20 kraken2_12345.out\n\n\n\n\n\n\n\nKey Takeaways\n\n\n\n\nPackage managers (apt, conda) simplify software installation and dependency management.\nConda environments allow for isolated setups, preventing conflicts between projects.\nContainers (Singularity/Apptainer) provide portability and reproducibility across different systems.\nAlways bind necessary directories (data, databases) when running containers on HPC.\n\n\n\n\n\n\n\n\n\nPro Tips\n\n\n\n\nTest containers locally before HPC deployment. Run exec, shell, and run commands to ensure functionality.\nKeep containers minimal; BioContainers images are a quick and reliable base.\nUse %help and labels in your definition file; inspect with singularity run-help and singularity inspect. This helps reproducibility for other users.\nBind data with --bind host_dir:container_dir; pass multiple directories with variables\nIn some cases, you may need additional config for your runs. Instead of making complex invokes in the jobscript, consider writing a script to run the analysis, and then invoke that script within the container.",
-    "crumbs": [
-      "Intro to Command Line",
-      "Practical 5: Software & Containers"
+      "Practical 2: Setting up the HPC"
     ]
   }
 ]
