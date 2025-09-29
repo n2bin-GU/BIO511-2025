@@ -242,7 +242,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#understanding-assembly-vs.-mapping" id="toc-understanding-assembly-vs.-mapping" class="nav-link" data-scroll-target="#understanding-assembly-vs.-mapping"><span class="header-section-number">2</span> Understanding Assembly vs.&nbsp;Mapping</a>
   <ul class="collapse">
   <li><a href="#a-summary" id="toc-a-summary" class="nav-link" data-scroll-target="#a-summary"><span class="header-section-number">2.1</span> A summary</a></li>
-  <li><a href="#data-requirements-and-considerations" id="toc-data-requirements-and-considerations" class="nav-link" data-scroll-target="#data-requirements-and-considerations"><span class="header-section-number">2.2</span> Data requirements and considerations</a></li>
   </ul></li>
   <li><a href="#de-novo-assembly-with-flye" id="toc-de-novo-assembly-with-flye" class="nav-link" data-scroll-target="#de-novo-assembly-with-flye"><span class="header-section-number">3</span> De Novo Assembly with Flye</a>
   <ul class="collapse">
@@ -309,7 +308,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
-<p>After quality control, the next critical step in genomic analysis is either mapping reads to a reference genome or performing de novo assembly to reconstruct genomes from scratch. This practical will guide you through both processes, focusing on de novo assembly using long reads from Oxford Nanopore Technologies (ONT) and assessing assembly quality. We will use tools like Flye for assembly, Quast for quality assessment, and MultiQC for comprehensive reporting. Additionally, we will also explore hybrid assembly techniques that combine long and short reads for improved accuracy, which will introduce you to the concept of mapping reads.</p>
+<p>After quality control, the next critical step in genomic analysis is either mapping reads to a reference genome or performing de novo assembly to reconstruct genomes from scratch. This practical will both processes in a sense, but focus will be on de novo assembly using long reads from Oxford Nanopore Technologies (ONT) and assessing the quality of these assemblies. We will use tools like Flye for assembly, Quast for quality assessment, and MultiQC for comprehensive reporting. Additionally, we will also explore hybrid assembly to combine long and short reads for improved accuracy. For this we will use the Burrows-Wheeler Aligner (bwa), serving as a somewhat introduction to mapping reads to an assembled sequence.</p>
+<p>The documentation for each tool used in this practical can be found here: - <a href="https://github.com/mikolmogorov/Flye/blob/flye/docs/USAGE.md">Flye</a> - <a href="https://quast.sourceforge.net/docs/manual.html">Quast</a> - <a href="https://docs.seqera.io/multiqc">MultiQC</a> - <a href="https://bio-bwa.sourceforge.net/bwa.shtml">BWA</a> - <a href="https://github.com/rrwick/Polypolish/wiki">Polypolish</a></p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -364,23 +364,19 @@ Learning Objectives
 <li>Studying structural variations or novel sequences</li>
 <li>Working with metagenomes or mixed communities (where maybe the a total genome is not really needed, rather the genetic content)</li>
 </ul>
-<p><strong>Reference Mapping</strong> is preferred when:</p>
+<p><strong>Reference Mapping/Assembly</strong> is preferred when:</p>
 <ul>
 <li>A high-quality reference genome is available</li>
 <li>The goal is to identify variants relative to a known sequence</li>
 <li>Working with well-characterized organisms</li>
 <li>Often less relevant to bacteria, due to the aforementioned pangenomic diversity</li>
 </ul>
-</section>
-<section id="data-requirements-and-considerations" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="data-requirements-and-considerations"><span class="header-section-number">2.2</span> Data requirements and considerations</h2>
-<p>For this practical, we’ll work with long reads to better prepare you for your own projects. We will mainly focus on de novo assembly using Flye. If you have time to do the optional advanced exercise, you can also explore hybrid assembly approaches that combine long and short reads in order to polish the assembly; it also introduces the concept of mapping reads to an assembly.</p>
 <hr>
 </section>
 </section>
 <section id="de-novo-assembly-with-flye" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> De Novo Assembly with Flye</h1>
-<p>Flye is a modern assembler designed for long noisy reads from PacBio and Oxford Nanopore technologies. Flye can be used both for mammalian and bacterial assemblies, and includes built-in polishing capabilities. We’ll explore two different assembly strategies using the same ONT reads but with different parameters to compare their performance.</p>
+<p>Flye is a repeat graph-based assembler designed for long noisy reads from PacBio and Oxford Nanopore technologies. Flye can be used both for mammalian and bacterial assemblies, and includes built-in polishing capabilities. We’ll explore two different assembly strategies using the same ONT reads but with different parameters to compare their performance.</p>
 <section id="job-1-basic-ont-assembly" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="job-1-basic-ont-assembly"><span class="header-section-number">3.1</span> Job 1: Basic ONT Assembly</h2>
 <p>First, let’s create a job script for a basic assembly with no polishing:</p>
@@ -465,7 +461,6 @@ Learning Objectives
 <p>After both assemblies have completed, we need to assess their quality using QUAST (Quality Assessment Tool for Genome Assemblies). We are able to get some of this info from flye, but QUAST provides some neat graphs and other metrics that are useful to look at.</p>
 <section id="running-quast-for-assembly-statistics" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="running-quast-for-assembly-statistics"><span class="header-section-number">4.1</span> Running QUAST for Assembly Statistics</h2>
-<p>QUAST provides comprehensive assembly statistics and quality metrics:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -A C3SE408-25-2</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -J quast_analysis</span></span>
@@ -682,8 +677,8 @@ Key Takeaways
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>Assembly vs.&nbsp;Mapping</strong>: Choose based on your research questions and available references, in many cases both are needed or useful</li>
-<li><strong>Quality Assessment</strong>: Multiple metrics are needed to evaluate assembly and mapping quality</li>
-<li><strong>Tool Selection</strong>: Different tools excel in different scenarios - Flye for long reads, BWA for accurate short-read alignment in polishing workflows</li>
+<li><strong>Quality Assessment</strong>: Multiple metrics are needed to evaluate assembly and mapping quality, however bigger is not always better (such as in the case when nanopore introduces insertions/deletions)</li>
+<li><strong>Tool Selection</strong>: Multiple tools exist for assembly and mapping, differing in algorithms and performance; choose based on data type and research needs.</li>
 <li><strong>Iterative Process</strong>: Assembly and mapping often require parameter optimization and multiple iterations of the same workflow, also polishing steps may sometimes need more or less iterations to generate balanced results</li>
 <li><strong>Comprehensive Reporting</strong>: As assemblies are rich in data, tools like MultiQC help gather results for quick and big picture interpretation</li>
 </ul>
