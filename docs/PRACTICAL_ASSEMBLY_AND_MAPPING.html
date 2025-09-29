@@ -184,6 +184,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="./PRACTICAL_ASSEMBLY_AND_MAPPING.html">
  <span class="dropdown-text">Practical 2: Genome Assembly and Mapping</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./PRACTICAL_FUNCTIONAL_ANNOTATION.html">
+ <span class="dropdown-text">Practical 3: Genome Annotation</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -226,6 +230,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="./PRACTICAL_ASSEMBLY_AND_MAPPING.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Practical 2: Genome Assembly and Mapping</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./PRACTICAL_FUNCTIONAL_ANNOTATION.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 3: Genome Annotation</span></a>
   </div>
 </li>
     </ul>
@@ -309,7 +319,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
 <p>After quality control, the next critical step in genomic analysis is either mapping reads to a reference genome or performing de novo assembly to reconstruct genomes from scratch. This practical will both processes in a sense, but focus will be on de novo assembly using long reads from Oxford Nanopore Technologies (ONT) and assessing the quality of these assemblies. We will use tools like Flye for assembly, Quast for quality assessment, and MultiQC for comprehensive reporting. Additionally, we will also explore hybrid assembly to combine long and short reads for improved accuracy. For this we will use the Burrows-Wheeler Aligner (bwa), serving as a somewhat introduction to mapping reads to an assembled sequence.</p>
-<p>The documentation for each tool used in this practical can be found here: - <a href="https://github.com/mikolmogorov/Flye/blob/flye/docs/USAGE.md">Flye</a> - <a href="https://quast.sourceforge.net/docs/manual.html">Quast</a> - <a href="https://docs.seqera.io/multiqc">MultiQC</a> - <a href="https://bio-bwa.sourceforge.net/bwa.shtml">BWA</a> - <a href="https://github.com/rrwick/Polypolish/wiki">Polypolish</a></p>
+<p>The documentation for each tool used in this practical can be found here:</p>
+<ul>
+<li><a href="https://github.com/mikolmogorov/Flye/blob/flye/docs/USAGE.md">Flye</a></li>
+<li><a href="https://quast.sourceforge.net/docs/manual.html">Quast</a></li>
+<li><a href="https://docs.seqera.io/multiqc">MultiQC</a></li>
+<li><a href="https://bio-bwa.sourceforge.net/bwa.shtml">BWA</a></li>
+<li><a href="https://github.com/rrwick/Polypolish/wiki">Polypolish</a></li>
+</ul>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -448,8 +465,8 @@ Learning Objectives
 <span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Polished ONT assembly completed"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Submit both jobs:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Submit the assembly jobs</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> flye_basic_job.slurm</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> flye_polished_job.slurm</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> flye_basic_job.sh</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> flye_polished_job.sh</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Monitor job status</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">-u</span> <span class="va">$USER</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

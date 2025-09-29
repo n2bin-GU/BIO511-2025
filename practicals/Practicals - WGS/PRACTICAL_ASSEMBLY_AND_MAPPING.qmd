@@ -1,0 +1,404 @@
+---
+title: "Practical 2: De novo Assembly and Mapping"
+subtitle: "BIO511 Genomics - De Novo Assembly using long reads"
+author: "Tor Kling"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+# Introduction
+
+After quality control, the next critical step in genomic analysis is either mapping reads to a reference genome or performing de novo assembly to reconstruct genomes from scratch. This practical will both processes in a sense, but focus will be on de novo assembly using long reads from Oxford Nanopore Technologies (ONT) and assessing the quality of these assemblies. We will use tools like Flye for assembly, Quast for quality assessment, and MultiQC for comprehensive reporting. Additionally, we will also explore hybrid assembly to combine long and short reads for improved accuracy. For this we will use the Burrows-Wheeler Aligner (bwa), serving as a somewhat introduction to mapping reads to an assembled sequence. 
+
+The documentation for each tool used in this practical can be found here:
+
+- [Flye](https://github.com/mikolmogorov/Flye/blob/flye/docs/USAGE.md)
+- [Quast](https://quast.sourceforge.net/docs/manual.html)
+- [MultiQC](https://docs.seqera.io/multiqc)
+- [BWA](https://bio-bwa.sourceforge.net/bwa.shtml)
+- [Polypolish](https://github.com/rrwick/Polypolish/wiki)
+
+::: {.callout-important}
+## REMEMBER: Create a separate project folder
+```bash
+# Remember to make separate project folders for this practical
+# How you structure your workspace is up to you, but make sure to adjust the paths in the scripts below accordingly
+# EXAMPLE:
+mkdir -p ~yourdir/bio511/practical_2
+
+# Symlink the data folder to your project directory
+ln -s /cephyr/NOBACKUP/groups/n2bin_gu/BIO511/data ./data
+
+# Or if you need to use the data locally, copy it
+scp -r CID@vera2.c3se.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/data ./data
+
+```
+:::
+
+::: {.callout-note}
+## Learning Objectives
+
+By the end of this practical, you will be able to:
+
+- Understand the differences between reference mapping and de novo assembly
+- Perform de novo assembly using Flye for long reads
+- Assess assembly quality using Quast
+- Generate comprehensive reports with MultiQC
+- Combine long and short reads for hybrid assembly and polishing (optional)
+:::
+
+---
+
+# Understanding Assembly vs. Mapping
+
+## A summary
+
+**De Novo Assembly** is used commonly when:
+
+- No reference genome exists for your organism, or the reference is hard to get good coverage (ie. bacteria with high pangenomic diversity)
+- Studying structural variations or novel sequences
+- Working with metagenomes or mixed communities (where maybe the a total genome is not really needed, rather the genetic content)
+
+**Reference Mapping/Assembly** is preferred when:
+
+- A high-quality reference genome is available
+- The goal is to identify variants relative to a known sequence
+- Working with well-characterized organisms
+- Often less relevant to bacteria, due to the aforementioned pangenomic diversity
+
+---
+
+# De Novo Assembly with Flye
+
+Flye is a repeat graph-based assembler designed for long noisy reads from PacBio and Oxford Nanopore technologies. Flye can be used both for mammalian and bacterial assemblies, and includes built-in polishing capabilities. We'll explore two different assembly strategies using the same ONT reads but with different parameters to compare their performance.
+
+## Job 1: Basic ONT Assembly
+
+First, let's create a job script for a basic assembly with no polishing:
+
+```bash
+#!/bin/bash
+#SBATCH -A C3SE408-25-2
+#SBATCH -J flye_basic
+#SBATCH -p vera
+#SBATCH -N 1 --cpus-per-task=16
+#SBATCH -t 01:30:00
+#SBATCH --output=/cephyr/users/ktor/Vera/practical_2/logs/flye_basic_%j.out
+#SBATCH --error=/cephyr/users/ktor/Vera/practical_2/logs/flye_basic_%j.err
+
+# Set paths - ADJUST THESE TO YOUR ACTUAL PATHS
+DATA_PATH="/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/data/fastq/Assembly_reads"
+RESULTS_PATH="/cephyr/NOBACKUP/groups/n2bin_gu/students/yourname/practical_2"
+SINGULARITY_PATH="/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/singularity_images/flye.sif"
+
+# Set bind paths for Singularity
+export SINGULARITY_BINDPATH="${DATA_PATH}:/data,${RESULTS_PATH}:/results"
+
+# Set sample and output paths
+ONT_READS="${DATA_PATH}/CAN-290_ONT.fastq.gz"
+OUTPUT_DIR="${RESULTS_PATH}/assembly/flye_basic"
+
+# Create output directories
+mkdir -p ${OUTPUT_DIR}
+
+# Run Flye assembly with basic settings
+singularity exec ${SINGULARITY_PATH} flye --nano-raw /data/CAN-290_ONT.fastq.gz \
+     --out-dir /results/assembly/flye_basic \
+     --threads 16 \
+     --iterations 0
+
+echo "Basic ONT assembly completed"
+```
+
+## Job 2: Polished ONT Assembly
+
+Now create a second job with more aggressive polishing parameters:
+
+```bash
+#!/bin/bash
+#SBATCH -A C3SE408-25-2
+#SBATCH -J flye_polished
+#SBATCH -p vera  
+#SBATCH -N 1 --cpus-per-task=12
+#SBATCH -t 02:30:00
+#SBATCH --output=/cephyr/users/ktor/Vera/practical_2/logs/flye_polished_%j.out
+#SBATCH --error=/cephyr/users/ktor/Vera/practical_2/logs/flye_polished_%j.err
+
+# Set paths - ADJUST THESE TO YOUR ACTUAL PATHS  
+DATA_PATH="/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/data/fastq/Assembly_reads"
+RESULTS_PATH="/cephyr/NOBACKUP/groups/n2bin_gu/students/yourname/practical_2"
+SINGULARITY_PATH="/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/singularity_images/flye.sif"
+
+# Set bind paths for Singularity
+export SINGULARITY_BINDPATH="${DATA_PATH}:/data,${RESULTS_PATH}:/results"
+
+# Set sample and output paths
+ONT_READS="${DATA_PATH}/CAN-290_ONT.fastq.gz"
+OUTPUT_DIR="${RESULTS_PATH}/assembly/flye_polished"
+
+# Create output directories
+mkdir -p ${OUTPUT_DIR}
+
+# Run Flye assembly with enhanced polishing
+singularity exec ${SINGULARITY_PATH} flye --nano-raw /data/CAN-290_ONT.fastq.gz \
+     --out-dir /results/assembly/flye_polished \
+     --threads 12 \
+     --iterations 5 \
+
+echo "Polished ONT assembly completed"
+```
+
+Submit both jobs:
+
+```bash
+# Submit the assembly jobs
+sbatch flye_basic_job.sh
+sbatch flye_polished_job.sh
+
+# Monitor job status
+squeue -u $USER
+```
+
+---
+
+# Assembly Quality Assessment
+
+After both assemblies have completed, we need to assess their quality using QUAST (Quality Assessment Tool for Genome Assemblies). We are able to get some of this info from flye, but QUAST provides some neat graphs and other metrics that are useful to look at.
+
+## Running QUAST for Assembly Statistics
+
+```bash
+#!/bin/bash
+#SBATCH -A C3SE408-25-2
+#SBATCH -J quast_analysis
+#SBATCH -p vera
+#SBATCH -N 1 --cpus-per-task=4
+#SBATCH -t 01:00:00
+#SBATCH --output=/cephyr/users/ktor/Vera/practical_2/logs/quast_%j.out
+#SBATCH --error=/cephyr/users/ktor/Vera/practical_2/logs/quast_%j.err
+
+# Load or use containerized QUAST
+CONTAINER_PATH="/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/singularity_images/quast.sif"
+
+# Set paths - ADJUST THESE TO YOUR ACTUAL PATHS
+DATA_PATH="/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/data/fastq/Assembly_reads"
+RESULTS_PATH="/cephyr/NOBACKUP/groups/n2bin_gu/students/yourname/practical_2"
+OUTPUT_DIR="${RESULTS_PATH}/results/quast_results"
+
+# Set the path to the assemblies
+ASSEMBLIES_DIR="${RESULTS_PATH}/assembly"
+
+# Bind paths for container
+export SINGULARITY_BINDPATH="${ASSEMBLIES_DIR}:/assemblies,${OUTPUT_DIR}:/output"
+
+# Create output directory
+mkdir -p ${OUTPUT_DIR}
+
+# Run QUAST on both assemblies
+singularity exec ${CONTAINER_PATH} quast.py \
+    -o ${OUTPUT_DIR} \
+    --threads 4 \
+    --plots-format png \
+    --labels "Basic,Polished" \
+    /assemblies/flye_basic/assembly.fasta \
+    /assemblies/flye_polished/assembly.fasta
+
+echo "QUAST analysis completed"
+```
+
+## Look at base assembly statistics
+While waiting for the QUAST job to finish, you can look at some basic assembly statistics provided by Flye in the `assembly_info.txt` file located in each assembly output directory, if you want. Make sure that you understand what each metric means. Google any terms you are unfamiliar with!
+
+---
+
+# Comprehensive Analysis with MultiQC
+Now we'll generate a comprehensive report using MultiQC to summarize the QUAST results from both assemblies.
+
+## Preparing Data for MultiQC
+
+```bash
+# Create a comprehensive results directory structure
+mkdir -p multiqc_analysis/{assembly_qc,quast_results,kraken2_results}
+
+# Copy QUAST results
+scp -r CID@vera2.c3se.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/students/name/results/quast_results/* multiqc_analysis/quast_results/
+
+# We have also prepared some kraken2 results for the reads that you can include in your report
+scp -r CID@vera2.c3se.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/teachers/Tor/extra_data/kraken2_results/* multiqc_analysis/kraken2_results/
+
+```
+
+## Running MultiQC
+
+```bash
+# Navigate to analysis directory
+cd multiqc_analysis
+
+# Run MultiQC to aggregate all results
+multiqc . \
+    --title "BIO511 Practical 2 - Assembly Analysis" \
+    --filename "practical2_assembly_report" \
+    --dirs \
+    --dirs-depth 2 \
+    --force
+```
+
+---
+
+# Data Interpretation and Questions
+
+## Assembly Quality Metrics
+
+Use your QUAST reports and MultiQC output to answer:
+
+1. What is the total assembly size for each assembly? How many contigs were generated in each assembly?
+2. What is the N50 value for each? What is L50, or L90? What do these metrics tell you about the assembly quality?
+3. How do the basic and polished assemblies compare? Which assembly has better contiguity (fewer, longer contigs)?
+4. How does the assembly size compare to the expected genome size? What is the expected genome size for *H. pylori*?
+5. What additional data or methods would you recommend to improve this assembly?
+
+
+---
+
+# Optional Advanced Exercise: Hybrid Assembly with Short-Read Polishing
+
+If you have extra time and want to explore hybrid assembly approaches, here's an advanced exercise that combines Flye with short-read polishing using BWA and Polypolish. This approach leverages the strengths of both long and short reads to produce a high-quality assembly.
+
+## Understanding Hybrid Assembly
+
+An example of a hybrid assembly workflow is:
+
+1. **Initial assembly** with long reads (Flye)
+2. **Mapping** short reads to the assembly (BWA)
+3. **Filtering** alignments for optimal polishing
+4. **Polishing** the assembly using the filtered short reads (Polypolish)
+
+## Setting up Hybrid Assembly
+
+```bash
+#!/bin/bash
+#SBATCH -A C3SE408-25-2
+#SBATCH -J hybrid_assembly
+#SBATCH -p vera
+#SBATCH -N 1 --cpus-per-task=12
+#SBATCH -t 03:00:00
+#SBATCH --output=/cephyr/users/ktor/Vera/practical_2/logs/hybrid_%j.out
+#SBATCH --error=/cephyr/users/ktor/Vera/practical_2/logs/hybrid_%j.err
+
+# Set paths - ADJUST THESE TO YOUR ACTUAL PATHS
+DATA_PATH="/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/data/fastq/Assembly_reads"
+RESULTS_PATH="/cephyr/NOBACKUP/groups/n2bin_gu/students/yourname/practical_2"
+FLYE_CONTAINER="/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/singularity_images/flye.sif"
+PP_CONTAINER="/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/singularity_images/polypolish.sif"
+
+# Set bind paths for Singularity
+export SINGULARITY_BINDPATH="${DATA_PATH}:/data,${RESULTS_PATH}:/results"
+
+# Set sample and output paths
+ONT_READS="${DATA_PATH}/CAN-290_ONT.fastq.gz"
+SHORT_R1="${DATA_PATH}/CAN-290_R1.fastp.fq.gz"
+SHORT_R2="${DATA_PATH}/CAN-290_R2.fastp.fq.gz"
+OUTPUT_DIR="${RESULTS_PATH}/hybrid_assembly/results"
+SAMPLE_NAME="hybrid_assembly"
+
+# Create output directory
+mkdir -p ${OUTPUT_DIR}
+
+# Run the first Flye assembly (if not already done)
+# If you have already done the Flye assembly in previous steps, you can skip this step by commenting it out
+echo "Step 1: Running initial Flye assembly with ONT reads..."
+singularity exec ${FLYE_CONTAINER} flye --nano-raw /data/CAN-290_ONT.fastq.gz \
+     --out-dir /results/hybrid_assembly/results/flye_initial \
+     --threads 12 \
+     --iterations 2
+
+# Step 2: Map short reads to the assembly using BWA
+# Mapping the short reads to the draft assembly is essential to identify mismatched regions for polishing
+echo "Step 2: Mapping short reads to assembly with BWA..."
+singularity exec ${PP_CONTAINER} bwa index ${OUTPUT_DIR}/flye_initial/assembly.fasta
+
+singularity exec ${PP_CONTAINER} bwa mem -t 12 ${OUTPUT_DIR}/flye_initial/assembly.fasta \
+         ${SHORT_R1} > ${OUTPUT_DIR}/aligned_R1.sam
+singularity exec ${PP_CONTAINER} bwa mem -t 12 ${OUTPUT_DIR}/flye_initial/assembly.fasta \
+         ${SHORT_R2} > ${OUTPUT_DIR}/aligned_R2.sam
+
+# Step 3: Filter alignments for Polypolish
+# By filtering the alignments, we ensure that only high-quality mappings are used for polishing
+echo "Step 3: Filtering alignments for Polypolish..."
+singularity exec ${PP_CONTAINER} polypolish filter \
+    --in1 ${OUTPUT_DIR}/aligned_R1.sam --in2 ${OUTPUT_DIR}/aligned_R2.sam \
+    --out1 ${OUTPUT_DIR}/filtered_R1.sam --out2 ${OUTPUT_DIR}/filtered_R2.sam 
+
+# Step 4: Polish the assembly with Polypolish
+# Finally, we use Polypolish to correct errors in the assembly based on the filtered short-read alignments
+echo "Step 4: Polishing assembly with Polypolish..."
+singularity exec ${PP_CONTAINER} polypolish polish \
+    ${OUTPUT_DIR}/flye_initial/assembly.fasta \
+    ${OUTPUT_DIR}/filtered_R1.sam ${OUTPUT_DIR}/filtered_R2.sam > ${OUTPUT_DIR}/${SAMPLE_NAME}.fasta
+
+echo "Hybrid assembly completed: ${SAMPLE_NAME}.fasta"
+```
+
+```bash
+# Submit the hybrid assembly job
+sbatch hybrid_assembly_job.slurm
+```
+
+## Comparing Three Assembly Approaches
+
+After the hybrid assembly completes, you can compare all three approaches:
+
+```bash
+#!/bin/bash
+#SBATCH -A C3SE408-25-2
+#SBATCH -J quast_all
+#SBATCH -p vera
+#SBATCH -N 1 --cpus-per-task=4
+#SBATCH -t 01:00:00
+#SBATCH --output=/cephyr/users/ktor/Vera/practical_2/logs/quast_all_%j.out
+#SBATCH --error=/cephyr/users/ktor/Vera/practical_2/logs/quast_all_%j.err
+
+# Set paths - ADJUST THESE TO YOUR ACTUAL PATHS
+CONTAINER_PATH="/cephyr/NOBACKUP/groups/n2bin_gu/BIO511/singularity_images/quast.sif"
+RESULTS_PATH="/cephyr/NOBACKUP/groups/n2bin_gu/students/yourname/practical_2"
+OUTPUT_DIR="${RESULTS_PATH}/results/quast_all_results"
+
+# Set the path to the assemblies
+ASSEMBLIES_DIR="${RESULTS_PATH}/assembly"
+ASSEMBLIES_DIR_HYBRID="${RESULTS_PATH}/hybrid_assembly/results"
+
+# Bind paths for container
+export SINGULARITY_BINDPATH="${ASSEMBLIES_DIR}:/assemblies,${ASSEMBLIES_DIR_HYBRID}:/assemblies_hybrid,${OUTPUT_DIR}:/output"
+
+mkdir -p ${OUTPUT_DIR}
+
+# Run QUAST on all three assemblies
+singularity exec ${CONTAINER_PATH} quast.py \
+    -o ${OUTPUT_DIR} \
+    --threads 4 \
+    --plots-format png \
+    --labels "Basic,Polished,Hybrid" \
+    /assemblies/flye_basic/assembly.fasta \
+    /assemblies/flye_polished/assembly.fasta \
+    /assemblies_hybrid/hybrid_assembly.fasta
+
+echo "Complete QUAST analysis finished"
+```
+---
+
+::: {.callout-note}
+## Key Takeaways
+
+- **Assembly vs. Mapping**: Choose based on your research questions and available references, in many cases both are needed or useful
+- **Quality Assessment**: Multiple metrics are needed to evaluate assembly and mapping quality, however bigger is not always better (such as in the case when nanopore introduces insertions/deletions)
+- **Tool Selection**: Multiple tools exist for assembly and mapping, differing in algorithms and performance; choose based on data type and research needs.
+- **Iterative Process**: Assembly and mapping often require parameter optimization and multiple iterations of the same workflow, also polishing steps may sometimes need more or less iterations to generate balanced results
+- **Comprehensive Reporting**: As assemblies are rich in data, tools like MultiQC help gather results for quick and big picture interpretation
+:::
+
