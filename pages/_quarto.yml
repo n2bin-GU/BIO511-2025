@@ -1,0 +1,73 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "BIO511 Genomics - Practical Repository"
+  description: "Practical exercises for the BIO511 Genomics course practical sections"
+  navbar:
+    background: "light"
+    search: true
+    left:
+      - text: "Home"
+        href: index.qmd
+      - sidebar:cli
+      - sidebar:gwf
+      - sidebar:python
+
+
+  sidebar:
+    - id: cli
+      title: "Command Line Programming"
+      style: "docked"
+      background: "light"
+      contents:
+      - section: "Intro to Command Line"
+        contents:
+        - href: PRACTICAL_INTRO_TO_COMMAND_LINE.qmd
+          text: "Practical 1: CLI Basics"
+        - href: PRACTICAL_SETTING_UP_THE_HPC.qmd
+          text: "Practical 2: Setting up the HPC"
+        - href: PRACTICAL_WORKSPACE_MANAGEMENT.qmd
+          text: "Practical 3: Workspace Management and Data Management"
+        - href: PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.qmd
+          text: "Practical 4: Scripting and Advanced Text Manipulation"
+        - href: PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.qmd
+          text: "Practical 5: Software & Containers"
+      - section: "Coding Best Practices"
+        contents:
+        - href: PRACTICAL_GIT_SESSION1.qmd
+          text: "Practical 1: Git Fundamentals: Session 1"
+        - href: PRACTICAL_GIT_SESSION2.qmd
+          text: "Practical 2: Git Fundamentals: Session 2"
+        - href: PRACTICAL_BEST_CODING_PRACTISES.qmd
+          text: "Practical 3: Best Coding Practices"
+
+    - id: gwf
+      title: "Genomics Workflows"
+      style: "docked"
+      background: "light"
+      contents:
+      - href: PRACTICAL_RAWDATA_AND_QC.qmd
+        text: "Practical 1: Quality Control and Classification"
+      - href: PRACTICAL_ASSEMBLY_AND_MAPPING.qmd
+        text: "Practical 2: Genome Assembly and Mapping"
+      - href: PRACTICAL_FUNCTIONAL_ANNOTATION.qmd
+        text: "Practical 3: Genome Annotation"
+
+    - id: python
+      title: "Python Programming"
+      style: "docked"
+      background: "light"
+      contents:
+      - text: "Nothing here yet"
+
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    link-external-newwindow: true
