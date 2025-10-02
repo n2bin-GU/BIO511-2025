@@ -12,11 +12,31 @@ format:
     theme: cosmo
 ---
 
+# Introduction
 
+Now we are finally getting into the bread and butter python syntax! Today you will do some very simple exercises with some of the most commonly used python data types as well as starting with boolean logic using if/else clauses.
+
+You can copy the code blocks containing comments below and work on the tasks from within your IDE (Integrated Developer Environment)
+Remember comments are the lines that start with `#` and will be ignored when you run your code
+
+ 
+Remember to refer back to todays presentations for help or ask the teachers - It's what we are here for :)
+
+
+## Some links that you may find helpful
+
+They may even contain information that the teachers missed or didn't explain well enough!
+
+[Data types (written help)](https://www.w3schools.com/python/python_datatypes.asp)
+
+[Data types (Video guide)](https://www.youtube.com/watch?v=ppsCxnNm-JI)
+
+If/else (written guide)
+If/else (video guide)
 
 # Exercises
 
-## 1.1 Data type usage
+## Data type usage
 ```python
 # Create a script where you save one value of each data type to its own variable.
 # Afterwards, print the variables and their type using print() and type()
@@ -24,7 +44,7 @@ format:
 # list, dictionary, tuple, set, range 
 ```
 
-## 1.2 If / Elif / Else on your data types
+## If / Elif / Else on your data types
 
 
 
@@ -36,23 +56,27 @@ format:
 # If it is empty print "empty", else print "non-empty".
 # (Hint: len(...) )
 
-# Your code here
+# Your code below
 
 
 # B) Multi-way
 # Pick an INTEGER you created.
 # Print exactly one of: "negative", "zero", "positive".
 # (Hint: compare to 0)
-# Your code here
+
+# Your code below
 
 
 # C) Type gate + nested classification
 # Pick a SEQUENCE you created (list OR tuple OR range).
 # If the type matches your choice:
-#   - if length == 0 → "empty"
-#   - elif length == 1 → "single item"
-#   - else → "multiple items"
+#   - if length == 0 print "empty"
+#   - elif length == 1 print "single item"
+#   - else print "multiple items"
 # Else print "wrong type for this task".
 # (Hint: type(x) is list/tuple/range; len(...) )
-# Your code here
+
+# Your code below
+
+
 ```
