@@ -1,0 +1,58 @@
+---
+title: "Practical 1: Python Data Types and If/Else Clauses"
+subtitle: "BIO511 Genomics - Python Introduction"
+author: "Alvar Almstedt, Emma Västerviga"
+date: today
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+
+
+# Exercises
+
+## 1.1 Data type usage
+```python
+# Create a script where you save one value of each data type to its own variable.
+# Afterwards, print the variables and their type using print() and type()
+# Data types: integer, floating point, string, boolean, nonetype,
+# list, dictionary, tuple, set, range 
+```
+
+## 1.2 If / Elif / Else on your data types
+
+
+
+```python
+# Reuse the variables you created previously in 1.1 or recreate them with new values. Print something for each part.
+#   - First: check the variable’s type with type(x) is <type>.
+# A) Simple check
+# Pick a STRING you created. 
+# If it is empty print "empty", else print "non-empty".
+# (Hint: len(...) )
+
+# Your code here
+
+
+# B) Multi-way
+# Pick an INTEGER you created.
+# Print exactly one of: "negative", "zero", "positive".
+# (Hint: compare to 0)
+# Your code here
+
+
+# C) Type gate + nested classification
+# Pick a SEQUENCE you created (list OR tuple OR range).
+# If the type matches your choice:
+#   - if length == 0 → "empty"
+#   - elif length == 1 → "single item"
+#   - else → "multiple items"
+# Else print "wrong type for this task".
+# (Hint: type(x) is list/tuple/range; len(...) )
+# Your code here
+```

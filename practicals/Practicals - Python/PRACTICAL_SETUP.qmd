@@ -1,0 +1,31 @@
+---
+title: "Practical 0: Introduction"
+subtitle: "BIO511 Genomics - Python Introduction and Setup"
+author: "Alvar Almstedt, Emma Västerviga"
+date: today
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+# Introduction
+
+Since this is the first day, we will make the practcal very short. The main goal is to make sure you have everything set up and working on your machine
+
+
+# Exercise
+
+## Set up your repo
+```python
+# Create your first python script in this course.
+# It can be something really simple like
+print(Author: YOUR-NAME)
+# Create a github repo for this course. Name it BIO511_python_2025_<My-Name> 
+```
+
+
+

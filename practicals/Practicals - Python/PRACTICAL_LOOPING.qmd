@@ -1,0 +1,121 @@
+---
+title: "Practical 3: Python Loops"
+subtitle: "BIO511 Genomics - Think iteration and loops"
+author: "Alvar Almstedt, Emma Västerviga"
+date: today
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+# Introduction
+
+
+# Exercises
+
+## 2.1
+
+```python
+# Example
+# Make a list
+mylist = ["a", "list", "can", "contain", "strings", "and", "numbers", 2]
+# You can double check if it's a list
+type(mylist)
+
+# print your list
+print(mylist)
+
+# print the first item in your list
+prit(thislist[0])
+```
+
+
+```python
+# 1. create a list of 7 items. Loop over the list printing each item of the list. 
+# 2. For each iteration, print the loop number (index). E.g. on the third loop (iteration) its supposed to print a "3".
+# 3. Add an If-statement to make the loop stop after printing its 5th item. 
+```
+
+## 2.2
+
+Example:
+```python
+# Example: Here's a simple nested loop, looking for codons in sequences.
+sequences = ['ATCTGAGTCCACACATG', 'GCGTCGTGCGATGTTCACGTTGAT', 'CAGTAGTACTCAGT', 'GGTATGCTAGACGAGATCTAATA']
+codons = ['CCA', 'TGT', 'GTA', 'TAG']
+for sequence in sequences:
+  for codon in codons:
+    if codon in sequence:
+      print(codon + " is in " + sequence)
+```
+
+
+```python
+# Exercise 2.2 - nested loops
+# These exercises can get a bit tricky. A tip is to write the steps down in plain text before writing the actual code, to keep track of things.
+# a.
+# Create a nested for loop as in the example which looks for start and stop codons in the list sequences.
+# Which sequences have both a start and a stop codon?
+# b.
+# Try to find a way to make sure that the start codon is before the stop codon in a sequence.
+# Which sequence(s) have a start codon before a stop codon? 
+# We can loop through a dictionary by defining two variables: both the key and value.
+# Example:
+# Build a simple dict with the keys 'pat_001', 'pat_002' and 'pat_003' that has a value each. Here, the values are list:
+data = dict({'pat_001': ['bacZZt98', 'bac889Ytd'], 'pat_002': ['bac0GFrr'], 'pat_003': ['bac889Ytd', 'bacFq55Hj', 'bacZZt98']})
+# Loop through the dict printing each key and each value as a list.
+for key_patient, value_bact_list in data.items():  
+  print(key_patient)
+  print(value_bact_list)
+# add a line to see if the value (list) has the bacterial strain 'bac889Ytd'. 
+If it does it should return 'True'. If not, it should say 'False'.
+for key_patient, value_bact_list in data.items():  
+  print(key_patient)
+  print(value_bact_list)
+  'bac889Ytd' in value_bact_list
+# c.
+# Make a loop going through the dictionary saved as 'data', given in the example.
+# Use the loop to create a list of all the unique bacteria.
+# Start by creating an empty list. Then create a for-loop where, for each iteration, you add the current bacteria to the list.
+# Next, introduce an if-statement. Before adding each bacteria, use the if-statement to check whether the bacteria is or is not already in the list. 
+# If it's not in the list, add it. Otherwise, continue to the next bacteria. See if you can use a search engine (like google) to figure out how to append items to a list. 
+---
+# Solution
+rev_list = []
+for pat, bac_list in data.items():
+  for bac in bac_list:
+    if bac in rev_list:
+      continue
+    else:
+      rev_list.append(bac)
+---
+# d.
+# Lets do the same thing but instead add each unique bacteria as a key in a dictionary. The values can be empty lists.
+# Start by making an empty dictionary. Hint: Search online for how to list the keys in a dict, in order to compare each bacteria to the dict you're building. 
+---
+# Solution
+rev_dict = {}
+for pat, bac_list in data.items():
+  for bac in bac_list:
+    if bac in rev_dict.keys():
+      continue
+    else:
+      rev_dict[bac] = []
+---
+# e. Now let's append the patients to the lists of each key.
+# The final dict should look like this: {'bacZZt98': ['pat_001', 'pat_003'], 'bac889Ytd': ['pat_001', 'pat_003'], 'bac0GFrr': ['pat_002'], 'bacFq55Hj': ['pat_003']}
+# Use the dict 'data' to create your new reversed dictionary.
+---
+# solution
+rev_dict = {}
+for pat, bac_list in data.items():
+  for bac in bac_list:
+    if bac not in rev_dict.keys():
+      rev_dict[bac] = []
+    rev_dict[bac].append(pat)
+---
+```

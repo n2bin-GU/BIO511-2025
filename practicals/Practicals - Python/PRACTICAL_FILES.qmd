@@ -1,0 +1,181 @@
+---
+title: "Practical 5: Files"
+subtitle: "BIO511 Genomics - Python File Manipulation"
+author: "Alvar Almstedt, Emma Västerviga"
+date: today
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+# Introduction
+
+
+
+# Exercises
+
+Here too the students will get an almost finished workflow, and will have to modify the functions in order to finish the tasks. The main.py calls functions from premade_script.py and uses an anonymous fasta-file to translate nucleotides into prospective proteins. The idea is that they should see how you open, write, and manipulate a file. But also how you can use a dict to store and tweak info from a file. 
+
+Suggestions for questions:
+'count_entries'
+
+How many codons and amino acids are in the sequence?
+
+How long is the original sequence?
+
+Does these lengths make sense?
+
+'function_one'
+What does this function do? Input? Output?
+Add comments to the code to explain what each part does.
+
+'function_two'
+Complete the function to write the ORFs to a multi-fasta file. (hint: use 'with open()' as in previous examples)
+
+Bonus: Do a blastp search of the faa-file and investigate. What organism was the original fasta from?
+
+
+### main.py
+
+```python
+from premade_script import read_into_dict, codons_and_acids, count_entries, function_one, function_two
+
+import argparse
+import os
+
+def existing_file(file_path):
+    """This function checks if the provided file path exists and is a file."""
+    if not os.path.isfile(file_path):
+        raise argparse.ArgumentTypeError(f"'{file_path}' is not a valid file")
+    return file_path
+
+def main():
+    # First we capture the input arguments from the command line
+    parser = argparse.ArgumentParser(description="Process a string and a folder.")
+    parser.add_argument('-s', '--sequence', type=existing_file, required=True, help='Input sequence file')
+    args = parser.parse_args()
+
+    # Then we read the sequence from the file and store it in a dictionary
+    results_dict = read_into_dict(args.sequence)
+
+    # Here we do the same work as last week, but through a more compact function and using a dictionary
+    results_dict = codons_and_acids(results_dict)
+
+    # This is an unfinished function that you will complete in the premade_script.py file
+    results_dict = count_entries(results_dict)
+
+    # This function is complete, but will need an explanation
+    results_dict = function_one(results_dict)
+
+    # Function is only started, you will finish it
+    function_two(results_dict)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+
+### premade_script.py
+
+```python
+from Bio.Seq import Seq # Students will need to use the installation from last week
+import os
+
+def read_into_dict(input_fasta):
+    """Here we store the information from the fasta file into a dictionary."""
+
+    results_dict = {}
+    sequence = ''
+    with open(input_fasta, 'r') as fasta_file:
+        for line in fasta_file:
+            line = line.strip()
+            if line.startswith('>'):
+                results_dict['header'] = line
+            else:
+                sequence += line
+    results_dict['sequence'] = sequence
+
+    return results_dict
+
+
+def codons_and_acids(results_dict):
+    """Almost the same as last week, except we use a dictionary to access the sequence."""
+
+    seq = Seq(results_dict['sequence']) # Converting the sequence string to a Seq object
+    codons = [str(seq[i:i+3]) for i in range(0, len(seq), 3) if len(seq[i:i+3]) == 3] # List comprehension to get codons
+    acids = [str(seq[i:i+3].translate()) for i in range(0, len(seq), 3) if len(seq[i:i+3]) == 3] # List comprehension to get amino acids
+
+    # Here we store the results in the dictionary
+    results_dict['codons'] = codons
+    results_dict['amino_acids'] = acids
+    results_dict['codon_to_acid'] = dict(zip(codons, acids))
+
+    return results_dict
+
+
+def count_entries(results_dict):
+    """This is an unfinished function where you should count the number of codons and amino acids."""
+
+    pass
+
+    # Solution:
+    results_dict['num_codons'] = len(results_dict['codons'])
+    results_dict['num_amino_acids'] = len(results_dict['amino_acids'])
+    results_dict['seq_length'] = len(results_dict['sequence'])
+    print(f"Number of codons: {results_dict['num_codons']}")
+    print(f"Number of amino acids: {results_dict['num_amino_acids']}")
+    print(f"Length of original sequence: {results_dict['seq_length']}")
+
+    return results_dict
+
+def function_one(results_dict):
+    """What does this function do?"""
+
+    ORFs = []
+    current_ORF = []
+    in_ORF = False
+
+    for acid in results_dict['amino_acids']:
+        if acid == 'M' and not in_ORF:
+            in_ORF = True
+            current_ORF = ['M']
+        elif acid == '*' and in_ORF:
+            in_ORF = False
+            current_ORF.append('*')
+            ORFs.append(''.join(current_ORF))
+            current_ORF = []
+        elif in_ORF:
+            current_ORF.append(acid)
+
+    results_dict['ORFs'] = ORFs
+
+    return results_dict
+
+
+def function_two(results_dict):
+    """Write the ORFs to a faa (amino acid multi fasta)."""
+
+    # These two lines specify that the output will be in the same directory as this script.
+    output_file_here = os.path.join(os.path.dirname(__file__), 'function_two_output.faa')
+    output_file_here_absolute = os.path.abspath(output_file_here)
+
+    # Exercise:
+    # Using "with open()" as in previous examples, write the ORFs to the file 'function_two_output.faa' as
+    # specified in the variable output_file_here_absolute. Remember that open(file, 'r') only reads files!
+    # Each ORF should have a header like '>ORF_1', '>ORF_2', etc.
+
+    # Solution:
+    with open(output_file_here_absolute, 'w') as out_faa:
+        number = 1
+        for ORF in results_dict['ORFs']:
+            out_faa.write(f'>ORF_{number}\n{ORF}\n')
+            number += 1
+
+
+
+```
