@@ -1,7 +1,7 @@
 ---
 title: "Practical 4: Python Modules"
 subtitle: "BIO511 Genomics - Importing and the standard Library (stdlib)"
-author: "Alvar Almstedt, Emma Västerviga"
+author: "Alvar Almstedt, Emma Västerviga, Emilio Rudbeck"
 date: today
 format: 
   html:
@@ -15,46 +15,75 @@ format:
 
 # Introduction
 
+Since python is such a popular programming language, people have created thousands and thousands of packages and modules that you can download for free and make use of. The ones we mention in this course are not even the tip of this massive icebarg.
+
+For example, pip contains over 675 000 packages as of the time of writing!!!
+
+Remember the suggested general workflow when attempting to install something:
+
+* create new conda env
+* try conda install with conda-forge and bioconda channels. If you dont find what you need:
+* install pip in your env and try that
+* If you still cant find the thing you need you can attempt to install from source via a github repo but that can be a little bit annoying (especially for a beginner)
+
+*(You dont have to use conda if you know what youre doing. Its just a convenient suggestion. Other package managers are available)*
+
+# Useful links
+
+[Python modules (text)](https://www.datacamp.com/tutorial/modules-in-python)
+
+[Python modules (video)](https://www.youtube.com/watch?v=CqvZ3vGoGs0)
+
 
 # Exercises
 
-Students will be given two scripts, where the main.py will import all functions from a separate script premade_script.py which first parses a fasta-file into codons, and then translates these to aminoacids. 
-To get this to work, the students first needs to import the aa-translation function, install and call Bio.Seqand see how variables are passed between two files.
+In these exercises you will learn how you can import functions from other scripts that you have written as well as install an external modul as well as install an external module.
 
-4.1
+You will be given two scripts (see below), where the main.py will import all functions from a separate script premade_script.py which first parses a fasta-file into codons, and then translates these to aminoacids. 
+To get this to work, you first need to import the amino acid translation function, install and call Bio.Seq and see how variables are passed between two files.
+
+##
 Navigate the imported code from premade_script.py
 
-a) Using the comments in the function codons, can you describe what it does?
+### 
+Using the comments in the function codons, can you describe what it does?
 
-b) What's the input of the function?
+###
+What's the input of the function?
 
-c) In the main function of main.py, add a print statement to print the output of the function
+### 
+In the main function of main.py, add a print statement to print the output of the function
 
 
-4.2
+##
 Open the script called premade_script.py and find the function called exercise_function
 
-a) What's the input of the function?
+### 
+What's the input of the function?
 
-b) What does this function do?
+### 
+What does this function do?
 
-c) Try calling it through main.py (see how the previous function is imported and used)
+### 
+Try calling it through main.py (see how the previous function is imported and used)
 
 
-4.3
+##
 Make the exercise_function work
 
-a) A non standard module is needed to run the function. Which? Install/use/call it [This will depend on how we want the students to access modules. Do we go with Conda, singularity, modules, or anything else?]
+###
+A non standard module is needed to run the function. Which? Install/use/call it [This will depend on how we want the students to access modules. Do we go with Conda, singularity, modules, or anything else?]
 
-b) Check the output of the script
+###
+Check the output of the script
 
-### main.py
+
+
+**main.py**
 
 ```python
 #!/usr/bin/env python3
 from premade_script import codons
-# Here students will import the translation function from premade_script.py
-from premade_script import exercise_function # REMOVE THIS
 import argparse
 import os
 
@@ -88,7 +117,11 @@ if __name__ == "__main__":
 ```
 
 
-### premade_script.py
+
+
+
+
+**premade_script.py**
 
 ```python
 def codons(sequence_file):
