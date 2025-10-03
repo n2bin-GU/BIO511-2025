@@ -38,9 +38,9 @@ If/else (video guide)
 
 ## Data type usage
 ```python
-# Create a script where you save one value of each data type to its own variable.
-# Afterwards, print the variables and their type using print() and type()
-# Data types: integer, floating point, string, boolean, nonetype,
+# Create a script (.py file) where you save one value of each data type to its own variable.
+# Afterwards, print all the variables and their type using print() and type()
+# Data types to include: integer, floating point, string, boolean, nonetype,
 # list, dictionary, tuple, set, range 
 ```
 
@@ -50,8 +50,9 @@ If/else (video guide)
 
 ```python
 # Reuse the variables you created previously in 1.1 or recreate them with new values. Print something for each part.
-#   - First: check the variable’s type with type(x) is <type>.
-# A) Simple check
+#   - Hint: check the variable’s type is with type(variablename) is to deremine which variable to use.
+
+# A) Simple check (If/else clause)
 # Pick a STRING you created. 
 # If it is empty print "empty", else print "non-empty".
 # (Hint: len(...) )
@@ -59,7 +60,9 @@ If/else (video guide)
 # Your code below
 
 
-# B) Multi-way
+
+# B) Multi-way (If/elif/else clause)
+
 # Pick an INTEGER you created.
 # Print exactly one of: "negative", "zero", "positive".
 # (Hint: compare to 0)
@@ -67,9 +70,11 @@ If/else (video guide)
 # Your code below
 
 
-# C) Type gate + nested classification
+
+# C) Type gate + nested classification (Nested If/elif/else)
+
 # Pick a SEQUENCE you created (list OR tuple OR range).
-# If the type matches your choice:
+# If the type of the variable matches your choice, check:
 #   - if length == 0 print "empty"
 #   - elif length == 1 print "single item"
 #   - else print "multiple items"

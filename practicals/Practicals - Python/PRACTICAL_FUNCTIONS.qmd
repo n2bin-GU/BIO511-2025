@@ -13,10 +13,12 @@ format:
 ---
 
 # Introduction
+Functions are everywhere in python and its time for you to start using them
 
 
+# Useful links
 
-# Exercise
+# Exercises
 
 ```python
 # Use the exact variables defined below. Write the functions and the calls yourself.
@@ -33,58 +35,69 @@ result = "unset"
 ```
 
 
-Task:
+##
 ```python
-# A) Count-above  (uses nums, limit, count)
-# Goal: make a small function and call it.
-# 1) Define a function named count_above that takes two arguments: seq and lim.
-# 2) Inside the function, create a LOCAL variable named count starting at 0.
-# 3) Loop through seq; for each number strictly greater than lim, increase count by 1.
-# 4) Return count.
-# 5) Outside the function:
+# Count-above  (uses nums, limit, count)
+# Goal: make a small function called whatevver you want and then call(run) it.
+
+# a) Define a function named count_above that takes two arguments: seq and lim.
+
+# b) Inside the function, create a LOCAL variable named count starting at 0.
+
+# c) Loop through seq; for each number strictly greater than lim, increase count by 1.
+
+# d) Return count.
+
+# e) Outside the function:
 #    - Print the GLOBAL count.
 #    - Call count_above(nums, limit) and print the returned number.
 #    - Print the GLOBAL count again (notice the global didn’t change).
+
 # Your code below
  
 
+```
 
-B) Text summary  (uses text, summary)
+##
+```python
+# Text summary  (uses text, summary)
 # Goal: classify characters with an if/elif/else chain and return a clear result.
-# 1) Define a function named summarize_text that takes one argument: s.
-# 2) Inside the function, create a LOCAL variable named summary that holds a result dictionary
+# a) Define a function named summarize_text that takes one argument: s.
+# b) Inside the function, create a LOCAL variable named summary that holds a result dictionary
 #    with exactly these keys: "digits", "letters", "other" — each starting at 0.
-# 3) Loop through each character in s:
+# c) Loop through each character in s:
 #       - if the character is a digit, increase "digits"
 #       - elif the character is a letter, increase "letters"
 #       - else increase "other"
-# 4) Return the summary dictionary.
-# 5) Outside the function:
+# d) Return the summary dictionary.
+# e) Outside the function:
 #    - Print the GLOBAL summary.
 #    - Call summarize_text(text) and print the returned dictionary.
 #    - Print the GLOBAL summary again.
 # Your code below
 
 
+```
 
-
+##
+```python
 #C) Aggregate with mode  (uses nums, limit, result)
 # Goal: nested decisions based on a mode string. Return one final value.
-# 1) Define a function named aggregate that takes three arguments: seq, mode, threshold.
-# 2) Inside the function, create a LOCAL variable named result.
+# a) Define a function named aggregate that takes three arguments: seq, mode, threshold.
+# b) Inside the function, create a LOCAL variable named result.
 #    Initialize it based on mode:
 #       - if mode is "sum": start at 0
 #       - if mode is "count": start at 0
 #       - if mode is "max": start at None (meaning “no qualifying value yet”)
-# 3) Loop through each number n in seq:
+# c) Loop through each number n in seq:
 #       - First, ignore n if it is negative (skip it).
 #       - If n is at least threshold, then:
 #           * if mode is "sum": add n to result
 #           * elif mode is "count": increase result by 1
 #           * else (treat any other mode as "max"):
 #                 if result is None or n is greater than result, update result to n
-# 4) Return result.
-# 5) Outside the function:
+# d) Return result.
+# e) Outside the function:
 #    - Print the GLOBAL result.
 #    - Call and print each of these:
 #         aggregate(nums, "sum", limit)
