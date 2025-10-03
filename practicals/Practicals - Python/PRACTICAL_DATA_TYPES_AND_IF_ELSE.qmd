@@ -16,7 +16,7 @@ format:
 
 Now we are finally getting into the bread and butter python syntax! Today you will do some very simple exercises with some of the most commonly used python data types as well as starting with boolean logic using if/else clauses.
 
-You can copy the code blocks containing comments below and work on the tasks from within your IDE (Integrated Developer Environment)
+You can copy the code blocks containing comments below and work on the tasks from within your IDE (Integrated Developer Environment)/text editor or a jupyter notebook.
 Remember comments are the lines that start with `#` and will be ignored when you run your code
 
  
@@ -31,12 +31,15 @@ They may even contain information that the teachers missed or didn't explain wel
 
 [Data types (Video guide)](https://www.youtube.com/watch?v=ppsCxnNm-JI)
 
-If/else (written guide)
-If/else (video guide)
+[If/else (written guide)](https://mimo.org/glossary/python/if-statement)
+
+[If/else (video guide, easy)](https://www.youtube.com/watch?v=FvMPfrgGeKs)
 
 # Exercises
 
 ## Data type usage
+
+
 ```python
 # Create a script (.py file) where you save one value of each data type to its own variable.
 # Afterwards, print all the variables and their type using print() and type()
@@ -46,12 +49,14 @@ If/else (video guide)
 
 ## If / Elif / Else on your data types
 
+Reuse the variables you created in the previous task or recreate them with new values. Print something for each task.
 
+::: {.callout-tip} 
+### Hint
+Check the variable’s type is with `type(variablename)` is to deremine which variable to use.
+:::
 
 ```python
-# Reuse the variables you created previously in 1.1 or recreate them with new values. Print something for each part.
-#   - Hint: check the variable’s type is with type(variablename) is to deremine which variable to use.
-
 # A) Simple check (If/else clause)
 # Pick a STRING you created. 
 # If it is empty print "empty", else print "non-empty".
@@ -61,6 +66,10 @@ If/else (video guide)
 
 
 
+```
+
+### Multi-way (If/elif/else clause)
+```python
 # B) Multi-way (If/elif/else clause)
 
 # Pick an INTEGER you created.
@@ -71,6 +80,10 @@ If/else (video guide)
 
 
 
+```
+
+### Type gate + nested classification (Nested If/elif/else)
+```python
 # C) Type gate + nested classification (Nested If/elif/else)
 
 # Pick a SEQUENCE you created (list OR tuple OR range).
@@ -82,6 +95,7 @@ If/else (video guide)
 # (Hint: type(x) is list/tuple/range; len(...) )
 
 # Your code below
+
 
 
 ```
