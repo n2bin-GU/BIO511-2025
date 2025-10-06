@@ -42,6 +42,13 @@ In these exercises you will learn how you can import functions from other script
 You will be given two scripts (see below), where the main.py will import all functions from a separate script premade_script.py which first parses a fasta-file into codons, and then translates these to aminoacids. 
 To get this to work, you first need to import the amino acid translation function, install and call Bio.Seq and see how variables are passed between two files.
 
+
+::: {.callout-tip} 
+### Hint
+You will need to install Biopython to use the Seq object. We have not discussed it yet so you have to look up the documentation yourself.
+:::
+
+
 ##
 Navigate the imported code from premade_script.py
 

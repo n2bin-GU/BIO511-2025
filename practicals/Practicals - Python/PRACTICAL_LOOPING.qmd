@@ -14,7 +14,7 @@ format:
 
 # Introduction
 
-Looping over different types of sequences is key in most programming languages and python is no different. Today the exercises will involve looping over sequence data 
+Looping over different types of sequences is key in most programming languages and python is no different. Today the exercises will involve creating some simple loops followed by some more invluved loop constructs where you will combine looping with the if clauses we learned yesterday. 
 
 
 
