@@ -13,19 +13,16 @@ format:
 ---
 
 # Introduction
-
+The instructions to this practical is not completely finsihed yet. In the end, it will contain something like this:
 
 # Exercises
 
 ### 6.1
 Try plotting scatterplots of the seaborn dataset “Penguins”. 
 
-a.) use different colors based on something
+a.) use different colors based on species or island
 b.)create one with matplotlib or seaborn, plotly and plotting
 
 ### 6.2
 Try to create a subplot with three plots
 
-### 6.3
-Create a plot with biological data, like violin plot of RNAseq 
- - save the figure as a .png 
