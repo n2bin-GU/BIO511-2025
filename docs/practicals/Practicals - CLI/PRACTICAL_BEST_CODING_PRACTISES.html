@@ -6,10 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Tor Kling">
-<meta name="dcterms.date" content="2025-10-06">
+<meta name="author" content="Stuti Jain, Tor Kling">
 
-<title>BIO511 Genomics - Practical Repository</title>
+<title>Best Coding Practices for Command‑Line Programming – BIO511 Genomics - Practical Repository</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,26 +21,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8e049031f30567c4281a40dcf0e5e98c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-8e049031f30567c4281a40dcf0e5e98c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -71,7 +105,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="pages/styles.css">
+<link rel="stylesheet" href="../../pages/styles.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -81,7 +115,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">BIO511 Genomics - Practical Repository</span>
     </a>
   </div>
@@ -92,7 +126,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -102,37 +136,37 @@ ul.task-list li input[type="checkbox"] {
     <ul class="dropdown-menu" aria-labelledby="nav-menu-command-line-programming">    
         <li class="dropdown-header">Intro to Command Line</li>
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_INTRO_TO_COMMAND_LINE.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - CLI/PRACTICAL_INTRO_TO_COMMAND_LINE.html">
  <span class="dropdown-text">Practical 1: CLI Basics</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_SETTING_UP_THE_HPC.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - CLI/PRACTICAL_SETTING_UP_THE_HPC.html">
  <span class="dropdown-text">Practical 2: Setting up the HPC</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_WORKSPACE_MANAGEMENT.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - CLI/PRACTICAL_WORKSPACE_MANAGEMENT.html">
  <span class="dropdown-text">Practical 3: Workspace Management and Data Management</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - CLI/PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html">
  <span class="dropdown-text">Practical 4: Scripting and Advanced Text Manipulation</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - CLI/PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html">
  <span class="dropdown-text">Practical 5: Software &amp; Containers</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Coding Best Practices</li>
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Git/PRACTICAL_GIT_SESSION1.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Git/PRACTICAL_GIT_SESSION1.html">
  <span class="dropdown-text">Practical 1: Git Fundamentals: Session 1</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Git/PRACTICAL_GIT_SESSION2.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Git/PRACTICAL_GIT_SESSION2.html">
  <span class="dropdown-text">Practical 2: Git Fundamentals: Session 2</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Git/PRACTICAL_BEST_CODING_PRACTISES.qmd">
+    <a class="dropdown-item" href="../../practicals/Practicals - Git/PRACTICAL_BEST_CODING_PRACTISES.qmd">
  <span class="dropdown-text">Practical 3: Best Coding Practices</span></a>
   </li>  
     </ul>
@@ -143,15 +177,15 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-genomics-workflows">    
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - WGS/PRACTICAL_RAWDATA_AND_QC.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - WGS/PRACTICAL_RAWDATA_AND_QC.html">
  <span class="dropdown-text">Practical 1: Quality Control and Classification</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - WGS/PRACTICAL_ASSEMBLY_AND_MAPPING.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - WGS/PRACTICAL_ASSEMBLY_AND_MAPPING.html">
  <span class="dropdown-text">Practical 2: Genome Assembly and Mapping</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - WGS/PRACTICAL_FUNCTIONAL_ANNOTATION.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - WGS/PRACTICAL_FUNCTIONAL_ANNOTATION.html">
  <span class="dropdown-text">Practical 3: Genome Annotation</span></a>
   </li>  
     </ul>
@@ -162,27 +196,27 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-python-programming">    
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_SETUP.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_SETUP.html">
  <span class="dropdown-text">Practical 0: Introduction</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_DATA_TYPES_AND_IF_ELSE.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_DATA_TYPES_AND_IF_ELSE.html">
  <span class="dropdown-text">Practical 1: Python Data Types and If/Else Clauses</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_LOOPING.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_LOOPING.html">
  <span class="dropdown-text">Practical 2: Python Loops</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_FUNCTIONS.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_FUNCTIONS.html">
  <span class="dropdown-text">Practical 3: Python Functions</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_MODULES.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_MODULES.html">
  <span class="dropdown-text">Practical 4: Python Modules</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_FILES.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_FILES.html">
  <span class="dropdown-text">Practical 5: Files</span></a>
   </li>  
     </ul>
@@ -203,12 +237,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#course-overview" id="toc-course-overview" class="nav-link active" data-scroll-target="#course-overview"><span class="header-section-number">1</span> Course Overview</a>
-  <ul class="collapse">
-  <li><a href="#command-line-programming" id="toc-command-line-programming" class="nav-link" data-scroll-target="#command-line-programming"><span class="header-section-number">1.1</span> 🖥️ Command Line Programming</a></li>
-  <li><a href="#genomics-workflows" id="toc-genomics-workflows" class="nav-link" data-scroll-target="#genomics-workflows"><span class="header-section-number">1.2</span> 🧬 Genomics Workflows</a></li>
-  <li><a href="#python-programming" id="toc-python-programming" class="nav-link" data-scroll-target="#python-programming"><span class="header-section-number">1.3</span> 🐍 Python Programming</a></li>
-  </ul></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#the-six-golden-rules" id="toc-the-six-golden-rules" class="nav-link" data-scroll-target="#the-six-golden-rules"><span class="header-section-number">2</span> The Six Golden Rules</a></li>
+  <li><a href="#common-mistakes-and-quick-fixes" id="toc-common-mistakes-and-quick-fixes" class="nav-link" data-scroll-target="#common-mistakes-and-quick-fixes"><span class="header-section-number">3</span> Common Mistakes (and quick fixes)</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">4</span> Summary</a></li>
   </ul>
 </nav>
     </div>
@@ -217,8 +249,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">BIO511 Genomics - Practical Repository</h1>
-<p class="subtitle lead">Welcome to the practical exercises for the BIO511 Genomics course</p>
+<h1 class="title">Best Coding Practices for Command‑Line Programming</h1>
 </div>
 
 
@@ -228,16 +259,10 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Tor Kling </p>
+             <p>Stuti Jain, Tor Kling </p>
           </div>
   </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">October 6, 2025</p>
-    </div>
-  </div>
   
     
   </div>
@@ -247,56 +272,120 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="course-overview" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="course-overview"><span class="header-section-number">1</span> Course Overview</h2>
-<p>This repository contains practical exercises for the BIO511 Genomics course. Use this page, or the navbar to navigate to the different sections.</p>
-<section id="command-line-programming" class="level3" data-number="1.1">
-<h3 data-number="1.1" class="anchored" data-anchor-id="command-line-programming"><span class="header-section-number">1.1</span> 🖥️ Command Line Programming</h3>
-<p>Here are the practical exercises related to command line programming section of the course:</p>
-<section id="introduction-to-command-line-programming" class="level4" data-number="1.1.1">
-<h4 data-number="1.1.1" class="anchored" data-anchor-id="introduction-to-command-line-programming"><span class="header-section-number">1.1.1</span> Introduction to Command Line Programming</h4>
-<ul>
-<li><strong><a href="./practicals/Practicals - CLI/PRACTICAL_INTRO_TO_COMMAND_LINE.html">Practical 1: CLI Basics</a></strong></li>
-<li><strong><a href="./practicals/Practicals - CLI/PRACTICAL_SETTING_UP_THE_HPC.html">Practical 2: Setting up the HPC</a></strong></li>
-<li><strong><a href="./practicals/Practicals - CLI/PRACTICAL_WORKSPACE_MANAGEMENT.html">Practical 3: Workspace Management and Data Management</a></strong></li>
-<li><strong><a href="./practicals/Practicals - CLI/PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html">Practical 4: Scripting and Advanced Text Manipulation</a></strong></li>
-<li><strong><a href="./practicals/Practicals - CLI/PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html">Practical 5: Software &amp; Containers</a></strong></li>
-</ul>
+<section id="introduction" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
+<p>This short guide introduces habits for writing reliable command‑line (Bash) scripts.</p>
+<p><strong>Why it matters</strong> - Scripts don’t crash silently. - You understand what the script did later in future too. - Results are reproducible and don’t get overwritten by accident.</p>
 </section>
-<section id="coding-best-practices" class="level4" data-number="1.1.2">
-<h4 data-number="1.1.2" class="anchored" data-anchor-id="coding-best-practices"><span class="header-section-number">1.1.2</span> Coding Best Practices</h4>
+<section id="the-six-golden-rules" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="the-six-golden-rules"><span class="header-section-number">2</span> The Six Golden Rules</h2>
+<ol type="1">
+<li><p><strong>Start every Bash script safely</strong><br>
+Use strict mode so mistakes fail fast.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> <span class="at">-euo</span> pipefail       <span class="co"># exit on error, unset var is error, fail on pipe errors</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="va">IFS</span><span class="op">=</span><span class="st">$'</span><span class="dt">\n\t</span><span class="st">'</span>              <span class="co"># safer word splitting</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Always offer help</strong><br>
+Let users see how to run the script.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">usage()</span> <span class="kw">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Usage: </span><span class="va">$(</span><span class="fu">basename</span> <span class="st">"</span><span class="va">$0</span><span class="st">"</span><span class="va">)</span><span class="st"> -i INPUT -o OUTDIR [--force]"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Example: </span><span class="va">$(</span><span class="fu">basename</span> <span class="st">"</span><span class="va">$0</span><span class="st">"</span><span class="va">)</span><span class="st"> -i data/sample.txt -o results"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Show help if asked</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">[[</span> <span class="va">${1</span><span class="op">:-</span><span class="va">}</span> <span class="ot">==</span> <span class="st">"-h"</span> <span class="kw">||</span> <span class="va">${1</span><span class="op">:-</span><span class="va">}</span> <span class="ot">==</span> <span class="st">"--help"</span> <span class="kw">]]</span> <span class="kw">&amp;&amp;</span> <span class="kw">{</span> <span class="ex">usage</span><span class="kw">;</span> <span class="bu">exit</span> 0<span class="kw">;</span> <span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Use project‑relative paths (not absolute)</strong><br>
+Make scripts portable by computing the project root from the script’s location.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="va">SCRIPT_DIR</span><span class="op">=</span><span class="va">$(</span><span class="bu">cd</span> <span class="at">--</span> <span class="st">"</span><span class="va">$(</span><span class="fu">dirname</span> <span class="at">--</span> <span class="st">"</span><span class="va">${BASH_SOURCE</span><span class="op">[</span><span class="dv">0</span><span class="op">]</span><span class="va">}</span><span class="st">"</span><span class="va">)</span><span class="st">"</span> <span class="kw">&amp;&amp;</span> <span class="bu">pwd</span><span class="va">)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="va">PROJECT_ROOT</span><span class="op">=</span><span class="va">$(</span><span class="bu">cd</span> <span class="at">--</span> <span class="st">"</span><span class="va">$SCRIPT_DIR</span><span class="st">/.."</span> <span class="kw">&amp;&amp;</span> <span class="bu">pwd</span><span class="va">)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="va">IN</span><span class="op">=</span><span class="st">"</span><span class="va">$PROJECT_ROOT</span><span class="st">/data/input.txt"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="va">OUTDIR</span><span class="op">=</span><span class="st">"</span><span class="va">$PROJECT_ROOT</span><span class="st">/results"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Never overwrite outputs by accident</strong><br>
+Create folders you need, and require <code>--force</code> to overwrite existing files.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="st">"</span><span class="va">$OUTDIR</span><span class="st">"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="va">OUT</span><span class="op">=</span><span class="st">"</span><span class="va">$OUTDIR</span><span class="st">/summary.txt"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="va">force</span><span class="op">=</span>false</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">[[</span> <span class="va">${1</span><span class="op">:-</span><span class="va">}</span> <span class="ot">==</span> <span class="st">"--force"</span> <span class="kw">]]</span> <span class="kw">&amp;&amp;</span> <span class="va">force</span><span class="op">=</span>true</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">[[</span> <span class="ot">-e</span> <span class="st">"</span><span class="va">$OUT</span><span class="st">"</span> <span class="kw">&amp;&amp;</span> <span class="st">"</span><span class="va">$force</span><span class="st">"</span> <span class="ot">!=</span> true <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Refusing to overwrite </span><span class="va">$OUT</span><span class="st"> (use --force)"</span><span class="kw">;</span> <span class="bu">exit</span> 1</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Log what you do</strong><br>
+Print key parameters and tool versions to a small log so runs are traceable.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"# Params"</span><span class="kw">;</span> <span class="bu">echo</span> <span class="st">"input=</span><span class="va">$IN</span><span class="st">"</span><span class="kw">;</span> <span class="bu">echo</span> <span class="st">"outdir=</span><span class="va">$OUTDIR</span><span class="st">"</span><span class="kw">;</span> <span class="fu">date</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"# Tool versions"</span><span class="kw">;</span> <span class="fu">bash</span> <span class="at">--version</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n1</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span> <span class="kw">|</span> <span class="fu">tee</span> <span class="st">"</span><span class="va">$OUTDIR</span><span class="st">/run.log"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Quote variables</strong><br>
+Quote <code>"$var"</code> to handle spaces.</p></li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled" title="Did You Know?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Did You Know?
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
-<li><strong><a href="./practicals/Practicals - Git/PRACTICAL_GIT_SESSION1.html">Practical 1: Git Fundamentals: Session 1</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Git/PRACTICAL_GIT_SESSION2.html">Practical 2: Git Fundamentals: Session 2</a></strong></li>
-<li><strong><a href="practicals/Practicals - Git/PRACTICAL_BEST_CODING_PRACTISES.qmd">Practical 3: Best Coding Practices</a></strong></li>
+<li><code>set -x</code> prints each command as it runs — handy for debugging.<br>
+</li>
+<li><code>cd -</code> jumps back to your previous directory.</li>
 </ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Best Practice">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Best Practice
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Keep scripts <strong>small and single‑purpose</strong>: one script = one task. Chain tasks with a Makefile later if needed.</p>
+</div>
+</div>
 </section>
-</section>
-<section id="genomics-workflows" class="level3" data-number="1.2">
-<h3 data-number="1.2" class="anchored" data-anchor-id="genomics-workflows"><span class="header-section-number">1.2</span> 🧬 Genomics Workflows</h3>
-<p>The following practical exercises focus on genomics workflows:</p>
+<section id="common-mistakes-and-quick-fixes" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="common-mistakes-and-quick-fixes"><span class="header-section-number">3</span> Common Mistakes (and quick fixes)</h2>
 <ul>
-<li><strong><a href="./practicals/Practicals - WGS/PRACTICAL_RAWDATA_AND_QC.html">Practical 1: Quality Control and Classification</a></strong></li>
-<li><strong><a href="./practicals/Practicals - WGS/PRACTICAL_ASSEMBLY_AND_MAPPING.html">Practical 2: Genome Assembly and Mapping</a></strong></li>
-<li><strong><a href="./practicals/Practicals - WGS/PRACTICAL_FUNCTIONAL_ANNOTATION.html">Practical 3: Genome Annotation</a></strong></li>
+<li><strong>Unquoted variables</strong> → Always use <code>"$var"</code> (handles spaces safely).<br>
+</li>
+<li><strong>Absolute paths</strong> → Use project‑relative paths like <code>"$PROJECT_ROOT/data"</code> instead.<br>
+</li>
+<li><strong>Overwriting results</strong> → Require <code>--force</code> or new output filenames.<br>
+</li>
+<li><strong>No log</strong> → Write a minimal <code>run.log</code> with parameters and versions.</li>
 </ul>
+<div class="callout callout-style-default callout-warning callout-titled" title="Common Mistake">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Common Mistake
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Using <code>rm -rf "$SOME_VAR"</code> without checking that <code>"$SOME_VAR"</code> is <strong>non‑empty</strong> can delete the wrong folder. Always validate inputs first.</p>
+</div>
+</div>
 </section>
-<section id="python-programming" class="level3" data-number="1.3">
-<h3 data-number="1.3" class="anchored" data-anchor-id="python-programming"><span class="header-section-number">1.3</span> 🐍 Python Programming</h3>
-<p>Lastly, we cover Python programming with these practical exercises:</p>
+<section id="summary" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="summary"><span class="header-section-number">4</span> Summary</h2>
 <ul>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_SETUP.html">Practical 0: Introduction</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_DATA_TYPES_AND_IF_ELSE.html">Practical 1: Python Data Types and If/Else Clauses</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_LOOPING.html">Practical 2: Python Loops</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_FUNCTIONS.html">Practical 3: Python Functions</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_MODULES.html">Practical 4: Python Modules</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_FILES.html">Practical 5: Files</a></strong></li>
+<li>Start <strong>safely</strong> (<code>set -euo pipefail</code>, quote variables).<br>
+</li>
+<li>Use <strong>project‑relative paths</strong> and <strong>don’t overwrite</strong> results.<br>
+</li>
+<li><strong>Log</strong> what you do; test on a small sample first.<br>
+</li>
+<li>Keep scripts <strong>simple, readable, and single‑purpose</strong>.</li>
 </ul>
-<hr>
-<p><em>For questions or issues, please contact the course instructors.</em></p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
