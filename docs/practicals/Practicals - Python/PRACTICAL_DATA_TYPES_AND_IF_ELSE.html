@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Tor Kling">
+<meta name="author" content="Alvar Almstedt, Emma Västerviga">
 <meta name="dcterms.date" content="2025-10-06">
 
-<title>BIO511 Genomics - Practical Repository</title>
+<title>Practical 1: Python Data Types and If/Else Clauses – BIO511 Genomics - Practical Repository</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,26 +22,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8e049031f30567c4281a40dcf0e5e98c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-8e049031f30567c4281a40dcf0e5e98c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -71,17 +106,17 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="pages/styles.css">
+<link rel="stylesheet" href="../../pages/styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar docked nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">BIO511 Genomics - Practical Repository</span>
     </a>
   </div>
@@ -92,7 +127,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -102,37 +137,37 @@ ul.task-list li input[type="checkbox"] {
     <ul class="dropdown-menu" aria-labelledby="nav-menu-command-line-programming">    
         <li class="dropdown-header">Intro to Command Line</li>
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_INTRO_TO_COMMAND_LINE.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - CLI/PRACTICAL_INTRO_TO_COMMAND_LINE.html">
  <span class="dropdown-text">Practical 1: CLI Basics</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_SETTING_UP_THE_HPC.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - CLI/PRACTICAL_SETTING_UP_THE_HPC.html">
  <span class="dropdown-text">Practical 2: Setting up the HPC</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_WORKSPACE_MANAGEMENT.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - CLI/PRACTICAL_WORKSPACE_MANAGEMENT.html">
  <span class="dropdown-text">Practical 3: Workspace Management and Data Management</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - CLI/PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html">
  <span class="dropdown-text">Practical 4: Scripting and Advanced Text Manipulation</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - CLI/PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html">
  <span class="dropdown-text">Practical 5: Software &amp; Containers</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Coding Best Practices</li>
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Git/PRACTICAL_GIT_SESSION1.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Git/PRACTICAL_GIT_SESSION1.html">
  <span class="dropdown-text">Practical 1: Git Fundamentals: Session 1</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Git/PRACTICAL_GIT_SESSION2.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Git/PRACTICAL_GIT_SESSION2.html">
  <span class="dropdown-text">Practical 2: Git Fundamentals: Session 2</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Git/PRACTICAL_BEST_CODING_PRACTISES.qmd">
+    <a class="dropdown-item" href="../../practicals/Practicals - Git/PRACTICAL_BEST_CODING_PRACTISES.qmd">
  <span class="dropdown-text">Practical 3: Best Coding Practices</span></a>
   </li>  
     </ul>
@@ -143,15 +178,15 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-genomics-workflows">    
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - WGS/PRACTICAL_RAWDATA_AND_QC.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - WGS/PRACTICAL_RAWDATA_AND_QC.html">
  <span class="dropdown-text">Practical 1: Quality Control and Classification</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - WGS/PRACTICAL_ASSEMBLY_AND_MAPPING.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - WGS/PRACTICAL_ASSEMBLY_AND_MAPPING.html">
  <span class="dropdown-text">Practical 2: Genome Assembly and Mapping</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - WGS/PRACTICAL_FUNCTIONAL_ANNOTATION.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - WGS/PRACTICAL_FUNCTIONAL_ANNOTATION.html">
  <span class="dropdown-text">Practical 3: Genome Annotation</span></a>
   </li>  
     </ul>
@@ -162,27 +197,27 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-python-programming">    
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_SETUP.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_SETUP.html">
  <span class="dropdown-text">Practical 0: Introduction</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_DATA_TYPES_AND_IF_ELSE.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_DATA_TYPES_AND_IF_ELSE.html">
  <span class="dropdown-text">Practical 1: Python Data Types and If/Else Clauses</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_LOOPING.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_LOOPING.html">
  <span class="dropdown-text">Practical 2: Python Loops</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_FUNCTIONS.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_FUNCTIONS.html">
  <span class="dropdown-text">Practical 3: Python Functions</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_MODULES.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_MODULES.html">
  <span class="dropdown-text">Practical 4: Python Modules</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_FILES.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_FILES.html">
  <span class="dropdown-text">Practical 5: Files</span></a>
   </li>  
     </ul>
@@ -193,21 +228,81 @@ ul.task-list li input[type="checkbox"] {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../practicals/Practicals - Python/PRACTICAL_DATA_TYPES_AND_IF_ELSE.html">Practical 1: Python Data Types and If/Else Clauses</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - Python/PRACTICAL_SETUP.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 0: Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - Python/PRACTICAL_DATA_TYPES_AND_IF_ELSE.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Practical 1: Python Data Types and If/Else Clauses</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - Python/PRACTICAL_LOOPING.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 2: Python Loops</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - Python/PRACTICAL_FUNCTIONS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 3: Python Functions</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - Python/PRACTICAL_MODULES.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 4: Python Modules</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - Python/PRACTICAL_FILES.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 5: Files</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#course-overview" id="toc-course-overview" class="nav-link active" data-scroll-target="#course-overview"><span class="header-section-number">1</span> Course Overview</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a>
   <ul class="collapse">
-  <li><a href="#command-line-programming" id="toc-command-line-programming" class="nav-link" data-scroll-target="#command-line-programming"><span class="header-section-number">1.1</span> 🖥️ Command Line Programming</a></li>
-  <li><a href="#genomics-workflows" id="toc-genomics-workflows" class="nav-link" data-scroll-target="#genomics-workflows"><span class="header-section-number">1.2</span> 🧬 Genomics Workflows</a></li>
-  <li><a href="#python-programming" id="toc-python-programming" class="nav-link" data-scroll-target="#python-programming"><span class="header-section-number">1.3</span> 🐍 Python Programming</a></li>
+  <li><a href="#some-links-that-you-may-find-helpful" id="toc-some-links-that-you-may-find-helpful" class="nav-link" data-scroll-target="#some-links-that-you-may-find-helpful"><span class="header-section-number">1.1</span> Some links that you may find helpful</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">2</span> Exercises</a>
+  <ul class="collapse">
+  <li><a href="#data-type-usage" id="toc-data-type-usage" class="nav-link" data-scroll-target="#data-type-usage"><span class="header-section-number">2.1</span> Data type usage</a></li>
+  <li><a href="#if-elif-else-on-your-data-types" id="toc-if-elif-else-on-your-data-types" class="nav-link" data-scroll-target="#if-elif-else-on-your-data-types"><span class="header-section-number">2.2</span> If / Elif / Else on your data types</a>
+  <ul class="collapse">
+  <li><a href="#multi-way-ifelifelse-clause" id="toc-multi-way-ifelifelse-clause" class="nav-link" data-scroll-target="#multi-way-ifelifelse-clause"><span class="header-section-number">2.2.1</span> Multi-way (If/elif/else clause)</a></li>
+  <li><a href="#type-gate-nested-classification-nested-ifelifelse" id="toc-type-gate-nested-classification-nested-ifelifelse" class="nav-link" data-scroll-target="#type-gate-nested-classification-nested-ifelifelse"><span class="header-section-number">2.2.2</span> Type gate + nested classification (Nested If/elif/else)</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -217,8 +312,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">BIO511 Genomics - Practical Repository</h1>
-<p class="subtitle lead">Welcome to the practical exercises for the BIO511 Genomics course</p>
+<h1 class="title">Practical 1: Python Data Types and If/Else Clauses</h1>
+<p class="subtitle lead">BIO511 Genomics - Python Introduction</p>
 </div>
 
 
@@ -228,7 +323,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Tor Kling </p>
+             <p>Alvar Almstedt, Emma Västerviga </p>
           </div>
   </div>
     
@@ -247,55 +342,83 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="course-overview" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="course-overview"><span class="header-section-number">1</span> Course Overview</h2>
-<p>This repository contains practical exercises for the BIO511 Genomics course. Use this page, or the navbar to navigate to the different sections.</p>
-<section id="command-line-programming" class="level3" data-number="1.1">
-<h3 data-number="1.1" class="anchored" data-anchor-id="command-line-programming"><span class="header-section-number">1.1</span> 🖥️ Command Line Programming</h3>
-<p>Here are the practical exercises related to command line programming section of the course:</p>
-<section id="introduction-to-command-line-programming" class="level4" data-number="1.1.1">
-<h4 data-number="1.1.1" class="anchored" data-anchor-id="introduction-to-command-line-programming"><span class="header-section-number">1.1.1</span> Introduction to Command Line Programming</h4>
-<ul>
-<li><strong><a href="./practicals/Practicals - CLI/PRACTICAL_INTRO_TO_COMMAND_LINE.html">Practical 1: CLI Basics</a></strong></li>
-<li><strong><a href="./practicals/Practicals - CLI/PRACTICAL_SETTING_UP_THE_HPC.html">Practical 2: Setting up the HPC</a></strong></li>
-<li><strong><a href="./practicals/Practicals - CLI/PRACTICAL_WORKSPACE_MANAGEMENT.html">Practical 3: Workspace Management and Data Management</a></strong></li>
-<li><strong><a href="./practicals/Practicals - CLI/PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html">Practical 4: Scripting and Advanced Text Manipulation</a></strong></li>
-<li><strong><a href="./practicals/Practicals - CLI/PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html">Practical 5: Software &amp; Containers</a></strong></li>
-</ul>
-</section>
-<section id="coding-best-practices" class="level4" data-number="1.1.2">
-<h4 data-number="1.1.2" class="anchored" data-anchor-id="coding-best-practices"><span class="header-section-number">1.1.2</span> Coding Best Practices</h4>
-<ul>
-<li><strong><a href="./practicals/Practicals - Git/PRACTICAL_GIT_SESSION1.html">Practical 1: Git Fundamentals: Session 1</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Git/PRACTICAL_GIT_SESSION2.html">Practical 2: Git Fundamentals: Session 2</a></strong></li>
-<li><strong><a href="practicals/Practicals - Git/PRACTICAL_BEST_CODING_PRACTISES.qmd">Practical 3: Best Coding Practices</a></strong></li>
-</ul>
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>Now we are finally getting into the bread and butter python syntax! Today you will do some very simple exercises with some of the most commonly used python data types as well as starting with boolean logic using if/else clauses.</p>
+<p>You can copy the code blocks containing comments below and work on the tasks from within your IDE (Integrated Developer Environment)/text editor or a jupyter notebook. Remember comments are the lines that start with <code>#</code> and will be ignored when you run your code</p>
+<p>Remember to refer back to todays presentations for help or ask the teachers - It’s what we are here for :)</p>
+<section id="some-links-that-you-may-find-helpful" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="some-links-that-you-may-find-helpful"><span class="header-section-number">1.1</span> Some links that you may find helpful</h2>
+<p>They may even contain information that the teachers missed or didn’t explain well enough!</p>
+<p><a href="https://www.w3schools.com/python/python_datatypes.asp">Data types (written help)</a></p>
+<p><a href="https://www.youtube.com/watch?v=ppsCxnNm-JI">Data types (Video guide)</a></p>
+<p><a href="https://mimo.org/glossary/python/if-statement">If/else (written guide)</a></p>
+<p><a href="https://www.youtube.com/watch?v=FvMPfrgGeKs">If/else (video guide, easy)</a></p>
 </section>
 </section>
-<section id="genomics-workflows" class="level3" data-number="1.2">
-<h3 data-number="1.2" class="anchored" data-anchor-id="genomics-workflows"><span class="header-section-number">1.2</span> 🧬 Genomics Workflows</h3>
-<p>The following practical exercises focus on genomics workflows:</p>
-<ul>
-<li><strong><a href="./practicals/Practicals - WGS/PRACTICAL_RAWDATA_AND_QC.html">Practical 1: Quality Control and Classification</a></strong></li>
-<li><strong><a href="./practicals/Practicals - WGS/PRACTICAL_ASSEMBLY_AND_MAPPING.html">Practical 2: Genome Assembly and Mapping</a></strong></li>
-<li><strong><a href="./practicals/Practicals - WGS/PRACTICAL_FUNCTIONAL_ANNOTATION.html">Practical 3: Genome Annotation</a></strong></li>
-</ul>
+<section id="exercises" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Exercises</h1>
+<section id="data-type-usage" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="data-type-usage"><span class="header-section-number">2.1</span> Data type usage</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a script (.py file) where you save one value of each data type to its own variable.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Afterwards, print all the variables and their type using print() and type()</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Data types to include: integer, floating point, string, boolean, nonetype,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># list, dictionary, tuple, set, range </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="python-programming" class="level3" data-number="1.3">
-<h3 data-number="1.3" class="anchored" data-anchor-id="python-programming"><span class="header-section-number">1.3</span> 🐍 Python Programming</h3>
-<p>Lastly, we cover Python programming with these practical exercises:</p>
-<ul>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_SETUP.html">Practical 0: Introduction</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_DATA_TYPES_AND_IF_ELSE.html">Practical 1: Python Data Types and If/Else Clauses</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_LOOPING.html">Practical 2: Python Loops</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_FUNCTIONS.html">Practical 3: Python Functions</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_MODULES.html">Practical 4: Python Modules</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_FILES.html">Practical 5: Files</a></strong></li>
-</ul>
-<hr>
-<p><em>For questions or issues, please contact the course instructors.</em></p>
+<section id="if-elif-else-on-your-data-types" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="if-elif-else-on-your-data-types"><span class="header-section-number">2.2</span> If / Elif / Else on your data types</h2>
+<p>Reuse the variables you created in the previous task or recreate them with new values. Print something for each task.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Hint
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Check the variable’s type is with <code>type(variablename)</code> is to deremine which variable to use.</p>
+</div>
+</div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A) Simple check (If/else clause)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick a STRING you created. </span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># If it is empty print "empty", else print "non-empty".</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># (Hint: len(...) )</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code below</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="multi-way-ifelifelse-clause" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="multi-way-ifelifelse-clause"><span class="header-section-number">2.2.1</span> Multi-way (If/elif/else clause)</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># B) Multi-way (If/elif/else clause)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick an INTEGER you created.</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print exactly one of: "negative", "zero", "positive".</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># (Hint: compare to 0)</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code below</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="type-gate-nested-classification-nested-ifelifelse" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="type-gate-nested-classification-nested-ifelifelse"><span class="header-section-number">2.2.2</span> Type gate + nested classification (Nested If/elif/else)</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># C) Type gate + nested classification (Nested If/elif/else)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick a SEQUENCE you created (list OR tuple OR range).</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># If the type of the variable matches your choice, check:</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   - if length == 0 print "empty"</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   - elif length == 1 print "single item"</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   - else print "multiple items"</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Else print "wrong type for this task".</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># (Hint: type(x) is list/tuple/range; len(...) )</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code below</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
+</section>
 </section>
 </section>
 
