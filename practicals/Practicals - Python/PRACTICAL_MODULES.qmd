@@ -1,0 +1,171 @@
+---
+title: "Practical 4: Python Modules"
+subtitle: "BIO511 Genomics - Importing and the standard Library (stdlib)"
+author: "Alvar Almstedt, Emma Västerviga, Emilio Rudbeck"
+date: today
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+
+# Introduction
+
+Since python is such a popular programming language, people have created thousands and thousands of packages and modules that you can download for free and make use of. The ones we mention in this course are not even the tip of this massive icebarg.
+
+For example, pip contains over 675 000 packages as of the time of writing!!!
+
+Remember the suggested general workflow when attempting to install something:
+
+* create new conda env
+* try conda install with conda-forge and bioconda channels. If you dont find what you need:
+* install pip in your env and try that
+* If you still cant find the thing you need you can attempt to install from source via a github repo but that can be a little bit annoying (especially for a beginner)
+
+*(You dont have to use conda if you know what youre doing. Its just a convenient suggestion. Other package managers are available)*
+
+# Useful links
+
+[Python modules (text)](https://www.datacamp.com/tutorial/modules-in-python)
+
+[Python modules (video)](https://www.youtube.com/watch?v=CqvZ3vGoGs0)
+
+
+# Exercises
+
+In these exercises you will learn how you can import functions from other scripts that you have written as well as install an external modul as well as install an external module.
+
+You will be given two scripts (see below), where the main.py will import all functions from a separate script premade_script.py which first parses a fasta-file into codons, and then translates these to aminoacids. 
+To get this to work, you first need to import the amino acid translation function, install and call Bio.Seq and see how variables are passed between two files.
+
+
+::: {.callout-tip} 
+### Hint
+You will need to install Biopython to use the Seq object. We have not discussed it yet so you have to look up the documentation yourself.
+:::
+
+
+##
+Navigate the imported code from premade_script.py
+
+### 
+Using the comments in the function codons, can you describe what it does?
+
+###
+What's the input of the function?
+
+### 
+In the main function of main.py, add a print statement to print the output of the function
+
+
+##
+Open the script called premade_script.py and find the function called exercise_function
+
+### 
+What's the input of the function?
+
+### 
+What does this function do?
+
+### 
+Try calling it through main.py (see how the previous function is imported and used)
+
+
+##
+Make the exercise_function work
+
+###
+A non standard module is needed to run the function. Which? Install/use/call it [This will depend on how we want the students to access modules. Do we go with Conda, singularity, modules, or anything else?]
+
+###
+Check the output of the script
+
+
+
+**main.py**
+
+```python
+#!/usr/bin/env python3
+from premade_script import codons
+import argparse
+import os
+
+
+def existing_file(file_path):
+    """This function checks if the provided file path exists and is a file."""
+    if not os.path.isfile(file_path):
+        raise argparse.ArgumentTypeError(f"'{file_path}' is not a valid file")
+    return file_path
+
+
+def main():
+    # First we capture the input arguments from the command line
+    parser = argparse.ArgumentParser(description="Process a string and a folder.")
+    parser.add_argument('-s', '--sequence', type=existing_file, required=True, help='Input sequence file')
+    args = parser.parse_args()
+    
+    # We first call the function from the script, and use the input string as an argument
+    sequence_codons = codons(args.sequence)
+    
+    # Here the students should check the output of the function
+    print(sequence_codons) # REMOVE THIS
+    
+    # Here the students will need to call the exercise_function from my_function.py
+    exercise_output = exercise_function(sequence_codons) # REMOVE THIS
+    
+    # And check the output of that function
+    print(exercise_output) # REMOVE THIS
+if __name__ == "__main__":
+    main()
+```
+
+
+
+
+
+
+**premade_script.py**
+
+```python
+def codons(sequence_file):
+    """A function that reads a fasta file and returns a list of codons for each sequence in the file"""
+    
+    # First we read the fasta file and store the sequences as a string
+    sequence = ""
+    
+    # Open the file
+    with open(sequence_file) as fasta_file:
+        # Read the file line by line
+        for row in fasta_file:
+            # If the line starts with '>', it is a header and we skip it
+            if not row.startswith('>'):
+                # If the line does not start with '>', it is a sequence and we add it to the list
+                sequence += row.strip()
+    
+    # Now we split the sequences into codons
+    sequence_codon_list = []
+    
+    # Loop over the sequence in steps of 3
+    for i in range(0, len(sequence), 3):
+        # Append the codon to the list if it is a full codon (3 nucleotides)
+        if i + 3 <= len(sequence):
+            # Then append the codon to the list
+            sequence_codon_list.append(sequence[i:i + 3])
+    
+    # Return the list of codons
+    return sequence_codon_list
+
+
+def exercise_function(sequence_codons):
+    """What does this function do?"""
+    aa_string = ""
+    for codon in sequence_codons:
+        amino_acid = Seq(codon).translate()
+        aa_string += str(amino_acid)
+    return aa_string
+```
+

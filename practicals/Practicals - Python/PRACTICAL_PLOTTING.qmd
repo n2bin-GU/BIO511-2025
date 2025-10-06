@@ -1,0 +1,28 @@
+---
+title: "Practical 6: Python Plotting"
+subtitle: "BIO511 Genomics - Plotting using matplotlib, plotly and plotnine"
+author: "Alvar Almstedt, Emma Västerviga"
+date: today
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+# Introduction
+The instructions to this practical is not completely finsihed yet. In the end, it will contain something like this:
+
+# Exercises
+
+### 6.1
+Try plotting scatterplots of the seaborn dataset “Penguins”. 
+
+a.) use different colors based on species or island
+b.)create one with matplotlib or seaborn, plotly and plotting
+
+### 6.2
+Try to create a subplot with three plots
+

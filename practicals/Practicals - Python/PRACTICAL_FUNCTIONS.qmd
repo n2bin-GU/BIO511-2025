@@ -1,0 +1,152 @@
+---
+title: "Practical 3: Python Functions"
+subtitle: "BIO511 Genomics -  Python Functions (and more looping)"
+author: "Alvar Almstedt, Emma Västerviga"
+date: today
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+# Introduction
+Functions are everywhere in python and its time for you to start using them to take you to the next level!
+
+If there are any built-in python functions you have not seen or heard about before (like for example `isdigit()`, `max()` etc.), search online for the documentation. The official page `python.docs.org` has information on the built-in functionality that comes with the standard python installation.
+
+* Remember that you have to both define a function using the `def` block and then later call the function itself to have the code it contains acutally run. Calling a function means running the fucntion.
+* Also do not forget that the function has its own namespace, meaning code outside the funtion can not access the variables that only exist inside the function. The function is meant to be sectioned off. The data you want to access outside the function needs to be `return`ed
+
+# Useful links
+
+[Python functions (text)]()
+
+[Python functions (video)](https://www.youtube.com/watch?v=9Os0o3wzS_I)
+
+# Example
+
+## Defining a function
+
+```python
+def add_two_numbers(num_one, num_two):
+    number_to_return = num_one + num_two
+    return number_to_return
+
+```
+## Calling the function
+
+```python
+my_added_numbers = add_two_numbers(1, 1)
+
+print(my_added_numbers) # will print 2
+```
+
+
+# Exercises
+
+You can copy the text blocks describing the tasks in comments below into your IDE to avoid having to refer back to this page.
+
+Use the exact variables defined in this block and set them on the global namespace (outside any function). Then write the functions and function calls we ask for in the tasks yourself.
+
+```python
+# Provided inputs (use these)
+nums = [3, -1, 7, 2, 9, 0, 4]
+limit = 4
+text = "Room 101: bring 2 apples & 1 banana."
+
+# Globals to observe name masking (same-name local variables hides the global variable so use different variable names inside the function). Do not rename these.
+count = 999
+summary = "unset"
+result = "unset"
+```
+
+
+## 
+```python
+# Count-above  (uses nums, limit, count)
+# Goal: make a small function called whatever you want and then call(run) it.
+
+# a) Define a function named count_above that takes two arguments: seq and lim.
+
+# b) Inside the function, create a LOCAL variable named count starting at 0.
+
+# c) Loop through seq; for each number strictly greater than lim, increase count by 1.
+
+# d) Return count.
+
+# e) Outside the function:
+#    - Print the GLOBAL count.
+#    - Call count_above(nums, limit) and print the returned number.
+#    - Print the GLOBAL count again (notice the global didn’t change).
+
+# Your code below
+ 
+
+```
+
+##
+```python
+# Text summary  (uses text, summary)
+# Goal: classify characters with an if/elif/else chain and return a clear result.
+
+# a) Define a function named summarize_text that takes one argument: s.
+
+# b) Inside the function, create a LOCAL variable named summary that holds a result dictionary
+#    with exactly these keys: "digits", "letters", "other" — each starting at 0.
+
+# c) Loop through each character in s:
+#       - if the character is a digit, increase "digits"
+#       - elif the character is a letter, increase "letters"
+#       - else increase "other"
+
+# d) Return the summary dictionary.
+
+# e) Outside the function:
+#    - Print the GLOBAL summary.
+#    - Call summarize_text(text) and print the returned dictionary.
+#    - Print the GLOBAL summary again.
+
+# Your code below
+
+
+```
+
+##
+```python
+#C) Aggregate with mode  (uses nums, limit, result)
+# Goal: nested decisions based on a mode string. Return one final value.
+
+# a) Define a function named aggregate that takes three arguments: seq, mode, threshold.
+
+# b) Inside the function, create a LOCAL variable named result.
+#    Initialize it based on mode:
+#       - if mode is "sum": start at 0
+#       - if mode is "count": start at 0
+#       - if mode is "max": start at None (meaning “no qualifying value yet”)
+
+# c) Loop through each number n in seq:
+#       - First, ignore n if it is negative (skip it).
+#       - If n is at least threshold, then:
+#           * if mode is "sum": add n to result
+#           * elif mode is "count": increase result by 1
+#           * else (treat any other mode as "max"):
+#                 if result is None or n is greater than result, update result to n
+
+# d) Return the result.
+
+# e) Outside the function:
+#    - Print the GLOBAL result.
+#    - Call and print each of these:
+#         aggregate(nums, "sum", limit)
+#         aggregate(nums, "count", limit)
+#         aggregate(nums, "max", limit)
+#    - Print the GLOBAL result again.
+
+# Your Code below
+
+
+
+```
