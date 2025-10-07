@@ -14,10 +14,10 @@ format:
 
 # Introduction
 
-Now we are finally getting into the bread and butter python syntax! Today you will do some very simple exercises with some of the most commonly used python data types as well as starting with boolean logic using if/else clauses.
+Now we are finally getting into the bread and butter of python syntax! Today you will do some very simple exercises with some of the most commonly used python data types as well as starting with boolean logic using if/else clauses.
 
 You can copy the code blocks containing comments below and work on the tasks from within your IDE (Integrated Developer Environment)/text editor or a jupyter notebook.
-Remember comments are the lines that start with `#` and will be ignored when you run your code
+Remember, comments are the lines that start with `#` and will be ignored when you run your code
 
  
 Remember to refer back to todays presentations for help or ask the teachers - It's what we are here for :)
@@ -38,64 +38,77 @@ They may even contain information that the teachers missed or didn't explain wel
 # Exercises
 
 ## Data type usage
-
+Here's some example code of how to save the number 4, which is interpreted as an integer by python, to a variable that we choose to call `my_int`. Then we print the variable. 
 
 ```python
-# Create a script (.py file) where you save one value of each data type to its own variable.
-# Afterwards, print all the variables and their type using print() and type()
-# Data types to include: integer, floating point, string, boolean, nonetype,
-# list, dictionary, tuple, set, range 
+my_int = 4
+
+print(my_int)
 ```
+Create a python script (`.py file`) where you save one value of each data type to its own variable.
+Afterwards, print all the variables and their type using the commands `print()` and `type()`.
+
+
+Data types to include: integer, floating point, string, boolean, nonetype,
+list, dictionary, tuple, set, range.
 
 ## If / Elif / Else on your data types
 
-Reuse the variables you created in the previous task or recreate them with new values. Print something for each task.
+For this part you can reuse the variables you created in the previous task or recreate them with new values. 
+
+The variables need to be created in the same script that you use to solve the following tasks. That way, python will still "remember" what the variables are supposed to be. 
+
 
 ::: {.callout-tip} 
 ### Hint
-Check the variable’s type is with `type(variablename)` is to deremine which variable to use.
+Double check what type a variable is with `type(variablename)`, to deremine which variable to use.
 :::
 
+###
+Let's start with strings! Below is an example code block of how to determine the length of a string:
+
 ```python
-# A) Simple check (If/else clause)
-# Pick a STRING you created. 
-# If it is empty print "empty", else print "non-empty".
-# (Hint: len(...) )
+# Save a string to a variable
+my_string = "variablestuesday"
 
-# Your code below
-
-
-
+# Check how many letters are in my_string. It's the same thing as checking the length of a string.
+len(my_string) 
 ```
+
+Pick a STRING you created. Then create an if/else-statement to determine if the string is empty or not. If the string is empty, the length should be zero.
+
+If it's empty, print "empty", else print "non-empty".
+
 
 ### Multi-way (If/elif/else clause)
-```python
-# B) Multi-way (If/elif/else clause)
+Pick an INTEGER you created. Write an if-statement with 3 scenarios:
 
-# Pick an INTEGER you created.
-# Print exactly one of: "negative", "zero", "positive".
-# (Hint: compare to 0)
+- The integer could be positive
 
-# Your code below
+- The integer could be zero
+
+- The integer could be negative
+
+For every scenario, some informative text should be printed. E. g. tell the user if the integer is positive, equal to zero or negative.
 
 
+::: {.callout-tip}
+### Hint
+Compare the integer to zero.
+:::
 
-```
 
 ### Type gate + nested classification (Nested If/elif/else)
-```python
-# C) Type gate + nested classification (Nested If/elif/else)
+Pick a SEQUENCE you created (list, tuple or range). Here, we want you to cerate a nested loop.
 
-# Pick a SEQUENCE you created (list OR tuple OR range).
-# If the type of the variable matches your choice, check:
-#   - if length == 0 print "empty"
-#   - elif length == 1 print "single item"
-#   - else print "multiple items"
-# Else print "wrong type for this task".
-# (Hint: type(x) is list/tuple/range; len(...) )
+In the outer if-statement, check if your choice of variable matches any of the data types list **or** tuple **or** range. Use `or` to allow the variable to match any of them. If the variable is not a match, print "wrong type for this task".
 
-# Your code below
+The inner if-statement should be used IF the variable was a match. Here, you need to check for 3 different scenarios:
 
+- if its length is zero, print "empty"
+
+- if the length == 1, print "single item"
+
+- Should the length be > 1, print "multiple items"
 
 
-```
