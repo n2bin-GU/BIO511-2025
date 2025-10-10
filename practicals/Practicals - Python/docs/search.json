@@ -1,0 +1,296 @@
+[
+  {
+    "objectID": "PRACTICAL_MODULES.html",
+    "href": "PRACTICAL_MODULES.html",
+    "title": "Practical 4: Python Modules",
+    "section": "",
+    "text": "Since python is such a popular programming language, people have created thousands and thousands of packages and modules that you can download for free and make use of. The ones we mention in this course are not even the tip of this massive icebarg.\nFor example, pip contains over 675 000 packages as of the time of writing!!!\nRemember the suggested general workflow when attempting to install something:\n\ncreate new conda env\ntry conda install with conda-forge and bioconda channels. If you dont find what you need:\ninstall pip in your env and try that\nIf you still cant find the thing you need you can attempt to install from source via a github repo but that can be a little bit annoying (especially for a beginner)\n\n(You dont have to use conda if you know what youre doing. Its just a convenient suggestion. Other package managers are available)",
+    "crumbs": [
+      "Practical 4: Modules"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_MODULES.html#section",
+    "href": "PRACTICAL_MODULES.html#section",
+    "title": "Practical 4: Python Modules",
+    "section": "3.1 ",
+    "text": "3.1 \nNavigate the imported code from premade_script.py\n\n3.1.1 \nUsing the comments in the function codons, can you describe what it does?\n\n\n3.1.2 \nWhat’s the input of the function?\n\n\n3.1.3 \nIn the main function of main.py, add a print statement to print the output of the function",
+    "crumbs": [
+      "Practical 4: Modules"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_MODULES.html#section-4",
+    "href": "PRACTICAL_MODULES.html#section-4",
+    "title": "Practical 4: Python Modules",
+    "section": "3.2 ",
+    "text": "3.2 \nOpen the script called premade_script.py and find the function called exercise_function\n\n3.2.1 \nWhat’s the input of the function?\n\n\n3.2.2 \nWhat does this function do?\n\n\n3.2.3 \nTry calling it through main.py (see how the previous function is imported and used)",
+    "crumbs": [
+      "Practical 4: Modules"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_MODULES.html#section-8",
+    "href": "PRACTICAL_MODULES.html#section-8",
+    "title": "Practical 4: Python Modules",
+    "section": "3.3 ",
+    "text": "3.3 \nMake the exercise_function work\n\n3.3.1 \nA non standard module is needed to run the function. Which? Install/use/call it [This will depend on how we want the students to access modules. Do we go with Conda, singularity, modules, or anything else?]\n\n\n3.3.2 \nCheck the output of the script\nmain.py\n#!/usr/bin/env python3\nfrom premade_script import codons\nimport argparse\nimport os\n\n\ndef existing_file(file_path):\n    \"\"\"This function checks if the provided file path exists and is a file.\"\"\"\n    if not os.path.isfile(file_path):\n        raise argparse.ArgumentTypeError(f\"'{file_path}' is not a valid file\")\n    return file_path\n\n\ndef main():\n    # First we capture the input arguments from the command line\n    parser = argparse.ArgumentParser(description=\"Process a string and a folder.\")\n    parser.add_argument('-s', '--sequence', type=existing_file, required=True, help='Input sequence file')\n    args = parser.parse_args()\n    \n    # We first call the function from the script, and use the input string as an argument\n    sequence_codons = codons(args.sequence)\n    \n    # Here the students should check the output of the function\n    print(sequence_codons) # REMOVE THIS\n    \n    # Here the students will need to call the exercise_function from my_function.py\n    exercise_output = exercise_function(sequence_codons) # REMOVE THIS\n    \n    # And check the output of that function\n    print(exercise_output) # REMOVE THIS\nif __name__ == \"__main__\":\n    main()\npremade_script.py\ndef codons(sequence_file):\n    \"\"\"A function that reads a fasta file and returns a list of codons for each sequence in the file\"\"\"\n    \n    # First we read the fasta file and store the sequences as a string\n    sequence = \"\"\n    \n    # Open the file\n    with open(sequence_file) as fasta_file:\n        # Read the file line by line\n        for row in fasta_file:\n            # If the line starts with '&gt;', it is a header and we skip it\n            if not row.startswith('&gt;'):\n                # If the line does not start with '&gt;', it is a sequence and we add it to the list\n                sequence += row.strip()\n    \n    # Now we split the sequences into codons\n    sequence_codon_list = []\n    \n    # Loop over the sequence in steps of 3\n    for i in range(0, len(sequence), 3):\n        # Append the codon to the list if it is a full codon (3 nucleotides)\n        if i + 3 &lt;= len(sequence):\n            # Then append the codon to the list\n            sequence_codon_list.append(sequence[i:i + 3])\n    \n    # Return the list of codons\n    return sequence_codon_list\n\n\ndef exercise_function(sequence_codons):\n    \"\"\"What does this function do?\"\"\"\n    aa_string = \"\"\n    for codon in sequence_codons:\n        amino_acid = Seq(codon).translate()\n        aa_string += str(amino_acid)\n    return aa_string",
+    "crumbs": [
+      "Practical 4: Modules"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_PLOTTING.html",
+    "href": "PRACTICAL_PLOTTING.html",
+    "title": "Practical 6: Python Plotting",
+    "section": "",
+    "text": "1 Introduction\nThe instructions to this practical is not completely finsihed yet. In the end, it will contain something like this:\n\n\n2 Exercises\n\n2.0.1 6.1\nTry plotting scatterplots of the seaborn dataset “Penguins”.\na.) use different colors based on species or island b.)create one with matplotlib or seaborn, plotly and plotting\n\n\n2.0.2 6.2\nTry to create a subplot with three plots",
+    "crumbs": [
+      "Practiacl 6: Plotting"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "BIO511 Genomics - Practical Repository",
+    "section": "",
+    "text": "This repository contains practical exercises for the BIO511 Genomics course. Use this page, or the navbar to navigate to the different sections.\n\n\nHere are the practical exercises related to command line programming section of the course:\n\nPractical 1: CLI Basics\nPractical 2: Setting up the HPC\nPractical 3: Workspace Management and Data Management\nPractical 4: Scripting and Advanced Text Manipulation\nPractical 5: Software & Containers\n\n\n\n\nComing Soon…\n\n\n\nHere are the pracical exercises related to python programming\n\nPractical 0: setup\nPractical 1: datatypes\nPractical 2: loops\nPractical 3: functions\nPractical 4: modules\nPractical 5: files\nPractical 6: plots\n\n\nFor questions or issues, please contact the course instructors."
+  },
+  {
+    "objectID": "index.html#course-overview",
+    "href": "index.html#course-overview",
+    "title": "BIO511 Genomics - Practical Repository",
+    "section": "",
+    "text": "This repository contains practical exercises for the BIO511 Genomics course. Use this page, or the navbar to navigate to the different sections.\n\n\nHere are the practical exercises related to command line programming section of the course:\n\nPractical 1: CLI Basics\nPractical 2: Setting up the HPC\nPractical 3: Workspace Management and Data Management\nPractical 4: Scripting and Advanced Text Manipulation\nPractical 5: Software & Containers\n\n\n\n\nComing Soon…\n\n\n\nHere are the pracical exercises related to python programming\n\nPractical 0: setup\nPractical 1: datatypes\nPractical 2: loops\nPractical 3: functions\nPractical 4: modules\nPractical 5: files\nPractical 6: plots\n\n\nFor questions or issues, please contact the course instructors."
+  },
+  {
+    "objectID": "PRACTICAL_SETUP.html",
+    "href": "PRACTICAL_SETUP.html",
+    "title": "Practical 0: Introduction",
+    "section": "",
+    "text": "Welcome!!\nThe exercises for this first lesson are meant to connect the python part of the course to what you have previously done in the unix shell scripting part of the course and are meant to be done in the terminal (not jupyter). You can start using jupyter after today.\nIf you think there is a lot of new syntax, dont worry. We will begin explaning the python syntax from the ground up starting tomorrow.\n\n\nJupyter notebooks (text)\nJupyter notebooks (video)",
+    "crumbs": [
+      "Practical 0: Setup"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SETUP.html#some-useful-links",
+    "href": "PRACTICAL_SETUP.html#some-useful-links",
+    "title": "Practical 0: Introduction",
+    "section": "",
+    "text": "Jupyter notebooks (text)\nJupyter notebooks (video)",
+    "crumbs": [
+      "Practical 0: Setup"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SETUP.html#the-print-command-and-your-first-script",
+    "href": "PRACTICAL_SETUP.html#the-print-command-and-your-first-script",
+    "title": "Practical 0: Introduction",
+    "section": "2.1 The print command and your first script",
+    "text": "2.1 The print command and your first script\nTo print any string, in this case hello, you can use the following line of code in python:\nprint(\"hello!\")\n\nTry to create a script that prints a message using the command above Open a file called my_python_script.py. You can name it anything, just make sure it has the extension .py. Add a print command like the one above to print any string of text.\nSave the file and find it in the terminal. Run your script using the following command in bash:\n\npython my_python_script.py\nAny line starting with a hash # will be interpreted as a comment by python. A reasonable comment to the print command above could look something like this: # Print \"Hello\". - Try adding a comment to your script as well.",
+    "crumbs": [
+      "Practical 0: Setup"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SETUP.html#check-your-python-version",
+    "href": "PRACTICAL_SETUP.html#check-your-python-version",
+    "title": "Practical 0: Introduction",
+    "section": "2.2 Check your python version",
+    "text": "2.2 Check your python version\nYou can check your python version by typing python -V in the terminal. Another useful argument is -h, which allows you to see what available options there are. Try it out by typing python -h in your terminal.",
+    "crumbs": [
+      "Practical 0: Setup"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SETUP.html#basename",
+    "href": "PRACTICAL_SETUP.html#basename",
+    "title": "Practical 0: Introduction",
+    "section": "3.1 basename",
+    "text": "3.1 basename\nWhen coding we often work with file paths. However, we want to avoid hardcoding any path. Usually, we write scripts where we allow the user to set any path they want. Let’s say we’re working on a script where the user can specify their own input file path.\nStart by moving the file my_python_script.py to one of the subdirectories you created, by using os.rename():\nos.rename(\"/path/to/my_python_script.py\", \"test_dir_from_python/subdir1/my_python_script.py\")\nWe can use a function called basename to work with any path we’re given. The basename function comes from a submodule within os called path. You can get only the file name from an entire path like this:\n# Save the path to a variable called my_file_path\nmy_file_path = 'test_dir_from_python/subdir2/my_python_script.py'\n# Get only the file name\nos.path.basename(my_file_path)",
+    "crumbs": [
+      "Practical 0: Setup"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_SETUP.html#arguments",
+    "href": "PRACTICAL_SETUP.html#arguments",
+    "title": "Practical 0: Introduction",
+    "section": "3.2 arguments",
+    "text": "3.2 arguments\nBut how can we allow any user of a script to specify their own path? We allow them to specify it when running the script from the terminal, to avoid them going in and messing with the actual script.\nNow we are going to import a module called sys. Then, we will use a function from sys called argv to allow us to work with the command line argument that the user will give. Open up a new python script named input_arguments_test.py, preferably in test_dir_from_python/subdir2/, to allow us to work in the same directories. Write the following code in your file:\nimport sys\n# use the first and only argument from the user and save it as \"input_string\"\ninput_string = sys.argv[1]\n\n# print the input argument\nprint(input_string)\nSave the file and try to run it from the terminal. This time we should give an input argument, something it could print. Run it like this:\npython test_dir_from_python/subdir2/input_arguments_test.py \"This is a test string\"\nFinally, we will combine what we’ve gone through so far. Create a script with and input argument that is a path to one of your files. Make the script print the basename of the file.",
+    "crumbs": [
+      "Practical 0: Setup"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_LOOPING.html",
+    "href": "PRACTICAL_LOOPING.html",
+    "title": "Practical 2: Python Loops",
+    "section": "",
+    "text": "Looping over different types of sequences is key in most programming languages and python is no different. Today the exercises will involve creating some simple loops followed by some more involved loop constructs where you will combine looping with the if clauses we learned yesterday.",
+    "crumbs": [
+      "Practical 2: Loops"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_LOOPING.html#simple-loops",
+    "href": "PRACTICAL_LOOPING.html#simple-loops",
+    "title": "Practical 2: Python Loops",
+    "section": "3.1 Simple loops",
+    "text": "3.1 Simple loops\n\nCreate a list of 7 items. Loop over the list printing each item of the list.\nFor each iteration, print the loop number (index). E.g. on the third loop (iteration) its supposed to print a “3”.\nAdd an If-statement to make the loop stop after printing its 5th item.",
+    "crumbs": [
+      "Practical 2: Loops"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_LOOPING.html#nested-loops",
+    "href": "PRACTICAL_LOOPING.html#nested-loops",
+    "title": "Practical 2: Python Loops",
+    "section": "3.2 Nested loops",
+    "text": "3.2 Nested loops\nExample code: Here’s a simple nested loop, looking for codons in sequences\nsequences = ['ATCTGAGTCCACACATG', 'GCGTCGTGCGATGTTCACGTTGAT', 'CAGTAGTACTCAGT', 'GGTATGCTAGACGAGATCTAATA']\ncodons = ['CCA', 'TGT', 'GTA', 'TAG']\nfor sequence in sequences:\n  for codon in codons:\n    if codon in sequence:\n      print(codon + \" is in \" + sequence)\nSee if you can follow every line and work out how this example code works.\nWhen working with loops within loops it can get a bit tricky to keep track of things. A tip is to write the steps down in plain text before writing the actual code.\n\n3.2.1 \nCreate a nested for loop as in the example which looks for start and stop codons in the sequences list from the example above. Which sequences have both a start and a stop codon?\n\n\n3.2.2 \nTry to find a way to make sure that the start codon is before the stop codon in a sequence. Which sequence(s) have a start codon before a stop codon? We can loop through a dictionary by defining two variables: both the key and value.\nExample: Build a simple dict with the keys pat_001, pat_002 and pat_003 that has a value each. Here, the values are list:\ndata = dict({'pat_001': ['bacZZt98', 'bac889Ytd'], 'pat_002': ['bac0GFrr'], 'pat_003': ['bac889Ytd', 'bacFq55Hj', 'bacZZt98']})\n\n# Loop through the dict printing each key and each value as a list.\nfor key_patient, value_bact_list in data.items():  \n  print(key_patient)\n  print(value_bact_list)\n\n# add a line to see if the value (list) has the bacterial strain 'bac889Ytd'. \n# If it does it should return 'True'. If not, it should say 'False'.\n\nfor key_patient, value_bact_list in data.items():  \n  print(key_patient)\n  print(value_bact_list)\n  'bac889Ytd' in value_bact_list\n\n\n3.2.3 \nMake a loop going through the dictionary saved as data, given in the example. Use the loop to create a list of all the unique bacteria. Start by creating an empty list. Then create a for-loop where, for each iteration, you add the current bacteria to the list. Next, introduce an if-statement. Before adding each bacteria, use the if-statement to check whether the bacteria is or is not already in the list. If it’s not in the list, add it (Hint: use the append() command). Otherwise, continue to the next bacteria. See if you can use a search engine (like google) to figure out how to append items to a list.\n\n\n3.2.4 \nLets do the same thing but instead add each unique bacteria as a key in a dictionary. The values can be empty lists. Start by making an empty dictionary. Hint: Search online for how to list the keys in a dict, in order to compare each bacteria to the dict you’re building.\n\n\n3.2.5 \nNow let’s append the patients to the lists of each key. The final dict should look like this: ``python {'bacZZt98': ['pat_001', 'pat_003'], 'bac889Ytd': ['pat_001', 'pat_003'], 'bac0GFrr': ['pat_002'], 'bacFq55Hj': ['pat_003']}",
+    "crumbs": [
+      "Practical 2: Loops"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_DATA_TYPES_AND_IF_ELSE.html",
+    "href": "PRACTICAL_DATA_TYPES_AND_IF_ELSE.html",
+    "title": "Practical 1: Python Data Types and If/Else Clauses",
+    "section": "",
+    "text": "Now we are finally getting into the bread and butter of python syntax! Today you will do some very simple exercises with some of the most commonly used python data types as well as starting with boolean logic using if/else clauses.\nYou can copy the code blocks containing comments below and work on the tasks from within your IDE (Integrated Developer Environment)/text editor or a jupyter notebook. Remember, comments are the lines that start with # and will be ignored when you run your code\nRemember to refer back to todays presentations for help or ask the teachers - It’s what we are here for :)\n\n\nThey may even contain information that the teachers missed or didn’t explain well enough!\nData types (written help)\nData types (Video guide)\nIf/else (written guide)\nIf/else (video guide, easy)",
+    "crumbs": [
+      "Practical 1: Data Types and If/Else"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_DATA_TYPES_AND_IF_ELSE.html#some-links-that-you-may-find-helpful",
+    "href": "PRACTICAL_DATA_TYPES_AND_IF_ELSE.html#some-links-that-you-may-find-helpful",
+    "title": "Practical 1: Python Data Types and If/Else Clauses",
+    "section": "",
+    "text": "They may even contain information that the teachers missed or didn’t explain well enough!\nData types (written help)\nData types (Video guide)\nIf/else (written guide)\nIf/else (video guide, easy)",
+    "crumbs": [
+      "Practical 1: Data Types and If/Else"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_DATA_TYPES_AND_IF_ELSE.html#data-type-usage",
+    "href": "PRACTICAL_DATA_TYPES_AND_IF_ELSE.html#data-type-usage",
+    "title": "Practical 1: Python Data Types and If/Else Clauses",
+    "section": "2.1 Data type usage",
+    "text": "2.1 Data type usage\nHere’s some example code of how to save the number 4, which is interpreted as an integer by python, to a variable that we choose to call my_int. Then we print the variable.\nmy_int = 4\n\nprint(my_int)\nCreate a python script (.py file) where you save one value of each data type to its own variable. Afterwards, print all the variables and their type using the commands print() and type().\nData types to include: integer, floating point, string, boolean, nonetype, list, dictionary, tuple, set, range.",
+    "crumbs": [
+      "Practical 1: Data Types and If/Else"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_DATA_TYPES_AND_IF_ELSE.html#if-elif-else-on-your-data-types",
+    "href": "PRACTICAL_DATA_TYPES_AND_IF_ELSE.html#if-elif-else-on-your-data-types",
+    "title": "Practical 1: Python Data Types and If/Else Clauses",
+    "section": "2.2 If / Elif / Else on your data types",
+    "text": "2.2 If / Elif / Else on your data types\nFor this part you can reuse the variables you created in the previous task or recreate them with new values.\nThe variables need to be created in the same script that you use to solve the following tasks. That way, python will still “remember” what the variables are supposed to be.\n\n\n\n\n\n\nTipHint\n\n\n\nDouble check what type a variable is with type(variablename), to deremine which variable to use.\n\n\n\n2.2.1 \nLet’s start with strings! Below is an example code block of how to determine the length of a string:\n# Save a string to a variable\nmy_string = \"variablestuesday\"\n\n# Check how many letters are in my_string. It's the same thing as checking the length of a string.\nlen(my_string) \nPick a STRING you created. Then create an if/else-statement to determine if the string is empty or not. If the string is empty, the length should be zero.\nIf it’s empty, print “empty”, else print “non-empty”.\n\n\n2.2.2 Multi-way (If/elif/else clause)\nPick an INTEGER you created. Write an if-statement with 3 scenarios:\n\nThe integer could be positive\nThe integer could be zero\nThe integer could be negative\n\nFor every scenario, some informative text should be printed. E. g. tell the user if the integer is positive, equal to zero or negative.\n\n\n\n\n\n\nTipHint\n\n\n\nCompare the integer to zero.\n\n\n\n\n2.2.3 Type gate + nested classification (Nested If/elif/else)\nPick a SEQUENCE you created (list, tuple or range). Here, we want you to cerate a nested loop.\nIn the outer if-statement, check if your choice of variable matches any of the data types list or tuple or range. Use or to allow the variable to match any of them. If the variable is not a match, print “wrong type for this task”.\nThe inner if-statement should be used IF the variable was a match. Here, you need to check for 3 different scenarios:\n\nif its length is zero, print “empty”\nif the length == 1, print “single item”\nShould the length be &gt; 1, print “multiple items”",
+    "crumbs": [
+      "Practical 1: Data Types and If/Else"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_FUNCTIONS.html",
+    "href": "PRACTICAL_FUNCTIONS.html",
+    "title": "Practical 3: Python Functions",
+    "section": "",
+    "text": "Functions are everywhere in python and its time for you to start using them to take you to the next level!\nIf there are any built-in python functions you have not seen or heard about before (like for example isdigit(), max() etc.), search online for the documentation. The official page python.docs.org has information on the built-in functionality that comes with the standard python installation.\n\nRemember that you have to both define a function using the def block and then later call the function itself to have the code it contains acutally run. Calling a function means running the fucntion.\nAlso do not forget that the function has its own namespace, meaning code outside the funtion can not access the variables that only exist inside the function. The function is meant to be sectioned off. The data you want to access outside the function needs to be returned",
+    "crumbs": [
+      "Practical 3: Functions"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_FUNCTIONS.html#defining-a-function",
+    "href": "PRACTICAL_FUNCTIONS.html#defining-a-function",
+    "title": "Practical 3: Python Functions",
+    "section": "3.1 Defining a function",
+    "text": "3.1 Defining a function\ndef add_two_numbers(num_one, num_two):\n    number_to_return = num_one + num_two\n    return number_to_return",
+    "crumbs": [
+      "Practical 3: Functions"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_FUNCTIONS.html#calling-the-function",
+    "href": "PRACTICAL_FUNCTIONS.html#calling-the-function",
+    "title": "Practical 3: Python Functions",
+    "section": "3.2 Calling the function",
+    "text": "3.2 Calling the function\nmy_added_numbers = add_two_numbers(1, 1)\n\nprint(my_added_numbers) # will print 2",
+    "crumbs": [
+      "Practical 3: Functions"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_FUNCTIONS.html#section",
+    "href": "PRACTICAL_FUNCTIONS.html#section",
+    "title": "Practical 3: Python Functions",
+    "section": "4.1 ",
+    "text": "4.1 \n# Count-above  (uses nums, limit, count)\n# Goal: make a small function called whatever you want and then call(run) it.\n\n# a) Define a function named count_above that takes two arguments: seq and lim.\n\n# b) Inside the function, create a LOCAL variable named count starting at 0.\n\n# c) Loop through seq; for each number strictly greater than lim, increase count by 1.\n\n# d) Return count.\n\n# e) Outside the function:\n#    - Print the GLOBAL count.\n#    - Call count_above(nums, limit) and print the returned number.\n#    - Print the GLOBAL count again (notice the global didn’t change).\n\n# Your code below",
+    "crumbs": [
+      "Practical 3: Functions"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_FUNCTIONS.html#section-1",
+    "href": "PRACTICAL_FUNCTIONS.html#section-1",
+    "title": "Practical 3: Python Functions",
+    "section": "4.2 ",
+    "text": "4.2 \n# Text summary  (uses text, summary)\n# Goal: classify characters with an if/elif/else chain and return a clear result.\n\n# a) Define a function named summarize_text that takes one argument: s.\n\n# b) Inside the function, create a LOCAL variable named summary that holds a result dictionary\n#    with exactly these keys: \"digits\", \"letters\", \"other\" — each starting at 0.\n\n# c) Loop through each character in s:\n#       - if the character is a digit, increase \"digits\"\n#       - elif the character is a letter, increase \"letters\"\n#       - else increase \"other\"\n\n# d) Return the summary dictionary.\n\n# e) Outside the function:\n#    - Print the GLOBAL summary.\n#    - Call summarize_text(text) and print the returned dictionary.\n#    - Print the GLOBAL summary again.\n\n# Your code below",
+    "crumbs": [
+      "Practical 3: Functions"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_FUNCTIONS.html#section-2",
+    "href": "PRACTICAL_FUNCTIONS.html#section-2",
+    "title": "Practical 3: Python Functions",
+    "section": "4.3 ",
+    "text": "4.3 \n#C) Aggregate with mode  (uses nums, limit, result)\n# Goal: nested decisions based on a mode string. Return one final value.\n\n# a) Define a function named aggregate that takes three arguments: seq, mode, threshold.\n\n# b) Inside the function, create a LOCAL variable named result.\n#    Initialize it based on mode:\n#       - if mode is \"sum\": start at 0\n#       - if mode is \"count\": start at 0\n#       - if mode is \"max\": start at None (meaning “no qualifying value yet”)\n\n# c) Loop through each number n in seq:\n#       - First, ignore n if it is negative (skip it).\n#       - If n is at least threshold, then:\n#           * if mode is \"sum\": add n to result\n#           * elif mode is \"count\": increase result by 1\n#           * else (treat any other mode as \"max\"):\n#                 if result is None or n is greater than result, update result to n\n\n# d) Return the result.\n\n# e) Outside the function:\n#    - Print the GLOBAL result.\n#    - Call and print each of these:\n#         aggregate(nums, \"sum\", limit)\n#         aggregate(nums, \"count\", limit)\n#         aggregate(nums, \"max\", limit)\n#    - Print the GLOBAL result again.\n\n# Your Code below",
+    "crumbs": [
+      "Practical 3: Functions"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_FILES.html",
+    "href": "PRACTICAL_FILES.html",
+    "title": "Practical 5: Files",
+    "section": "",
+    "text": "In this exercise, you will be given a pre-made script, assignment_3.py and a FASTA file with a nucleotide sequence, assignment_3.fasta. To stay organized, make a new directory and keep all the exercise files in it.\nAt the end of this exercise, you should have two script files:\n\nAn updated version of assignment_3.py\nA second script, e.g.my_script.py",
+    "crumbs": [
+      "Practical 5: Files"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_FILES.html#section",
+    "href": "PRACTICAL_FILES.html#section",
+    "title": "Practical 5: Files",
+    "section": "3.1 ",
+    "text": "3.1 \nThe assignment_3.py script.\n\n3.1.1 \nLook at the code in assignment_3.py. The first two functions are annotated with comments describing what they do. Go through the code to get an overview of what it actually does.\n\n\n3.1.2 \nThe last function, mystery_function, is not. Read through the code in that function and try to figure out what it does. Write a docstring (\"\"\"This thing at the beginning of a function definition\"\"\") and add comments in the same way as the first two functions, describing what this function does. If you want, you can also give it a more descriptive name.",
+    "crumbs": [
+      "Practical 5: Files"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_FILES.html#section-3",
+    "href": "PRACTICAL_FILES.html#section-3",
+    "title": "Practical 5: Files",
+    "section": "3.2 ",
+    "text": "3.2 \nCreate a new python script (eg. my_script.py) in the same directory. In this script, import all the functions from your updated assignment_3.py. Use the functions to read assignment_3.fasta, get the first nucleotide sequence, split into codons, and finally call the mystery function on the sequence. Include the output from the mystery function as a comment in your script.",
+    "crumbs": [
+      "Practical 5: Files"
+    ]
+  },
+  {
+    "objectID": "PRACTICAL_FILES.html#section-4",
+    "href": "PRACTICAL_FILES.html#section-4",
+    "title": "Practical 5: Files",
+    "section": "3.3 ",
+    "text": "3.3 \nIt is usually a good idea to not rely on hard-coded paths for input files. Using sys.argv or argparse, add the necessary code to get the path to the input FASTA file from the command-line.",
+    "crumbs": [
+      "Practical 5: Files"
+    ]
+  }
+]

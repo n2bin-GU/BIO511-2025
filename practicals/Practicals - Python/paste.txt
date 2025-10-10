@@ -1,0 +1,24 @@
+- href: PRACTICAL_SETUP.qmd
+        text: "Practical 0: Setup"
+      - href: PRACTICAL_DATA_TYPES_AND_IF_ELSE.qmd
+        text: "Practical 1: Data Types and If/Else"
+      - href: PRACTICAL_LOOPS.qmd
+	text: "Practical 2: Loops"
+      - href: PRACTICAL_FUNCTIONS.qmd
+        text: "Practical 3: Functions"
+      - href: PRACTICAL_MODULES.qmd
+        text: "Practical 4: Modules"
+      - href: PRACTICAL_FILES.qmd
+        text: "Practical 5: Files"
+      - href: PRACTICALS_PLOTTING.qmd
+	text: "Practiacl 6: Plotting""
+
+- **[Practical 0: setup](PRACTICAL_SETUP.qmd)**
+- **[Practical 1: datatypes](PRACTICAL_DATA_TYPES_AND_IF_ELSE.qmd)**
+- **[Practical 2: loops](PRACTICAL_LOOPING.qmd)**
+- **[Practical 3: functions](PRACTICAL_FUNCTIONS.qmd)**
+- **[Practical 4: modules](PRACTICAL_MODULES.qmd)**
+- **[Practical 5: files](PRACTICAL_FILES.qmd)**
+- **[Practical 6: plots](PRACTICALS_PLOTTING.qmd)**
+
+
