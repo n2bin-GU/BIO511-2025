@@ -79,7 +79,7 @@ Try calling it through main.py (see how the previous function is imported and us
 Make the exercise_function work
 
 ###
-A non standard module is needed to run the function. Which? Install/use/call it [This will depend on how we want the students to access modules. Do we go with Conda, singularity, modules, or anything else?]
+A non standard module is needed to run the function. Which? Install/use/call it 
 
 ###
 Check the output of the script
