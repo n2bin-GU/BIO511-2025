@@ -15,7 +15,7 @@ format:
 
 # Introduction
 
-Since python is such a popular programming language, people have created thousands and thousands of packages and modules that you can download for free and make use of. The ones we mention in this course are not even the tip of this massive icebarg.
+Since python is such a popular programming language, people have created thousands and thousands of packages and modules that you can download for free and make use of. The ones we mention in this course are not even the tip of this massive iceberg.
 
 For example, pip contains over 675 000 packages as of the time of writing!!!
 
@@ -112,13 +112,10 @@ def main():
     sequence_codons = codons(args.sequence)
     
     # Here the students should check the output of the function
-    print(sequence_codons) # REMOVE THIS
     
     # Here the students will need to call the exercise_function from my_function.py
-    exercise_output = exercise_function(sequence_codons) # REMOVE THIS
     
     # And check the output of that function
-    print(exercise_output) # REMOVE THIS
 if __name__ == "__main__":
     main()
 ```
