@@ -13,42 +13,27 @@ format:
 ---
 
 # Introduction
-In this exercise, you will be given a pre-made script, `assignment_3.py` and a FASTA file with a nucleotide sequence, `assignment_3.fasta`. To stay organized, make a new directory and keep all the exercise files in it.
-
-At the end of this exercise, you should have two script files: 
-
-- An updated version of assignment_3.py
-
-- A second script, e.g.my_script.py
-
-# Useful links
-
-[Functions in other files video](https://www.youtube.com/watch?v=mjLPBC3PeO0)
-
-[Functions in other files text](https://www.geeksforgeeks.org/python/python-call-function-from-another-file/)
-
-[CLI arguments video](https://www.youtube.com/watch?v=mZbRRQMJ7Ew)
-
-[argv text](https://www.geeksforgeeks.org/python/how-to-use-sys-argv-in-python/)
-
-[argparse text](https://www.datacamp.com/tutorial/python-argparse)
 
 # Exercises
 ## 
-The `assignment_3.py` script.
 
-### 
-Look at the code in `assignment_3.py`. The first two functions are annotated with comments describing what they do. Go through the code to get an overview of what it actually does. 
+Create a script that:
 
-###
-The last function, `mystery_function`, is not. Read through the code in that function and try to figure out what it does. Write a docstring (`"""This thing at the beginning of a function definition"""`) and add comments in the same way as the first two functions, describing what this function does. If you want, you can also give it a more descriptive name.
+a. Uses with open() to create a csv file with 5 rows and 5 columns. Make sure to save the file and use comma as the separator.
 
-##
-Create a new python script (eg. `my_script.py`) in the same directory. In this script, import all the functions from your updated `assignment_3.py`. Use the functions to read `assignment_3.fasta`, get the first nucleotide sequence, split into codons, and finally call the mystery function on the sequence. Include the output from the mystery function as a comment in your script.
+b. Appends a row to the file based on the users input, using argv.
 
 ##
-It is usually a good idea to not rely on hard-coded paths for input files. Using `sys.argv` or `argparse`, add the necessary code to get the path to the input FASTA file from the command-line.
 
+a. Create a second script that takes the file you created in the previous task as a user defined input argument. Use argparse for this.
+
+b. Make sure to add useful help messages to the arguments in your script.
+
+c. use the csv module to read the csv file you created
+
+d. Convert the data to a pandas dataframe. Print a statistical summary of your data.
+
+## 
 
 
 
