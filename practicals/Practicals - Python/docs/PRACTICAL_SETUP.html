@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Tor Kling">
-<meta name="dcterms.date" content="2025-10-10">
+<meta name="author" content="Alvar Almstedt, Emma Västerviga">
+<meta name="dcterms.date" content="2025-10-08">
 
-<title>BIO511 Genomics - Practical Repository</title>
+<title>Practical 0: Introduction – BIO511 Genomics - Practical Repository</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -72,10 +107,9 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="pages/styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar docked nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -103,40 +137,25 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Command Line Programming</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-command-line-programming">    
-        <li class="dropdown-header">Intro to Command Line</li>
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_INTRO_TO_COMMAND_LINE.html">
+    <a class="dropdown-item" href="./PRACTICAL_INTRO_TO_COMMAND_LINE.qmd">
  <span class="dropdown-text">Practical 1: CLI Basics</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_SETTING_UP_THE_HPC.html">
+    <a class="dropdown-item" href="./PRACTICAL_SETTING_UP_THE_HPC.qmd">
  <span class="dropdown-text">Practical 2: Setting up the HPC</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_WORKSPACE_MANAGEMENT.html">
+    <a class="dropdown-item" href="./PRACTICAL_WORKSPACE_MANAGEMENT.qmd">
  <span class="dropdown-text">Practical 3: Workspace Management and Data Management</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html">
+    <a class="dropdown-item" href="./PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.qmd">
  <span class="dropdown-text">Practical 4: Scripting and Advanced Text Manipulation</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html">
+    <a class="dropdown-item" href="./PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.qmd">
  <span class="dropdown-text">Practical 5: Software &amp; Containers</span></a>
-  </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li class="dropdown-header">Coding Best Practices</li>
-        <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Git/PRACTICAL_GIT_SESSION1.html">
- <span class="dropdown-text">Practical 1: Git Fundamentals: Session 1</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Git/PRACTICAL_GIT_SESSION2.html">
- <span class="dropdown-text">Practical 2: Git Fundamentals: Session 2</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Git/PRACTICAL_BEST_CODING_PRACTISES.qmd">
- <span class="dropdown-text">Practical 3: Best Coding Practices</span></a>
   </li>  
     </ul>
   </li>
@@ -145,18 +164,6 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Genomics Workflows</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-genomics-workflows">    
-        <li>
-    <a class="dropdown-item" href="./practicals/Practicals - WGS/PRACTICAL_RAWDATA_AND_QC.html">
- <span class="dropdown-text">Practical 1: Quality Control and Classification</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./practicals/Practicals - WGS/PRACTICAL_ASSEMBLY_AND_MAPPING.html">
- <span class="dropdown-text">Practical 2: Genome Assembly and Mapping</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./practicals/Practicals - WGS/PRACTICAL_FUNCTIONAL_ANNOTATION.html">
- <span class="dropdown-text">Practical 3: Genome Annotation</span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -165,28 +172,32 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-python-programming">    
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_SETUP.html">
- <span class="dropdown-text">Practical 0: Introduction</span></a>
+    <a class="dropdown-item" href="./PRACTICAL_SETUP.html">
+ <span class="dropdown-text">Practical 0: Setup</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_DATA_TYPES_AND_IF_ELSE.html">
- <span class="dropdown-text">Practical 1: Python Data Types and If/Else Clauses</span></a>
+    <a class="dropdown-item" href="./PRACTICAL_DATA_TYPES_AND_IF_ELSE.html">
+ <span class="dropdown-text">Practical 1: Data Types and If/Else</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_LOOPING.html">
- <span class="dropdown-text">Practical 2: Python Loops</span></a>
+    <a class="dropdown-item" href="./PRACTICAL_LOOPING.html">
+ <span class="dropdown-text">Practical 2: Loops</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_FUNCTIONS.html">
- <span class="dropdown-text">Practical 3: Python Functions</span></a>
+    <a class="dropdown-item" href="./PRACTICAL_FUNCTIONS.html">
+ <span class="dropdown-text">Practical 3: Functions</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_MODULES.html">
- <span class="dropdown-text">Practical 4: Python Modules</span></a>
+    <a class="dropdown-item" href="./PRACTICAL_MODULES.html">
+ <span class="dropdown-text">Practical 4: Modules</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_FILES.html">
+    <a class="dropdown-item" href="./PRACTICAL_FILES.html">
  <span class="dropdown-text">Practical 5: Files</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./PRACTICAL_PLOTTING.html">
+ <span class="dropdown-text">Practiacl 6: Plotting</span></a>
   </li>  
     </ul>
   </li>
@@ -196,21 +207,92 @@ ul.task-list li input[type="checkbox"] {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./PRACTICAL_SETUP.html">Practical 0: Setup</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./PRACTICAL_SETUP.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Practical 0: Setup</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./PRACTICAL_DATA_TYPES_AND_IF_ELSE.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 1: Data Types and If/Else</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./PRACTICAL_LOOPING.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 2: Loops</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./PRACTICAL_FUNCTIONS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 3: Functions</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./PRACTICAL_MODULES.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 4: Modules</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./PRACTICAL_FILES.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 5: Files</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./PRACTICAL_PLOTTING.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practiacl 6: Plotting</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#course-overview" id="toc-course-overview" class="nav-link active" data-scroll-target="#course-overview"><span class="header-section-number">1</span> Course Overview</a>
+  <li><a href="#introduction-to-python" id="toc-introduction-to-python" class="nav-link active" data-scroll-target="#introduction-to-python"><span class="header-section-number">1</span> Introduction to Python</a>
   <ul class="collapse">
-  <li><a href="#command-line-programming" id="toc-command-line-programming" class="nav-link" data-scroll-target="#command-line-programming"><span class="header-section-number">1.1</span> 🖥️ Command Line Programming</a></li>
-  <li><a href="#genomics-workflows" id="toc-genomics-workflows" class="nav-link" data-scroll-target="#genomics-workflows"><span class="header-section-number">1.2</span> 🧬 Genomics Workflows</a></li>
-  <li><a href="#python-programming" id="toc-python-programming" class="nav-link" data-scroll-target="#python-programming"><span class="header-section-number">1.3</span> 🐍 Python Programming</a></li>
+  <li><a href="#some-useful-links" id="toc-some-useful-links" class="nav-link" data-scroll-target="#some-useful-links"><span class="header-section-number">1.1</span> Some useful links</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">2</span> Exercises</a>
+  <ul class="collapse">
+  <li><a href="#the-print-command-and-your-first-script" id="toc-the-print-command-and-your-first-script" class="nav-link" data-scroll-target="#the-print-command-and-your-first-script"><span class="header-section-number">2.1</span> The print command and your first script</a></li>
+  <li><a href="#check-your-python-version" id="toc-check-your-python-version" class="nav-link" data-scroll-target="#check-your-python-version"><span class="header-section-number">2.2</span> Check your python version</a></li>
+  </ul></li>
+  <li><a href="#bash-commands" id="toc-bash-commands" class="nav-link" data-scroll-target="#bash-commands"><span class="header-section-number">3</span> Bash commands</a>
+  <ul class="collapse">
+  <li><a href="#basename" id="toc-basename" class="nav-link" data-scroll-target="#basename"><span class="header-section-number">3.1</span> basename</a></li>
+  <li><a href="#arguments" id="toc-arguments" class="nav-link" data-scroll-target="#arguments"><span class="header-section-number">3.2</span> arguments</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -220,8 +302,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">BIO511 Genomics - Practical Repository</h1>
-<p class="subtitle lead">Welcome to the practical exercises for the BIO511 Genomics course</p>
+<h1 class="title">Practical 0: Introduction</h1>
+<p class="subtitle lead">BIO511 Genomics - Python Introduction and Setup</p>
 </div>
 
 
@@ -231,14 +313,14 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Tor Kling </p>
+             <p>Alvar Almstedt, Emma Västerviga </p>
           </div>
   </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 10, 2025</p>
+      <p class="date">October 8, 2025</p>
     </div>
   </div>
   
@@ -250,53 +332,81 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="course-overview" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="course-overview"><span class="header-section-number">1</span> Course Overview</h2>
-<p>This repository contains practical exercises for the BIO511 Genomics course. Use this page, or the navbar to navigate to the different sections.</p>
-<section id="command-line-programming" class="level3" data-number="1.1">
-<h3 data-number="1.1" class="anchored" data-anchor-id="command-line-programming"><span class="header-section-number">1.1</span> 🖥️ Command Line Programming</h3>
-<p>Here are the practical exercises related to command line programming section of the course:</p>
-<section id="introduction-to-command-line-programming" class="level4" data-number="1.1.1">
-<h4 data-number="1.1.1" class="anchored" data-anchor-id="introduction-to-command-line-programming"><span class="header-section-number">1.1.1</span> Introduction to Command Line Programming</h4>
-<ul>
-<li><strong><a href="./practicals/Practicals - CLI/PRACTICAL_INTRO_TO_COMMAND_LINE.html">Practical 1: CLI Basics</a></strong></li>
-<li><strong><a href="./practicals/Practicals - CLI/PRACTICAL_SETTING_UP_THE_HPC.html">Practical 2: Setting up the HPC</a></strong></li>
-<li><strong><a href="./practicals/Practicals - CLI/PRACTICAL_WORKSPACE_MANAGEMENT.html">Practical 3: Workspace Management and Data Management</a></strong></li>
-<li><strong><a href="./practicals/Practicals - CLI/PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html">Practical 4: Scripting and Advanced Text Manipulation</a></strong></li>
-<li><strong><a href="./practicals/Practicals - CLI/PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html">Practical 5: Software &amp; Containers</a></strong></li>
-</ul>
-</section>
-<section id="coding-best-practices" class="level4" data-number="1.1.2">
-<h4 data-number="1.1.2" class="anchored" data-anchor-id="coding-best-practices"><span class="header-section-number">1.1.2</span> Coding Best Practices</h4>
-<ul>
-<li><strong><a href="./practicals/Practicals - Git/PRACTICAL_GIT_SESSION1.html">Practical 1: Git Fundamentals: Session 1</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Git/PRACTICAL_GIT_SESSION2.html">Practical 2: Git Fundamentals: Session 2</a></strong></li>
-<li><strong><a href="practicals/Practicals - Git/PRACTICAL_BEST_CODING_PRACTISES.qmd">Practical 3: Best Coding Practices</a></strong></li>
-</ul>
+<section id="introduction-to-python" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction to Python</h1>
+<p>Welcome!!</p>
+<p>The exercises for this first lesson are meant to connect the python part of the course to what you have previously done in the unix shell scripting part of the course and are meant to be done in the terminal (not jupyter). You can start using jupyter after today.</p>
+<p>If you think there is a lot of new syntax, dont worry. We will begin explaning the python syntax from the ground up starting tomorrow.</p>
+<section id="some-useful-links" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="some-useful-links"><span class="header-section-number">1.1</span> Some useful links</h2>
+<p><a href="https://www.datacamp.com/tutorial/tutorial-jupyter-notebook">Jupyter notebooks (text)</a></p>
+<p><a href="https://www.youtube.com/watch?v=HW29067qVWk">Jupyter notebooks (video)</a></p>
 </section>
 </section>
-<section id="genomics-workflows" class="level3" data-number="1.2">
-<h3 data-number="1.2" class="anchored" data-anchor-id="genomics-workflows"><span class="header-section-number">1.2</span> 🧬 Genomics Workflows</h3>
-<p>The following practical exercises focus on genomics workflows:</p>
+<section id="exercises" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Exercises</h1>
+<p>We are going to use github repos to present and compare each assignment within groups. Create a github repo for this course. Name it <code>BIO511_python_2025_&lt;My-Name&gt;</code>. Create a folder for the first assignment in your new git repo and push your solutions for the next exercise below. This should allow you to easily show the rest of the group what you did tomorrow.</p>
+<p>Let’s start exploring Python! Some of the terms and tools used below we will go through in greater detail later on in the course. For now, let’s just try them out.</p>
+<section id="the-print-command-and-your-first-script" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="the-print-command-and-your-first-script"><span class="header-section-number">2.1</span> The print command and your first script</h2>
+<p>To print any string, in this case hello, you can use the following line of code in python:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"hello!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
-<li><strong><a href="./practicals/Practicals - WGS/PRACTICAL_RAWDATA_AND_QC.html">Practical 1: Quality Control and Classification</a></strong></li>
-<li><strong><a href="./practicals/Practicals - WGS/PRACTICAL_ASSEMBLY_AND_MAPPING.html">Practical 2: Genome Assembly and Mapping</a></strong></li>
-<li><strong><a href="./practicals/Practicals - WGS/PRACTICAL_FUNCTIONAL_ANNOTATION.html">Practical 3: Genome Annotation</a></strong></li>
+<li>Try to create a script that prints a message using the command above Open a file called <code>my_python_script.py</code>. You can name it anything, just make sure it has the extension <code>.py</code>. Add a print command like the one above to print any string of text.</li>
+<li>Save the file and find it in the terminal. Run your script using the following command in bash:</li>
 </ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>python my_python_script.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Any line starting with a hash <code>#</code> will be interpreted as a comment by python. A reasonable comment to the print command above could look something like this: <code># Print "Hello"</code>. - Try adding a comment to your script as well.</p>
 </section>
-<section id="python-programming" class="level3" data-number="1.3">
-<h3 data-number="1.3" class="anchored" data-anchor-id="python-programming"><span class="header-section-number">1.3</span> 🐍 Python Programming</h3>
-<p>Lastly, we cover Python programming with these practical exercises:</p>
-<ul>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_SETUP.html">Practical 0: Introduction</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_DATA_TYPES_AND_IF_ELSE.html">Practical 1: Python Data Types and If/Else Clauses</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_LOOPING.html">Practical 2: Python Loops</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_FUNCTIONS.html">Practical 3: Python Functions</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_MODULES.html">Practical 4: Python Modules</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_FILES.html">Practical 5: Files</a></strong></li>
-</ul>
-<hr>
-<p><em>For questions or issues, please contact the course instructors.</em></p>
+<section id="check-your-python-version" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="check-your-python-version"><span class="header-section-number">2.2</span> Check your python version</h2>
+<p>You can check your python version by typing <code>python -V</code> in the terminal. Another useful argument is <code>-h</code>, which allows you to see what available options there are. Try it out by typing <code>python -h</code> in your terminal.</p>
+</section>
+</section>
+<section id="bash-commands" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Bash commands</h1>
+<p>You already had an introduction to bash. Did you know you can run bash commands in python as well?</p>
+<p>Open a python session by typing <code>python</code> in your terminal. To exit python, you’ll just have to type <code>quit()</code>.</p>
+<p>Let’s open python and try out some commands. A typical python module that you can use to perform the following commands is called <code>os</code>. First we have to import it in the python session to allow us to use the various tools provided by <code>os</code>. Start by opening a python session. Then, try out the following commands:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In bash we would write pwd to print the current working directory. In python it’s:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>os.getcwd()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Create a new directory in the one you’re in right now</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>os.mkdir(<span class="st">"test_dir_from_python"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Create a subrdirectory in the one you just created</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>os.mkdir(<span class="st">"test_dir_from_python/subdir1"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You can create a new directory with a subdirectory in one line of code should you use the function makedirs() instead</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>os.makedirs(<span class="st">"test_dir_from_python/subdir2/subdir2.1"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>What happens if you try to create the directories you just made again? Try it out.</p>
+<p>Should you want to create a directory that might already exist without getting an error message, just to create it if it doesn’t exist and otherwise do nothing, you can use the command <code>os.makedirs()</code> with an input argument especially made for cases like these, called exist_true. <code>exist_ok</code> is set to <code>False</code> by default so we need to set it to <code>True</code> like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>os.makedirs(<span class="st">"test_dir_from_python/subdir2/"</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>To list the contents of a directory, use <code>os.listdir()</code>. To have a look inside the directory we just made, run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>os.listdir(<span class="st">"test_dir_from_python"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Try to list the contents of the subdirectories <code>subdir1</code> and <code>subdir2</code> as well.</p>
+<section id="basename" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="basename"><span class="header-section-number">3.1</span> basename</h2>
+<p>When coding we often work with file paths. However, we want to avoid hardcoding any path. Usually, we write scripts where we allow the user to set any path they want. Let’s say we’re working on a script where the user can specify their own input file path.</p>
+<p>Start by moving the file <code>my_python_script.py</code> to one of the subdirectories you created, by using <code>os.rename()</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>os.rename(<span class="st">"/path/to/my_python_script.py"</span>, <span class="st">"test_dir_from_python/subdir1/my_python_script.py"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We can use a function called <code>basename</code> to work with any path we’re given. The <code>basename</code> function comes from a submodule within <code>os</code> called <code>path</code>. You can get only the file name from an entire path like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the path to a variable called my_file_path</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>my_file_path <span class="op">=</span> <span class="st">'test_dir_from_python/subdir2/my_python_script.py'</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get only the file name</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>os.path.basename(my_file_path)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="arguments" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="arguments"><span class="header-section-number">3.2</span> arguments</h2>
+<p>But how can we allow any user of a script to specify their own path? We allow them to specify it when running the script from the terminal, to avoid them going in and messing with the actual script.</p>
+<p>Now we are going to import a module called <code>sys</code>. Then, we will use a function from <code>sys</code> called <code>argv</code> to allow us to work with the command line argument that the user will give. Open up a new python script named <code>input_arguments_test.py</code>, preferably in <code>test_dir_from_python/subdir2/</code>, to allow us to work in the same directories. Write the following code in your file:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># use the first and only argument from the user and save it as "input_string"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>input_string <span class="op">=</span> sys.argv[<span class="dv">1</span>]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># print the input argument</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(input_string)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Save the file and try to run it from the terminal. This time we should give an input argument, something it could print. Run it like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>python test_dir_from_python<span class="op">/</span>subdir2<span class="op">/</span>input_arguments_test.py <span class="st">"This is a test string"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Finally, we will combine what we’ve gone through so far. Create a script with and input argument that is a path to one of your files. Make the script print the basename of the file.</p>
 
 
 </section>

@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Tor Kling">
+<meta name="author" content="Alvar Almstedt, Emma Västerviga">
 <meta name="dcterms.date" content="2025-10-10">
 
-<title>BIO511 Genomics - Practical Repository</title>
+<title>Practical 2: Python Loops – BIO511 Genomics - Practical Repository</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,27 +22,62 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-b08f96deee0b642f6814feffc40ccbab.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-b08f96deee0b642f6814feffc40ccbab.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -72,19 +107,19 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="pages/styles.css">
+<link rel="stylesheet" href="../../pages/styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar docked nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">BIO511 Genomics - Practical Repository</span>
     </a>
   </div>
@@ -95,7 +130,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -105,37 +140,37 @@ ul.task-list li input[type="checkbox"] {
     <ul class="dropdown-menu" aria-labelledby="nav-menu-command-line-programming">    
         <li class="dropdown-header">Intro to Command Line</li>
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_INTRO_TO_COMMAND_LINE.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - CLI/PRACTICAL_INTRO_TO_COMMAND_LINE.html">
  <span class="dropdown-text">Practical 1: CLI Basics</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_SETTING_UP_THE_HPC.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - CLI/PRACTICAL_SETTING_UP_THE_HPC.html">
  <span class="dropdown-text">Practical 2: Setting up the HPC</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_WORKSPACE_MANAGEMENT.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - CLI/PRACTICAL_WORKSPACE_MANAGEMENT.html">
  <span class="dropdown-text">Practical 3: Workspace Management and Data Management</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - CLI/PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html">
  <span class="dropdown-text">Practical 4: Scripting and Advanced Text Manipulation</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - CLI/PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html">
  <span class="dropdown-text">Practical 5: Software &amp; Containers</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Coding Best Practices</li>
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Git/PRACTICAL_GIT_SESSION1.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Git/PRACTICAL_GIT_SESSION1.html">
  <span class="dropdown-text">Practical 1: Git Fundamentals: Session 1</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Git/PRACTICAL_GIT_SESSION2.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Git/PRACTICAL_GIT_SESSION2.html">
  <span class="dropdown-text">Practical 2: Git Fundamentals: Session 2</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Git/PRACTICAL_BEST_CODING_PRACTISES.qmd">
+    <a class="dropdown-item" href="../../practicals/Practicals - Git/PRACTICAL_BEST_CODING_PRACTISES.qmd">
  <span class="dropdown-text">Practical 3: Best Coding Practices</span></a>
   </li>  
     </ul>
@@ -146,15 +181,15 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-genomics-workflows">    
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - WGS/PRACTICAL_RAWDATA_AND_QC.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - WGS/PRACTICAL_RAWDATA_AND_QC.html">
  <span class="dropdown-text">Practical 1: Quality Control and Classification</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - WGS/PRACTICAL_ASSEMBLY_AND_MAPPING.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - WGS/PRACTICAL_ASSEMBLY_AND_MAPPING.html">
  <span class="dropdown-text">Practical 2: Genome Assembly and Mapping</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - WGS/PRACTICAL_FUNCTIONAL_ANNOTATION.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - WGS/PRACTICAL_FUNCTIONAL_ANNOTATION.html">
  <span class="dropdown-text">Practical 3: Genome Annotation</span></a>
   </li>  
     </ul>
@@ -165,27 +200,27 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-python-programming">    
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_SETUP.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_SETUP.html">
  <span class="dropdown-text">Practical 0: Introduction</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_DATA_TYPES_AND_IF_ELSE.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_DATA_TYPES_AND_IF_ELSE.html">
  <span class="dropdown-text">Practical 1: Python Data Types and If/Else Clauses</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_LOOPING.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_LOOPING.html">
  <span class="dropdown-text">Practical 2: Python Loops</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_FUNCTIONS.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_FUNCTIONS.html">
  <span class="dropdown-text">Practical 3: Python Functions</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_MODULES.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_MODULES.html">
  <span class="dropdown-text">Practical 4: Python Modules</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_FILES.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_FILES.html">
  <span class="dropdown-text">Practical 5: Files</span></a>
   </li>  
     </ul>
@@ -196,21 +231,86 @@ ul.task-list li input[type="checkbox"] {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../practicals/Practicals - Python/PRACTICAL_LOOPING.html">Practical 2: Python Loops</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - Python/PRACTICAL_SETUP.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 0: Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - Python/PRACTICAL_DATA_TYPES_AND_IF_ELSE.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 1: Python Data Types and If/Else Clauses</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - Python/PRACTICAL_LOOPING.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Practical 2: Python Loops</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - Python/PRACTICAL_FUNCTIONS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 3: Python Functions</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - Python/PRACTICAL_MODULES.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 4: Python Modules</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - Python/PRACTICAL_FILES.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 5: Files</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#course-overview" id="toc-course-overview" class="nav-link active" data-scroll-target="#course-overview"><span class="header-section-number">1</span> Course Overview</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#useful-links" id="toc-useful-links" class="nav-link" data-scroll-target="#useful-links"><span class="header-section-number">2</span> Useful links</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">3</span> Exercises</a>
   <ul class="collapse">
-  <li><a href="#command-line-programming" id="toc-command-line-programming" class="nav-link" data-scroll-target="#command-line-programming"><span class="header-section-number">1.1</span> 🖥️ Command Line Programming</a></li>
-  <li><a href="#genomics-workflows" id="toc-genomics-workflows" class="nav-link" data-scroll-target="#genomics-workflows"><span class="header-section-number">1.2</span> 🧬 Genomics Workflows</a></li>
-  <li><a href="#python-programming" id="toc-python-programming" class="nav-link" data-scroll-target="#python-programming"><span class="header-section-number">1.3</span> 🐍 Python Programming</a></li>
+  <li><a href="#simple-loops" id="toc-simple-loops" class="nav-link" data-scroll-target="#simple-loops"><span class="header-section-number">3.1</span> Simple loops</a></li>
+  <li><a href="#nested-loops" id="toc-nested-loops" class="nav-link" data-scroll-target="#nested-loops"><span class="header-section-number">3.2</span> Nested loops</a>
+  <ul class="collapse">
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">3.2.1</span> </a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><span class="header-section-number">3.2.2</span> </a></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"><span class="header-section-number">3.2.3</span> </a></li>
+  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3"><span class="header-section-number">3.2.4</span> </a></li>
+  <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4"><span class="header-section-number">3.2.5</span> </a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -220,8 +320,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">BIO511 Genomics - Practical Repository</h1>
-<p class="subtitle lead">Welcome to the practical exercises for the BIO511 Genomics course</p>
+<h1 class="title">Practical 2: Python Loops</h1>
+<p class="subtitle lead">BIO511 Genomics - Think iteration and loops</p>
 </div>
 
 
@@ -231,7 +331,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Tor Kling </p>
+             <p>Alvar Almstedt, Emma Västerviga </p>
           </div>
   </div>
     
@@ -250,55 +350,85 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="course-overview" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="course-overview"><span class="header-section-number">1</span> Course Overview</h2>
-<p>This repository contains practical exercises for the BIO511 Genomics course. Use this page, or the navbar to navigate to the different sections.</p>
-<section id="command-line-programming" class="level3" data-number="1.1">
-<h3 data-number="1.1" class="anchored" data-anchor-id="command-line-programming"><span class="header-section-number">1.1</span> 🖥️ Command Line Programming</h3>
-<p>Here are the practical exercises related to command line programming section of the course:</p>
-<section id="introduction-to-command-line-programming" class="level4" data-number="1.1.1">
-<h4 data-number="1.1.1" class="anchored" data-anchor-id="introduction-to-command-line-programming"><span class="header-section-number">1.1.1</span> Introduction to Command Line Programming</h4>
-<ul>
-<li><strong><a href="./practicals/Practicals - CLI/PRACTICAL_INTRO_TO_COMMAND_LINE.html">Practical 1: CLI Basics</a></strong></li>
-<li><strong><a href="./practicals/Practicals - CLI/PRACTICAL_SETTING_UP_THE_HPC.html">Practical 2: Setting up the HPC</a></strong></li>
-<li><strong><a href="./practicals/Practicals - CLI/PRACTICAL_WORKSPACE_MANAGEMENT.html">Practical 3: Workspace Management and Data Management</a></strong></li>
-<li><strong><a href="./practicals/Practicals - CLI/PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html">Practical 4: Scripting and Advanced Text Manipulation</a></strong></li>
-<li><strong><a href="./practicals/Practicals - CLI/PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html">Practical 5: Software &amp; Containers</a></strong></li>
-</ul>
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>Looping over different types of sequences is key in most programming languages and python is no different. Today the exercises will involve creating some simple loops followed by some more involved loop constructs where you will combine looping with the if clauses we learned yesterday.</p>
 </section>
-<section id="coding-best-practices" class="level4" data-number="1.1.2">
-<h4 data-number="1.1.2" class="anchored" data-anchor-id="coding-best-practices"><span class="header-section-number">1.1.2</span> Coding Best Practices</h4>
-<ul>
-<li><strong><a href="./practicals/Practicals - Git/PRACTICAL_GIT_SESSION1.html">Practical 1: Git Fundamentals: Session 1</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Git/PRACTICAL_GIT_SESSION2.html">Practical 2: Git Fundamentals: Session 2</a></strong></li>
-<li><strong><a href="practicals/Practicals - Git/PRACTICAL_BEST_CODING_PRACTISES.qmd">Practical 3: Best Coding Practices</a></strong></li>
-</ul>
+<section id="useful-links" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Useful links</h1>
+<p><a href="https://www.dataquest.io/blog/python-for-loop-tutorial/">Loops (text)</a></p>
+<p><a href="https://www.youtube.com/watch?v=ZPSES_gtm5U">Loops (video)</a></p>
 </section>
+<section id="exercises" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Exercises</h1>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example code</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a list</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>mylist <span class="op">=</span> [<span class="st">"a"</span>, <span class="st">"list"</span>, <span class="st">"can"</span>, <span class="st">"contain"</span>, <span class="st">"strings"</span>, <span class="st">"and"</span>, <span class="st">"numbers"</span>, <span class="dv">2</span>]</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># You can double check if it's a list</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(mylist)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># print your list</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mylist)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># print the first item in your list</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>prit(thislist[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="simple-loops" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="simple-loops"><span class="header-section-number">3.1</span> Simple loops</h2>
+<ol type="1">
+<li>Create a list of 7 items. Loop over the list printing each item of the list.</li>
+<li>For each iteration, print the loop number (index). E.g. on the third loop (iteration) its supposed to print a “3”.</li>
+<li>Add an If-statement to make the loop stop after printing its 5th item.</li>
+</ol>
 </section>
-<section id="genomics-workflows" class="level3" data-number="1.2">
-<h3 data-number="1.2" class="anchored" data-anchor-id="genomics-workflows"><span class="header-section-number">1.2</span> 🧬 Genomics Workflows</h3>
-<p>The following practical exercises focus on genomics workflows:</p>
-<ul>
-<li><strong><a href="./practicals/Practicals - WGS/PRACTICAL_RAWDATA_AND_QC.html">Practical 1: Quality Control and Classification</a></strong></li>
-<li><strong><a href="./practicals/Practicals - WGS/PRACTICAL_ASSEMBLY_AND_MAPPING.html">Practical 2: Genome Assembly and Mapping</a></strong></li>
-<li><strong><a href="./practicals/Practicals - WGS/PRACTICAL_FUNCTIONAL_ANNOTATION.html">Practical 3: Genome Annotation</a></strong></li>
-</ul>
+<section id="nested-loops" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="nested-loops"><span class="header-section-number">3.2</span> Nested loops</h2>
+<p>Example code: Here’s a simple nested loop, looking for codons in sequences</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sequences <span class="op">=</span> [<span class="st">'ATCTGAGTCCACACATG'</span>, <span class="st">'GCGTCGTGCGATGTTCACGTTGAT'</span>, <span class="st">'CAGTAGTACTCAGT'</span>, <span class="st">'GGTATGCTAGACGAGATCTAATA'</span>]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>codons <span class="op">=</span> [<span class="st">'CCA'</span>, <span class="st">'TGT'</span>, <span class="st">'GTA'</span>, <span class="st">'TAG'</span>]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sequence <span class="kw">in</span> sequences:</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> codon <span class="kw">in</span> codons:</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> codon <span class="kw">in</span> sequence:</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      <span class="bu">print</span>(codon <span class="op">+</span> <span class="st">" is in "</span> <span class="op">+</span> sequence)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>See if you can follow every line and work out how this example code works.</p>
+<p>When working with loops within loops it can get a bit tricky to keep track of things. A tip is to write the steps down in plain text before writing the actual code.</p>
+<section id="section" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="section"><span class="header-section-number">3.2.1</span> </h3>
+<p>Create a nested for loop as in the example which looks for start and stop codons in the <code>sequences</code> list from the example above. Which sequences have both a start and a stop codon?</p>
 </section>
-<section id="python-programming" class="level3" data-number="1.3">
-<h3 data-number="1.3" class="anchored" data-anchor-id="python-programming"><span class="header-section-number">1.3</span> 🐍 Python Programming</h3>
-<p>Lastly, we cover Python programming with these practical exercises:</p>
-<ul>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_SETUP.html">Practical 0: Introduction</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_DATA_TYPES_AND_IF_ELSE.html">Practical 1: Python Data Types and If/Else Clauses</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_LOOPING.html">Practical 2: Python Loops</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_FUNCTIONS.html">Practical 3: Python Functions</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_MODULES.html">Practical 4: Python Modules</a></strong></li>
-<li><strong><a href="./practicals/Practicals - Python/PRACTICAL_FILES.html">Practical 5: Files</a></strong></li>
-</ul>
-<hr>
-<p><em>For questions or issues, please contact the course instructors.</em></p>
+<section id="section-1" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="section-1"><span class="header-section-number">3.2.2</span> </h3>
+<p>Try to find a way to make sure that the start codon is before the stop codon in a sequence. Which sequence(s) have a start codon before a stop codon? We can loop through a dictionary by defining two variables: both the key and value.</p>
+<p>Example: Build a simple dict with the keys <code>pat_001</code>, <code>pat_002</code> and <code>pat_003</code> that has a value each. Here, the values are list:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> <span class="bu">dict</span>({<span class="st">'pat_001'</span>: [<span class="st">'bacZZt98'</span>, <span class="st">'bac889Ytd'</span>], <span class="st">'pat_002'</span>: [<span class="st">'bac0GFrr'</span>], <span class="st">'pat_003'</span>: [<span class="st">'bac889Ytd'</span>, <span class="st">'bacFq55Hj'</span>, <span class="st">'bacZZt98'</span>]})</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through the dict printing each key and each value as a list.</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> key_patient, value_bact_list <span class="kw">in</span> data.items():  </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(key_patient)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(value_bact_list)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># add a line to see if the value (list) has the bacterial strain 'bac889Ytd'. </span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># If it does it should return 'True'. If not, it should say 'False'.</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> key_patient, value_bact_list <span class="kw">in</span> data.items():  </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(key_patient)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(value_bact_list)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="co">'bac889Ytd'</span> <span class="kw">in</span> value_bact_list</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="section-2" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="section-2"><span class="header-section-number">3.2.3</span> </h3>
+<p>Make a loop going through the dictionary saved as <code>data</code>, given in the example. Use the loop to create a list of all the unique bacteria. Start by creating an empty list. Then create a for-loop where, for each iteration, you add the current bacteria to the list. Next, introduce an if-statement. Before adding each bacteria, use the if-statement to check whether the bacteria is or is not already in the list. If it’s not in the list, add it (Hint: use the <code>append()</code> command). Otherwise, continue to the next bacteria. See if you can use a search engine (like google) to figure out how to append items to a list.</p>
+</section>
+<section id="section-3" class="level3" data-number="3.2.4">
+<h3 data-number="3.2.4" class="anchored" data-anchor-id="section-3"><span class="header-section-number">3.2.4</span> </h3>
+<p>Lets do the same thing but instead add each unique bacteria as a key in a dictionary. The values can be empty lists. Start by making an empty dictionary. Hint: Search online for how to list the keys in a dict, in order to compare each bacteria to the dict you’re building.</p>
+</section>
+<section id="section-4" class="level3" data-number="3.2.5">
+<h3 data-number="3.2.5" class="anchored" data-anchor-id="section-4"><span class="header-section-number">3.2.5</span> </h3>
+<p>Now let’s append the patients to the lists of each key. The final dict should look like this: ``<code>python {'bacZZt98': ['pat_001', 'pat_003'], 'bac889Ytd': ['pat_001', 'pat_003'], 'bac0GFrr': ['pat_002'], 'bacFq55Hj': ['pat_003']}</code></p>
 
 
+</section>
 </section>
 </section>
 
