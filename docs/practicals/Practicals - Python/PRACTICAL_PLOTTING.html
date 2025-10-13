@@ -75,7 +75,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="../../pages/styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar docked nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -95,7 +95,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -188,6 +188,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_FILES.html">
  <span class="dropdown-text">Practical 5: Files</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_PLOTTING.html">
+ <span class="dropdown-text">Practical 5: Plotting</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
@@ -196,10 +200,73 @@ ul.task-list li input[type="checkbox"] {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../practicals/Practicals - Python/PRACTICAL_PLOTTING.html">Practical 5: Plotting</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - Python/PRACTICAL_SETUP.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 0: Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - Python/PRACTICAL_DATA_TYPES_AND_IF_ELSE.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 1: Python Data Types and If/Else Clauses</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - Python/PRACTICAL_LOOPING.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 2: Python Loops</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - Python/PRACTICAL_FUNCTIONS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 3: Python Functions</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - Python/PRACTICAL_MODULES.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 4: Python Modules</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - Python/PRACTICAL_FILES.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 5: Files</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - Python/PRACTICAL_PLOTTING.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Practical 5: Plotting</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -207,12 +274,13 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">2</span> Exercises</a>
+  <li><a href="#useful-links" id="toc-useful-links" class="nav-link" data-scroll-target="#useful-links"><span class="header-section-number">2</span> Useful links</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">3</span> Exercises</a>
   <ul class="collapse">
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">2.1</span> </a></li>
-  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><span class="header-section-number">2.2</span> </a></li>
-  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"><span class="header-section-number">2.3</span> </a></li>
-  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3"><span class="header-section-number">2.4</span> </a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">3.1</span> </a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><span class="header-section-number">3.2</span> </a></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"><span class="header-section-number">3.3</span> </a></li>
+  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3"><span class="header-section-number">3.4</span> </a></li>
   </ul></li>
   </ul>
 </nav>
@@ -254,13 +322,21 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
-<p>Plotting is a necessity in most omics projects. A good plot can help the viewer to quickly get an understanding of the data and the project. A bad plot can be misguiding and lead to general confusion or, if worst comes to worst, incorrect conclusions. Plotting is a central part of sharing and visualizing results. It’s a way to investigate, create an overview of and validate the data you are working with. For now, however, we’ll start with making some simple plots, using a few popular plotting libraries. Hopefully, this will give you the confidence to create spectacular ones in the future! # Useful links <a href="https://pandas.pydata.org/docs/user_guide/10min.html">10 minutes to pandas (text)</a> <a href="https://www.geeksforgeeks.org/python/pyplot-in-matplotlib/">Matplotlib intro tutorial (text)</a> <a href="https://www.w3schools.com/python/numpy/numpy_random_seaborn.asp">Seaborn (text)</a> <a href="https://www.geeksforgeeks.org/python/python-plotly-tutorial/">Plotly intro (text)</a> <a href="https://www.youtube.com/watch?v=2KrJ2tNrvGo">Plotnine (video)</a></p>
+<p>Plotting is a necessity in most omics projects. A good plot can help the viewer to quickly get an understanding of the data and the project. A bad plot can be misguiding and lead to general confusion or, if worst comes to worst, incorrect conclusions. Plotting is a central part of sharing and visualizing results. It’s a way to investigate, create an overview of and validate the data you are working with. For now, however, we’ll start with making some simple plots, using a few popular plotting libraries. Hopefully, this will give you the confidence to create spectacular ones in the future!</p>
 </section>
-<section id="exercises" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Exercises</h1>
+<section id="useful-links" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Useful links</h1>
+<p><a href="https://pandas.pydata.org/docs/user_guide/10min.html">10 minutes to pandas (text)</a></p>
+<p><a href="https://www.geeksforgeeks.org/python/pyplot-in-matplotlib/">Matplotlib intro tutorial (text)</a></p>
+<p><a href="https://www.w3schools.com/python/numpy/numpy_random_seaborn.asp">Seaborn (text)</a></p>
+<p><a href="https://www.geeksforgeeks.org/python/python-plotly-tutorial/">Plotly intro (text)</a></p>
+<p><a href="https://www.youtube.com/watch?v=2KrJ2tNrvGo">Plotnine (video)</a></p>
+</section>
+<section id="exercises" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Exercises</h1>
 <p>Let’s start with doing something quite similar to what we went through in today’s presentation. For this exercise you’ll need the following external libraries: pandas, matplotlib, seaborn, plotly and plotnine. You can use the environment file provided for the practice dugga or make your own environment if you prefer. Start the code with setting up a suitable environment for this practical.</p>
-<section id="section" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="section"><span class="header-section-number">2.1</span> </h2>
+<section id="section" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="section"><span class="header-section-number">3.1</span> </h2>
 <p>For the following subtasks you can refer to the slides of today’s presentation.</p>
 <ol type="a">
 <li><p>Load the ‘penguins’ dataset using seaborn. Remove any rows with missing values. Hint: Check out how to use the dropna() function.</p></li>
@@ -270,16 +346,16 @@ ul.task-list li input[type="checkbox"] {
 <li><p>Finally, try it out using <code>plotnine</code>. To save the plot you will need to import and use the function <code>ggsave</code>. (A good practice is to always import any packages or functions at the top of your script.)</p></li>
 </ol>
 </section>
-<section id="section-1" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="section-1"><span class="header-section-number">2.2</span> </h2>
+<section id="section-1" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="section-1"><span class="header-section-number">3.2</span> </h2>
 <p>Create a histogram to show the distribution of the bill lengths in the data. Use the function you like best.</p>
 </section>
-<section id="section-2" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="section-2"><span class="header-section-number">2.3</span> </h2>
+<section id="section-2" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="section-2"><span class="header-section-number">3.3</span> </h2>
 <p>Use the <code>pandas</code> library to group the penguins data by body mass and island and calculate the mean value of body mass per island. Save the results to a new variable. Create a bar plot where each bar represents the average body mass of one island.</p>
 </section>
-<section id="section-3" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="section-3"><span class="header-section-number">2.4</span> </h2>
+<section id="section-3" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="section-3"><span class="header-section-number">3.4</span> </h2>
 <p>Optional:</p>
 <p>Create two (or more) plots of your own choosing to visualize the penguins data. Use seaborn and try to subplot them together. Create a palette or use one of seaborne’s pre-existing palettes to separate the data by any factor you think is appropriate. (island, sex, species, etc.. )</p>
 
