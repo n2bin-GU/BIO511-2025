@@ -154,7 +154,35 @@
     "href": "practicals/Practicals - Python/PRACTICAL_PLOTTING.html",
     "title": "Practical 6: Python Plotting",
     "section": "",
-    "text": "1 Introduction\nThe instructions to this practical is not completely finsihed yet. In the end, it will contain something like this:\n\n\n2 Exercises\n\n2.0.1 6.1\nTry plotting scatterplots of the seaborn dataset “Penguins”.\na.) use different colors based on species or island b.)create one with matplotlib or seaborn, plotly and plotting\n\n\n2.0.2 6.2\nTry to create a subplot with three plots"
+    "text": "Plotting is a necessity in most omics projects. A good plot can help the viewer to quickly get an understanding of the data and the project. A bad plot can be misguiding and lead to general confusion or, if worst comes to worst, incorrect conclusions. Plotting is a central part of sharing and visualizing results. It’s a way to investigate, create an overview of and validate the data you are working with. For now, however, we’ll start with making some simple plots, using a few popular plotting libraries. Hopefully, this will give you the confidence to create spectacular ones in the future! # Useful links 10 minutes to pandas (text) Matplotlib intro tutorial (text) Seaborn (text) Plotly intro (text) Plotnine (video)"
+  },
+  {
+    "objectID": "practicals/Practicals - Python/PRACTICAL_PLOTTING.html#section",
+    "href": "practicals/Practicals - Python/PRACTICAL_PLOTTING.html#section",
+    "title": "Practical 6: Python Plotting",
+    "section": "2.1 ",
+    "text": "2.1 \nFor the following subtasks you can refer to the slides of today’s presentation.\n\nLoad the ‘penguins’ dataset using seaborn. Remove any rows with missing values. Hint: Check out how to use the dropna() function.\nPlot a scatterplot using matplotlib. The plot should show flipper length on the x-axis and body mass on the y-axis. Add an informative title, xlabel and ylabel. Save the plot.\nCreate the same plot but using plotly. Save an interactive file (.html).\nCreate and save the same plot using seaborn instead. See if you can set colors based on species.\nFinally, try it out using plotnine. To save the plot you will need to import and use the function ggsave. (A good practice is to always import any packages or functions at the top of your script.)"
+  },
+  {
+    "objectID": "practicals/Practicals - Python/PRACTICAL_PLOTTING.html#section-1",
+    "href": "practicals/Practicals - Python/PRACTICAL_PLOTTING.html#section-1",
+    "title": "Practical 6: Python Plotting",
+    "section": "2.2 ",
+    "text": "2.2 \nCreate a histogram to show the distribution of the bill lengths in the data. Use the function you like best."
+  },
+  {
+    "objectID": "practicals/Practicals - Python/PRACTICAL_PLOTTING.html#section-2",
+    "href": "practicals/Practicals - Python/PRACTICAL_PLOTTING.html#section-2",
+    "title": "Practical 6: Python Plotting",
+    "section": "2.3 ",
+    "text": "2.3 \nUse the pandas library to group the penguins data by body mass and island and calculate the mean value of body mass per island. Save the results to a new variable. Create a bar plot where each bar represents the average body mass of one island."
+  },
+  {
+    "objectID": "practicals/Practicals - Python/PRACTICAL_PLOTTING.html#section-3",
+    "href": "practicals/Practicals - Python/PRACTICAL_PLOTTING.html#section-3",
+    "title": "Practical 6: Python Plotting",
+    "section": "2.4 ",
+    "text": "2.4 \nOptional:\nCreate two (or more) plots of your own choosing to visualize the penguins data. Use seaborn and try to subplot them together. Create a palette or use one of seaborne’s pre-existing palettes to separate the data by any factor you think is appropriate. (island, sex, species, etc.. )"
   },
   {
     "objectID": "practicals/Practicals - Python/index.html",
@@ -1003,7 +1031,7 @@
     "href": "practicals/Practicals - Python/PRACTICAL_FILES.html",
     "title": "Practical 5: Files",
     "section": "",
-    "text": "In this exercise, you will be given a pre-made script, assignment_3.py and a FASTA file with a nucleotide sequence, assignment_3.fasta. To stay organized, make a new directory and keep all the exercise files in it.\nAt the end of this exercise, you should have two script files:\n\nAn updated version of assignment_3.py\nA second script, e.g.my_script.py",
+    "text": "Todays topics include: Reading and writing to files, working with pandas dataframes and some of the functionality in biopython",
     "crumbs": [
       "Practical 5: Files"
     ]
@@ -1013,27 +1041,27 @@
     "href": "practicals/Practicals - Python/PRACTICAL_FILES.html#section",
     "title": "Practical 5: Files",
     "section": "3.1 ",
-    "text": "3.1 \nThe assignment_3.py script.\n\n3.1.1 \nLook at the code in assignment_3.py. The first two functions are annotated with comments describing what they do. Go through the code to get an overview of what it actually does.\n\n\n3.1.2 \nThe last function, mystery_function, is not. Read through the code in that function and try to figure out what it does. Write a docstring (\"\"\"This thing at the beginning of a function definition\"\"\") and add comments in the same way as the first two functions, describing what this function does. If you want, you can also give it a more descriptive name.",
+    "text": "3.1 \nFile Manipulation\nCreate a script that:\n\nUses with open() to create a csv file with 5 rows and 5 columns. Make sure to save the file and use comma as the separator.\nAppends a row to the file based on the users input, using argv.",
     "crumbs": [
       "Practical 5: Files"
     ]
   },
   {
-    "objectID": "practicals/Practicals - Python/PRACTICAL_FILES.html#section-3",
-    "href": "practicals/Practicals - Python/PRACTICAL_FILES.html#section-3",
+    "objectID": "practicals/Practicals - Python/PRACTICAL_FILES.html#section-1",
+    "href": "practicals/Practicals - Python/PRACTICAL_FILES.html#section-1",
     "title": "Practical 5: Files",
     "section": "3.2 ",
-    "text": "3.2 \nCreate a new python script (eg. my_script.py) in the same directory. In this script, import all the functions from your updated assignment_3.py. Use the functions to read assignment_3.fasta, get the first nucleotide sequence, split into codons, and finally call the mystery function on the sequence. Include the output from the mystery function as a comment in your script.",
+    "text": "3.2 \nArguments and pandas\n\nCreate a second script that takes the file you created in the previous task as a user defined input argument. Use argparse for this.\nMake sure to add useful help messages to the arguments in your script.\nuse the csv module to read the csv file you created\nConvert the data to a pandas dataframe. Print a statistical summary of your data.",
     "crumbs": [
       "Practical 5: Files"
     ]
   },
   {
-    "objectID": "practicals/Practicals - Python/PRACTICAL_FILES.html#section-4",
-    "href": "practicals/Practicals - Python/PRACTICAL_FILES.html#section-4",
+    "objectID": "practicals/Practicals - Python/PRACTICAL_FILES.html#section-2",
+    "href": "practicals/Practicals - Python/PRACTICAL_FILES.html#section-2",
     "title": "Practical 5: Files",
     "section": "3.3 ",
-    "text": "3.3 \nIt is usually a good idea to not rely on hard-coded paths for input files. Using sys.argv or argparse, add the necessary code to get the path to the input FASTA file from the command-line.",
+    "text": "3.3 \n\"\"\"\nBiopython Exercise — Mini FASTA toolkit with Biopython (Seq, SeqRecord, SeqIO)\n\nRemember that you can copy these commented code blocks into your script to not have to refer back to your browser window\n\nStep 0 — Create the input file:\nSave the text below as a file named `dna.fasta` in the same folder as your script:\n\n&gt;seq1\nATGCATGCATGCATGCATGCATGCATGC\n&gt;seq2\nGATTACAGATTACAGATTACA\n&gt;seq3\nCGCGATATCGCGATATCGCGATATCGCGATATCGCGATATC\n&gt;seq4\nTTTAAACCCGGGTTTAAA\n&gt;seq5\nGCCGCGGCGCGCCGCGGCGCGCCGCGGCGC\n&gt;seq6\nATATATATATATATATATATAT\n&gt;seq7\nACGTTGCAACGTTGCAACGTTGCAACGTTGCA\n&gt;seq8\nCATGACTGACTGATGCTAGCTAGCTGATCGTACGATC\n\"\"\"\n\n3.3.1 \n# A) Load and report (use SeqIO)\n\n# - Read all records from `dna.fasta`.\n# - For each record, print the record ID and the sequence length.\n# - Also print the first 10 bases of the sequence.\n\n\n3.3.2 \n# B) Reverse complements to a new FASTA (use Seq, SeqRecord, SeqIO)\n\n# - For each original record, create the reverse complement of its sequence.\n# - Make a new SeqRecord for the reverse complement.\n# - Set the new ID to \"&lt;oldid&gt;_rc\" and the description to \"reverse complement of &lt;oldid&gt;\".\n# - Write all reverse-complement records to a file named `dna_rc.fasta`.\n\n\n3.3.3 \n# C) GC% annotation to a new FASTA (use SeqRecord, SeqIO)\n\n# - For each original record, calculate GC% = 100 * (count of 'G' + count of 'C') / length.\n# - Round to 1 decimal place.\n# - Create a copy of the record where the description includes \"GC=&lt;value&gt;%\".\n# - Write these annotated records to `dna_with_gc.fasta`.\n\n\n3.3.4 \n# D) Translation (Optional, do if you have extra time)\n\n# - Translate each DNA sequence and print the first 10 amino acids.\n# - Read `dna_rc.fasta` back in and confirm IDs/descriptions look correct.",
     "crumbs": [
       "Practical 5: Files"
     ]

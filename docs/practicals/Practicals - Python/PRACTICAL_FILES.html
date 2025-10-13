@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alvar Almstedt, Emma Västerviga">
-<meta name="dcterms.date" content="2025-10-10">
+<meta name="dcterms.date" content="2025-10-13">
 
 <title>Practical 5: Files – BIO511 Genomics - Practical Repository</title>
 <style>
@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -267,13 +302,15 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#useful-links" id="toc-useful-links" class="nav-link" data-scroll-target="#useful-links"><span class="header-section-number">2</span> Useful links</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">3</span> Exercises</a>
   <ul class="collapse">
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">3.1</span> </a>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">3.1</span> </a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><span class="header-section-number">3.2</span> </a></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"><span class="header-section-number">3.3</span> </a>
   <ul class="collapse">
-  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><span class="header-section-number">3.1.1</span> </a></li>
-  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"><span class="header-section-number">3.1.2</span> </a></li>
+  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3"><span class="header-section-number">3.3.1</span> </a></li>
+  <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4"><span class="header-section-number">3.3.2</span> </a></li>
+  <li><a href="#section-5" id="toc-section-5" class="nav-link" data-scroll-target="#section-5"><span class="header-section-number">3.3.3</span> </a></li>
+  <li><a href="#section-6" id="toc-section-6" class="nav-link" data-scroll-target="#section-6"><span class="header-section-number">3.3.4</span> </a></li>
   </ul></li>
-  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3"><span class="header-section-number">3.2</span> </a></li>
-  <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4"><span class="header-section-number">3.3</span> </a></li>
   </ul></li>
   </ul>
 </nav>
@@ -301,7 +338,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 10, 2025</p>
+      <p class="date">October 13, 2025</p>
     </div>
   </div>
   
@@ -315,44 +352,99 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
-<p>In this exercise, you will be given a pre-made script, <code>assignment_3.py</code> and a FASTA file with a nucleotide sequence, <code>assignment_3.fasta</code>. To stay organized, make a new directory and keep all the exercise files in it.</p>
-<p>At the end of this exercise, you should have two script files:</p>
-<ul>
-<li><p>An updated version of assignment_3.py</p></li>
-<li><p>A second script, e.g.my_script.py</p></li>
-</ul>
+<p>Todays topics include: Reading and writing to files, working with pandas dataframes and some of the functionality in biopython</p>
 </section>
 <section id="useful-links" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Useful links</h1>
-<p><a href="https://www.youtube.com/watch?v=mjLPBC3PeO0">Functions in other files video</a></p>
-<p><a href="https://www.geeksforgeeks.org/python/python-call-function-from-another-file/">Functions in other files text</a></p>
-<p><a href="https://www.youtube.com/watch?v=mZbRRQMJ7Ew">CLI arguments video</a></p>
-<p><a href="https://www.geeksforgeeks.org/python/how-to-use-sys-argv-in-python/">argv text</a></p>
-<p><a href="https://www.datacamp.com/tutorial/python-argparse">argparse text</a></p>
+<p><a href="https://www.geeksforgeeks.org/python/file-handling-python/">Files (text)</a></p>
+<p><a href="https://www.youtube.com/watch?v=Uh2ebFW8OYM">Files (video)</a></p>
+<p><a href="https://www.w3schools.com/python/pandas/default.asp">Pandas tutorial</a></p>
+<p><a href="https://biopython.org/docs/latest/Tutorial/index.html">Biopython (text tutorial)</a></p>
+<p><a href="https://www.youtube.com/watch?v=ocA2IMe7dpA">Biopython (video)</a></p>
 </section>
 <section id="exercises" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Exercises</h1>
 <section id="section" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="section"><span class="header-section-number">3.1</span> </h2>
-<p>The <code>assignment_3.py</code> script.</p>
-<section id="section-1" class="level3" data-number="3.1.1">
-<h3 data-number="3.1.1" class="anchored" data-anchor-id="section-1"><span class="header-section-number">3.1.1</span> </h3>
-<p>Look at the code in <code>assignment_3.py</code>. The first two functions are annotated with comments describing what they do. Go through the code to get an overview of what it actually does.</p>
+<p><strong>File Manipulation</strong></p>
+<p>Create a script that:</p>
+<ol type="a">
+<li><p>Uses with open() to create a csv file with 5 rows and 5 columns. Make sure to save the file and use comma as the separator.</p></li>
+<li><p>Appends a row to the file based on the users input, using argv.</p></li>
+</ol>
 </section>
-<section id="section-2" class="level3" data-number="3.1.2">
-<h3 data-number="3.1.2" class="anchored" data-anchor-id="section-2"><span class="header-section-number">3.1.2</span> </h3>
-<p>The last function, <code>mystery_function</code>, is not. Read through the code in that function and try to figure out what it does. Write a docstring (<code>"""This thing at the beginning of a function definition"""</code>) and add comments in the same way as the first two functions, describing what this function does. If you want, you can also give it a more descriptive name.</p>
+<section id="section-1" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="section-1"><span class="header-section-number">3.2</span> </h2>
+<p><strong>Arguments and pandas</strong></p>
+<ol type="a">
+<li><p>Create a second script that takes the file you created in the previous task as a user defined input argument. Use argparse for this.</p></li>
+<li><p>Make sure to add useful help messages to the arguments in your script.</p></li>
+<li><p>use the csv module to read the csv file you created</p></li>
+<li><p>Convert the data to a pandas dataframe. Print a statistical summary of your data.</p></li>
+</ol>
 </section>
+<section id="section-2" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="section-2"><span class="header-section-number">3.3</span> </h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">Biopython Exercise — Mini FASTA toolkit with Biopython (Seq, SeqRecord, SeqIO)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">Remember that you can copy these commented code blocks into your script to not have to refer back to your browser window</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">Step 0 — Create the input file:</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">Save the text below as a file named `dna.fasta` in the same folder as your script:</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">&gt;seq1</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">ATGCATGCATGCATGCATGCATGCATGC</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">&gt;seq2</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">GATTACAGATTACAGATTACA</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">&gt;seq3</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">CGCGATATCGCGATATCGCGATATCGCGATATCGCGATATC</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">&gt;seq4</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">TTTAAACCCGGGTTTAAA</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">&gt;seq5</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">GCCGCGGCGCGCCGCGGCGCGCCGCGGCGC</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">&gt;seq6</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">ATATATATATATATATATATAT</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">&gt;seq7</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">ACGTTGCAACGTTGCAACGTTGCAACGTTGCA</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">&gt;seq8</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">CATGACTGACTGATGCTAGCTAGCTGATCGTACGATC</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="section-3" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="section-3"><span class="header-section-number">3.3.1</span> </h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A) Load and report (use SeqIO)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># - Read all records from `dna.fasta`.</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># - For each record, print the record ID and the sequence length.</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># - Also print the first 10 bases of the sequence.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="section-3" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="section-3"><span class="header-section-number">3.2</span> </h2>
-<p>Create a new python script (eg. <code>my_script.py</code>) in the same directory. In this script, import all the functions from your updated <code>assignment_3.py</code>. Use the functions to read <code>assignment_3.fasta</code>, get the first nucleotide sequence, split into codons, and finally call the mystery function on the sequence. Include the output from the mystery function as a comment in your script.</p>
+<section id="section-4" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="section-4"><span class="header-section-number">3.3.2</span> </h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># B) Reverse complements to a new FASTA (use Seq, SeqRecord, SeqIO)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># - For each original record, create the reverse complement of its sequence.</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># - Make a new SeqRecord for the reverse complement.</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># - Set the new ID to "&lt;oldid&gt;_rc" and the description to "reverse complement of &lt;oldid&gt;".</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># - Write all reverse-complement records to a file named `dna_rc.fasta`.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="section-4" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="section-4"><span class="header-section-number">3.3</span> </h2>
-<p>It is usually a good idea to not rely on hard-coded paths for input files. Using <code>sys.argv</code> or <code>argparse</code>, add the necessary code to get the path to the input FASTA file from the command-line.</p>
+<section id="section-5" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="section-5"><span class="header-section-number">3.3.3</span> </h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># C) GC% annotation to a new FASTA (use SeqRecord, SeqIO)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># - For each original record, calculate GC% = 100 * (count of 'G' + count of 'C') / length.</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># - Round to 1 decimal place.</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># - Create a copy of the record where the description includes "GC=&lt;value&gt;%".</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># - Write these annotated records to `dna_with_gc.fasta`.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="section-6" class="level3" data-number="3.3.4">
+<h3 data-number="3.3.4" class="anchored" data-anchor-id="section-6"><span class="header-section-number">3.3.4</span> </h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># D) Translation (Optional, do if you have extra time)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># - Translate each DNA sequence and print the first 10 amino acids.</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># - Read `dna_rc.fasta` back in and confirm IDs/descriptions look correct.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
+</section>
 </section>
 </section>
 
