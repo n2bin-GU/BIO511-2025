@@ -14,8 +14,27 @@ format:
 
 # Introduction
 
+Todays topics include: Reading and writing to files, working with pandas dataframes and some of the functionality in biopython
+
+# Useful links
+
+[Files (text)](https://www.geeksforgeeks.org/python/file-handling-python/)
+
+[Files (video)](https://www.youtube.com/watch?v=Uh2ebFW8OYM)
+
+[Pandas tutorial](https://www.w3schools.com/python/pandas/default.asp)
+
+[Biopython (text tutorial)](https://biopython.org/docs/latest/Tutorial/index.html)
+
+[Biopython (video)](https://www.youtube.com/watch?v=ocA2IMe7dpA)
+
+
+
 # Exercises
+
 ## 
+
+**File Manipulation**
 
 Create a script that:
 
@@ -24,6 +43,8 @@ a. Uses with open() to create a csv file with 5 rows and 5 columns. Make sure to
 b. Appends a row to the file based on the users input, using argv.
 
 ##
+
+**Arguments and pandas**
 
 a. Create a second script that takes the file you created in the previous task as a user defined input argument. Use argparse for this.
 
@@ -36,9 +57,11 @@ d. Convert the data to a pandas dataframe. Print a statistical summary of your d
 ## 
 
 
-´´´python
+```python
 """
-Exercise — Mini FASTA toolkit with Biopython (Seq, SeqRecord, SeqIO)
+Biopython Exercise — Mini FASTA toolkit with Biopython (Seq, SeqRecord, SeqIO)
+
+Remember that you can copy these commented code blocks into your script to not have to refer back to your browser window
 
 Step 0 — Create the input file:
 Save the text below as a file named `dna.fasta` in the same folder as your script:
@@ -47,7 +70,20 @@ Save the text below as a file named `dna.fasta` in the same folder as your scrip
 ATGCATGCATGCATGCATGCATGCATGC
 >seq2
 GATTACAGATTACAGATTACA
+>seq3
+CGCGATATCGCGATATCGCGATATCGCGATATCGCGATATC
+>seq4
+TTTAAACCCGGGTTTAAA
+>seq5
+GCCGCGGCGCGCCGCGGCGCGCCGCGGCGC
+>seq6
+ATATATATATATATATATATAT
+>seq7
+ACGTTGCAACGTTGCAACGTTGCAACGTTGCA
+>seq8
+CATGACTGACTGATGCTAGCTAGCTGATCGTACGATC
 """
+```
 
 ###
 ```python
@@ -57,6 +93,7 @@ GATTACAGATTACAGATTACA
 # - For each record, print the record ID and the sequence length.
 # - Also print the first 10 bases of the sequence.
 ```
+
 ###
 ```python
 # B) Reverse complements to a new FASTA (use Seq, SeqRecord, SeqIO)
