@@ -47,12 +47,18 @@ website:
       style: docked
       background: light
       contents:
-      - href: "practicals/Practicals - WGS/PRACTICAL_RAWDATA_AND_QC.qmd"
-        text: "Practical 1: Quality Control and Classification"
-      - href: "practicals/Practicals - WGS/PRACTICAL_ASSEMBLY_AND_MAPPING.qmd"
-        text: "Practical 2: Genome Assembly and Mapping"
-      - href: "practicals/Practicals - WGS/PRACTICAL_FUNCTIONAL_ANNOTATION.qmd"
-        text: "Practical 3: Genome Annotation"
+      - section: "Genome workflows - Whole Genome Sequencing (WGS)"
+        contents:
+        - href: "practicals/Practicals - WGS/PRACTICAL_RAWDATA_AND_QC.qmd"
+          text: "Practical 1: Quality Control and Classification"
+        - href: "practicals/Practicals - WGS/PRACTICAL_ASSEMBLY_AND_MAPPING.qmd"
+          text: "Practical 2: Genome Assembly and Mapping"
+        - href: "practicals/Practicals - WGS/PRACTICAL_FUNCTIONAL_ANNOTATION.qmd"
+          text: "Practical 3: Genome Annotation"
+      - section: "Additional Genomics Resources"
+        contents:
+        - href: "practicals/Practicals - WGS/ADDITIONAL_PREP_CURATED_PROTEINS.qmd"
+          text: "Preparing Curated Protein Databases"
 
     - id: python
       title: "Python Programming"

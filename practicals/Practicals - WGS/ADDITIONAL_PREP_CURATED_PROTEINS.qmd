@@ -1,0 +1,80 @@
+---
+title: "Additional: Build curated reference proteins"
+subtitle: "BIO511 Genomics — Manual preparation of curated proteins for Prokka"
+author: "Tor Kling"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+Since we know that annotation/classification databases have their limits, especially with **novel or poorly characterized proteins**, its a good idea to create a curated reference set. This page shows how to manually create a curated reference protein FASTA file for use with Prokka.
+
+## Requirements
+
+You will need the following tools installed (either via apt or conda):
+
+- seqkit
+- cd-hit
+
+Tip: Run these steps in a clean folder containing only the protein FASTA files you want to include.
+
+## Steps
+
+### Fetching protein FASTA files
+
+You can download protein FASTA files from various sources, such as NCBI RefSeq, UniProt, or other specialized databases. Ensure that the files are in FASTA format and contain the protein sequences you want to include in your curated reference. A recommendation is to start with NCBI and look for the complete genomes of high quality reference strains of your organism of interest. Next you should try to include some genomes that may be of certain genes of interest, these could be clinical isolates (for virulence factors, ESBL), environmental isolates (for diverse metabolic capabilities and resistance genes), industrial strains (for production relevant genes) etc.
+
+Once you have identified the genomes, download their protein FASTA files (usually with the extension .faa) from the NCBI Genome or RefSeq database using the "Download" option on the genome's page. Then place all the downloaded .faa files into a single directory where you will perform the following steps.
+
+### Concatenate protein FASTA files
+```bash
+# Create file 
+touch merged_raw.faa
+
+# Concatenate all .faa files into one
+cat *.faa >> merged_raw.faa
+```
+
+### Remove exact duplicates
+```bash
+# Remove exact duplicate sequences using rmdup from seqkit
+seqkit rmdup -s -o merged_dedup.faa merged_raw.faa
+```
+
+- -s: remove sequences that are exactly identical (same sequence and header)
+- -o: output file
+
+### Cluster with CD-HIT 
+```bash
+# Cluster similar sequences at 95% identity to remove redundancy
+cd-hit -i merged_dedup.faa -o curatedRef.faa -c 0.95 -n 5 -d 0 -T 2 -M 0
+```
+
+- -c: sequence identity threshold (0.95 = 95%)
+- -n: word size matching the identity cutoff (5 for ~70–100%)
+- -d: header length in output (0 = full)
+- -T: threads; -M: memory in MB (0 = no limit)
+
+### Review the results
+```bash
+# Inspect clustered sequences
+less curatedRef.faa.clstr
+less curatedRef.faa
+
+# Check number of sequences
+wc -l merged_raw.faa
+wc -l merged_dedup.faa
+wc -l curatedRef.faa
+```
+
+## Use with Prokka
+Provide curatedRef.faa via the proteins flag:
+```bash
+# Note that path/to is a placeholder, adjust accordingly
+--proteins /path/to/curatedRef.faa
+```

@@ -6,9 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Tor Kling">
 <meta name="dcterms.date" content="2025-10-21">
 
-<title>Pre-course setup | BIO511 – BIO511 Genomics - Practical Repository</title>
+<title>Additional: Build curated reference proteins – BIO511 Genomics - Practical Repository</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,26 +22,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8e049031f30567c4281a40dcf0e5e98c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-8e049031f30567c4281a40dcf0e5e98c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,17 +106,17 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="pages/styles.css">
+<link rel="stylesheet" href="../../pages/styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar docked nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">BIO511 Genomics - Practical Repository</span>
     </a>
   </div>
@@ -91,7 +127,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -101,37 +137,37 @@ ul.task-list li input[type="checkbox"] {
     <ul class="dropdown-menu" aria-labelledby="nav-menu-command-line-programming">    
         <li class="dropdown-header">Intro to Command Line</li>
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_INTRO_TO_COMMAND_LINE.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - CLI/PRACTICAL_INTRO_TO_COMMAND_LINE.html">
  <span class="dropdown-text">Practical 1: CLI Basics</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_SETTING_UP_THE_HPC.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - CLI/PRACTICAL_SETTING_UP_THE_HPC.html">
  <span class="dropdown-text">Practical 2: Setting up the HPC</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_WORKSPACE_MANAGEMENT.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - CLI/PRACTICAL_WORKSPACE_MANAGEMENT.html">
  <span class="dropdown-text">Practical 3: Workspace Management and Data Management</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - CLI/PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.html">
  <span class="dropdown-text">Practical 4: Scripting and Advanced Text Manipulation</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - CLI/PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - CLI/PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.html">
  <span class="dropdown-text">Practical 5: Software &amp; Containers</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Coding Best Practices</li>
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Git/PRACTICAL_GIT_SESSION1.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Git/PRACTICAL_GIT_SESSION1.html">
  <span class="dropdown-text">Practical 1: Git Fundamentals: Session 1</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Git/PRACTICAL_GIT_SESSION2.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Git/PRACTICAL_GIT_SESSION2.html">
  <span class="dropdown-text">Practical 2: Git Fundamentals: Session 2</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Git/PRACTICAL_BEST_CODING_PRACTISES.qmd">
+    <a class="dropdown-item" href="../../practicals/Practicals - Git/PRACTICAL_BEST_CODING_PRACTISES.qmd">
  <span class="dropdown-text">Practical 3: Best Coding Practices</span></a>
   </li>  
     </ul>
@@ -143,21 +179,21 @@ ul.task-list li input[type="checkbox"] {
     <ul class="dropdown-menu" aria-labelledby="nav-menu-genomics-workflows">    
         <li class="dropdown-header">Genome workflows - Whole Genome Sequencing (WGS)</li>
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - WGS/PRACTICAL_RAWDATA_AND_QC.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - WGS/PRACTICAL_RAWDATA_AND_QC.html">
  <span class="dropdown-text">Practical 1: Quality Control and Classification</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - WGS/PRACTICAL_ASSEMBLY_AND_MAPPING.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - WGS/PRACTICAL_ASSEMBLY_AND_MAPPING.html">
  <span class="dropdown-text">Practical 2: Genome Assembly and Mapping</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - WGS/PRACTICAL_FUNCTIONAL_ANNOTATION.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - WGS/PRACTICAL_FUNCTIONAL_ANNOTATION.html">
  <span class="dropdown-text">Practical 3: Genome Annotation</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Additional Genomics Resources</li>
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - WGS/ADDITIONAL_PREP_CURATED_PROTEINS.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - WGS/ADDITIONAL_PREP_CURATED_PROTEINS.html">
  <span class="dropdown-text">Preparing Curated Protein Databases</span></a>
   </li>  
     </ul>
@@ -168,31 +204,31 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-python-programming">    
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_SETUP.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_SETUP.html">
  <span class="dropdown-text">Practical 0: Introduction</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_DATA_TYPES_AND_IF_ELSE.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_DATA_TYPES_AND_IF_ELSE.html">
  <span class="dropdown-text">Practical 1: Python Data Types and If/Else Clauses</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_LOOPING.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_LOOPING.html">
  <span class="dropdown-text">Practical 2: Python Loops</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_FUNCTIONS.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_FUNCTIONS.html">
  <span class="dropdown-text">Practical 3: Python Functions</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_MODULES.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_MODULES.html">
  <span class="dropdown-text">Practical 4: Python Modules</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_FILES.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_FILES.html">
  <span class="dropdown-text">Practical 5: Files</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./practicals/Practicals - Python/PRACTICAL_PLOTTING.html">
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_PLOTTING.html">
  <span class="dropdown-text">Practical 5: Plotting</span></a>
   </li>  
     </ul>
@@ -203,36 +239,111 @@ ul.task-list li input[type="checkbox"] {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../practicals/Practicals - WGS/ADDITIONAL_PREP_CURATED_PROTEINS.html">Additional Genomics Resources</a></li><li class="breadcrumb-item"><a href="../../practicals/Practicals - WGS/ADDITIONAL_PREP_CURATED_PROTEINS.html">Preparing Curated Protein Databases</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Genome workflows - Whole Genome Sequencing (WGS)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - WGS/PRACTICAL_RAWDATA_AND_QC.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 1: Quality Control and Classification</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - WGS/PRACTICAL_ASSEMBLY_AND_MAPPING.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 2: Genome Assembly and Mapping</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - WGS/PRACTICAL_FUNCTIONAL_ANNOTATION.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 3: Genome Annotation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Additional Genomics Resources</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - WGS/ADDITIONAL_PREP_CURATED_PROTEINS.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Preparing Curated Protein Databases</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#welcome-to-the-world-of-bioinformatics" id="toc-welcome-to-the-world-of-bioinformatics" class="nav-link active" data-scroll-target="#welcome-to-the-world-of-bioinformatics"><span class="header-section-number">1</span> Welcome to the world of bioinformatics :)</a></li>
-  <li><a href="#setup-for-mac-linux-users" id="toc-setup-for-mac-linux-users" class="nav-link" data-scroll-target="#setup-for-mac-linux-users"><span class="header-section-number">2</span> Setup for Mac / Linux users</a></li>
-  <li><a href="#setup-for-windows-users" id="toc-setup-for-windows-users" class="nav-link" data-scroll-target="#setup-for-windows-users"><span class="header-section-number">3</span> Setup for Windows users</a></li>
-  <li><a href="#getting-access-to-the-high-performance-computing-cluster-c3se" id="toc-getting-access-to-the-high-performance-computing-cluster-c3se" class="nav-link" data-scroll-target="#getting-access-to-the-high-performance-computing-cluster-c3se"><span class="header-section-number">4</span> Getting access to the High Performance computing cluster <strong>c3se</strong></a></li>
+  <li><a href="#requirements" id="toc-requirements" class="nav-link active" data-scroll-target="#requirements"><span class="header-section-number">1</span> Requirements</a></li>
+  <li><a href="#steps" id="toc-steps" class="nav-link" data-scroll-target="#steps"><span class="header-section-number">2</span> Steps</a>
+  <ul class="collapse">
+  <li><a href="#fetching-protein-fasta-files" id="toc-fetching-protein-fasta-files" class="nav-link" data-scroll-target="#fetching-protein-fasta-files"><span class="header-section-number">2.1</span> Fetching protein FASTA files</a></li>
+  <li><a href="#concatenate-protein-fasta-files" id="toc-concatenate-protein-fasta-files" class="nav-link" data-scroll-target="#concatenate-protein-fasta-files"><span class="header-section-number">2.2</span> Concatenate protein FASTA files</a></li>
+  <li><a href="#remove-exact-duplicates" id="toc-remove-exact-duplicates" class="nav-link" data-scroll-target="#remove-exact-duplicates"><span class="header-section-number">2.3</span> Remove exact duplicates</a></li>
+  <li><a href="#cluster-with-cd-hit" id="toc-cluster-with-cd-hit" class="nav-link" data-scroll-target="#cluster-with-cd-hit"><span class="header-section-number">2.4</span> Cluster with CD-HIT</a></li>
+  <li><a href="#review-the-results" id="toc-review-the-results" class="nav-link" data-scroll-target="#review-the-results"><span class="header-section-number">2.5</span> Review the results</a></li>
+  </ul></li>
+  <li><a href="#use-with-prokka" id="toc-use-with-prokka" class="nav-link" data-scroll-target="#use-with-prokka"><span class="header-section-number">3</span> Use with Prokka</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../practicals/Practicals - WGS/ADDITIONAL_PREP_CURATED_PROTEINS.html">Additional Genomics Resources</a></li><li class="breadcrumb-item"><a href="../../practicals/Practicals - WGS/ADDITIONAL_PREP_CURATED_PROTEINS.html">Preparing Curated Protein Databases</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Pre-course setup</h1>
-<p class="subtitle lead">Setup to be completed before the course</p>
+<h1 class="title">Additional: Build curated reference proteins</h1>
+<p class="subtitle lead">BIO511 Genomics — Manual preparation of curated proteins for Prokka</p>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Tor Kling </p>
+          </div>
+  </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
@@ -249,80 +360,68 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="welcome-to-the-world-of-bioinformatics" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="welcome-to-the-world-of-bioinformatics"><span class="header-section-number">1</span> Welcome to the world of bioinformatics :)</h2>
-<p>Here is a tutorial to guide you through how to set up your computers for the BIO511 and following courses. Throughout the course we will both teach you how to use your local computer for bioinformatics but also, for more heavy duty stuff, use the <a href="https://www.c3se.chalmers.se/">c3se</a> high performance computing cluster (HPC). The setup will therefore prepare you for both cases.</p>
-<p>Some of you might already have done some kinds of bioinformatics and have other setups and if you are comfortable with those, that’s fine by us. We will however not be able to give support/trouble shoot different kinds of setups so we ask you to make sure you have what’s below as a minimum.</p>
+<p>Since we know that annotation/classification databases have their limits, especially with <strong>novel or poorly characterized proteins</strong>, its a good idea to create a curated reference set. This page shows how to manually create a curated reference protein FASTA file for use with Prokka.</p>
+<section id="requirements" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="requirements"><span class="header-section-number">1</span> Requirements</h2>
+<p>You will need the following tools installed (either via apt or conda):</p>
+<ul>
+<li>seqkit</li>
+<li>cd-hit</li>
+</ul>
+<p>Tip: Run these steps in a clean folder containing only the protein FASTA files you want to include.</p>
 </section>
-<section id="setup-for-mac-linux-users" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="setup-for-mac-linux-users"><span class="header-section-number">2</span> Setup for Mac / Linux users</h2>
-<p>macOS is Unix-based (specifically, it’s a certified Unix system built on BSD) and therefore one can run many Linux-compatible tools without modification directly. You can basically just use the built in <strong>Terminal</strong> app and start coding. The Terminal runs the zsh shell by default.</p>
-<p>However, to get a better user experience, especially when we further on are going to access the HPC we will recommend using the integrated development environment (IDE) Visual Studio Code (VS Code). Please follow <a href="https://code.visualstudio.com/docs/setup/mac#_install-vs-code-on-macos">these instructions</a> to do so.</p>
+<section id="steps" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="steps"><span class="header-section-number">2</span> Steps</h2>
+<section id="fetching-protein-fasta-files" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="fetching-protein-fasta-files"><span class="header-section-number">2.1</span> Fetching protein FASTA files</h3>
+<p>You can download protein FASTA files from various sources, such as NCBI RefSeq, UniProt, or other specialized databases. Ensure that the files are in FASTA format and contain the protein sequences you want to include in your curated reference. A recommendation is to start with NCBI and look for the complete genomes of high quality reference strains of your organism of interest. Next you should try to include some genomes that may be of certain genes of interest, these could be clinical isolates (for virulence factors, ESBL), environmental isolates (for diverse metabolic capabilities and resistance genes), industrial strains (for production relevant genes) etc.</p>
+<p>Once you have identified the genomes, download their protein FASTA files (usually with the extension .faa) from the NCBI Genome or RefSeq database using the “Download” option on the genome’s page. Then place all the downloaded .faa files into a single directory where you will perform the following steps.</p>
 </section>
-<section id="setup-for-windows-users" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="setup-for-windows-users"><span class="header-section-number">3</span> Setup for Windows users</h2>
-<p>Using a Windows computer for bioinformatic work has sadly not been ideal most of the time, but large advances in recent years have made this quite feasible through the <em>Windows Subsystem for Linux (WSL)</em>.</p>
-<p>Apart from the Linux kernel provided by WSL, we also recommend installing the integrated development environment (IDE) Visual Studio Code (VS Code), and the tutorial will guide you through how to set up WSL integrated in VS Code. If you already feel comfortable with another IDE such and PyCharm since before, that’s ok but we may not be able to trouble shoot your setup during the course.</p>
-<p>There are two substantially different versions of the Linux subsystem, WSL1 and WSL2. We strongly recommend using <strong>WSL2</strong>, which offers an essentially complete Linux experience and better performance.</p>
-<p>Using the Linux subsystem will give you access to a full command-line bash shell and a Linux implementation on your Windows 10 or 11 PC. For the difference between the Linux Bash Shell and the Windows PowerShell, see <em>e.g.</em> <a href="https://searchitoperations.techtarget.com/tip/On-Windows-PowerShell-vs-Bash-comparison-gets-interesting">this article</a>.</p>
-<p>The installation has three main steps:</p>
-<ol type="1">
-<li>Install WSL2 on Windows 10 or 11, follow the instructions here: <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Installing the Windows Subsystem and the Linux Bash</a></li>
-</ol>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>If you run into error messages when trying to download files through the Linux shell (<em>e.g.</em> <code>curl:(6) Could not resolve host</code>) then try adding the Google name server to the internet configuration by running <code>sudo nano /etc/resolv.conf</code> then add <code>nameserver 8.8.8.8</code> to the bottom of the file and save it.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Caution
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Whenever a setup instruction specifies Mac or Linux (<em>i.e.</em> only those two, with no alternative for Windows), <strong>please follow the Linux instructions.</strong></p>
-</div>
-</div>
-<ol start="2" type="1">
-<li>Install <a href="https://code.visualstudio.com/">Visual Studio Code</a> on the Windows side (not in WSL).</li>
-</ol>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Note: When prompted to <strong>Select Additional Tasks</strong> during installation, be sure to check the <strong>Add to PATH</strong> option so you can easily open a folder in WSL using the <code>code</code> command.</p>
-</div>
-</div>
-<ol start="3" type="1">
-<li>Install the <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl">WSL extension</a>. If you plan to work with other remote extensions in VS Code, you may choose to install the <a href="https://aka.ms/vscode-remote/download/extension">Remote Development extension pack</a>.</li>
-</ol>
+<section id="concatenate-protein-fasta-files" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="concatenate-protein-fasta-files"><span class="header-section-number">2.2</span> Concatenate protein FASTA files</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create file </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> merged_raw.faa</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Concatenate all .faa files into one</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="pp">*</span>.faa <span class="op">&gt;&gt;</span> merged_raw.faa</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="getting-access-to-the-high-performance-computing-cluster-c3se" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="getting-access-to-the-high-performance-computing-cluster-c3se"><span class="header-section-number">4</span> Getting access to the High Performance computing cluster <strong>c3se</strong></h2>
-<p>Now you have your local computer setup for bioinformatics. However, for many of the practicals we will use a high performance computing cluster, both so that you get familiar with that way of working, to keep a more controlled environment for you in the beginning and to let you perform analyses that require a bit more heavy duty computing power than your local machines.</p>
-<p>This setup will be the same regardless of your OS.</p>
-<ol type="1">
-<li><p>Register yourself at <a href="https://supr.naiss.se/person/register/">SUPR</a>. SUPR is the database for the National Swedish Infrastructure for Supercomputing (NAISS) and SUPR is used to keep track of persons, projects, project proposals and more. Please register <strong>with</strong> Federated Identity using your GU email address.</p></li>
-<li><p>When you have registered, please send an email to <a href="kaisa.thorell@gu.se">kaisa.thorell@gu.se</a> and I will add you to the c3se project.</p></li>
-</ol>
+<section id="remove-exact-duplicates" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="remove-exact-duplicates"><span class="header-section-number">2.3</span> Remove exact duplicates</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove exact duplicate sequences using rmdup from seqkit</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">seqkit</span> rmdup <span class="at">-s</span> <span class="at">-o</span> merged_dedup.faa merged_raw.faa</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>-s: remove sequences that are exactly identical (same sequence and header)</li>
+<li>-o: output file</li>
+</ul>
+</section>
+<section id="cluster-with-cd-hit" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="cluster-with-cd-hit"><span class="header-section-number">2.4</span> Cluster with CD-HIT</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cluster similar sequences at 95% identity to remove redundancy</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">cd-hit</span> <span class="at">-i</span> merged_dedup.faa <span class="at">-o</span> curatedRef.faa <span class="at">-c</span> 0.95 <span class="at">-n</span> 5 <span class="at">-d</span> 0 <span class="at">-T</span> 2 <span class="at">-M</span> 0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>-c: sequence identity threshold (0.95 = 95%)</li>
+<li>-n: word size matching the identity cutoff (5 for ~70–100%)</li>
+<li>-d: header length in output (0 = full)</li>
+<li>-T: threads; -M: memory in MB (0 = no limit)</li>
+</ul>
+</section>
+<section id="review-the-results" class="level3" data-number="2.5">
+<h3 data-number="2.5" class="anchored" data-anchor-id="review-the-results"><span class="header-section-number">2.5</span> Review the results</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect clustered sequences</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">less</span> curatedRef.faa.clstr</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">less</span> curatedRef.faa</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check number of sequences</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> merged_raw.faa</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> merged_dedup.faa</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> curatedRef.faa</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="use-with-prokka" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="use-with-prokka"><span class="header-section-number">3</span> Use with Prokka</h2>
+<p>Provide curatedRef.faa via the proteins flag:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that path/to is a placeholder, adjust accordingly</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">--proteins</span> /path/to/curatedRef.faa</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
