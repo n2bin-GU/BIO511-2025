@@ -78,7 +78,7 @@ website:
       - href: "practicals/Practicals - Python/PRACTICAL_FILES.qmd"
         text: "Practical 5: Files"
       - href: "practicals/Practicals - Python/PRACTICAL_PLOTTING.qmd"
-        text: "Practical 5: Plotting"
+        text: "Practical 6: Plotting"
 
 format:
   html:
