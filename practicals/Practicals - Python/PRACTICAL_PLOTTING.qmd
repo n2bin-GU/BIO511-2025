@@ -13,16 +13,45 @@ format:
 ---
 
 # Introduction
-The instructions to this practical is not completely finsihed yet. In the end, it will contain something like this:
+Plotting is a necessity in most omics projects. A good plot can help the viewer to quickly get an understanding of the data and the project. A bad plot can be misguiding and lead to general confusion or, if worst comes to worst, incorrect conclusions. Plotting is a central part of sharing and visualizing results. It’s a way to investigate, create an overview of and validate the data you are working with. For now, however, we’ll start with making some simple plots, using a few popular plotting libraries. Hopefully, this will give you the confidence to create spectacular ones in the future!
+
+# Useful links
+
+[10 minutes to pandas (text)](https://pandas.pydata.org/docs/user_guide/10min.html)
+
+[Matplotlib intro tutorial (text)](https://www.geeksforgeeks.org/python/pyplot-in-matplotlib/)
+
+[Seaborn (text)](https://www.w3schools.com/python/numpy/numpy_random_seaborn.asp)
+
+[Plotly intro (text)](https://www.geeksforgeeks.org/python/python-plotly-tutorial/)
+
+[Plotnine (video)](https://www.youtube.com/watch?v=2KrJ2tNrvGo)
 
 # Exercises
+Let’s start with doing something quite similar to what we went through in today’s presentation. For this exercise you’ll need the following external libraries: pandas, matplotlib, seaborn, plotly and plotnine. You can use the environment file provided for the practice dugga or make your own environment if you prefer. Start the code with setting up a suitable environment for this practical.
 
-### 6.1
-Try plotting scatterplots of the seaborn dataset “Penguins”. 
+##
+For the following subtasks you can refer to the slides of today’s presentation.
 
-a.) use different colors based on species or island
-b.)create one with matplotlib or seaborn, plotly and plotting
+a. Load the ‘penguins’ dataset using seaborn. Remove any rows with missing values. Hint: Check out how to use the dropna() function. 
 
-### 6.2
-Try to create a subplot with three plots
+b. Plot a scatterplot using `matplotlib`. The plot should show flipper length on the x-axis and body mass on the y-axis. Add an informative title, xlabel and ylabel. Save the plot.
+
+c. Create the same plot but using `plotly`. Save an interactive file (.html).
+
+d. Create and save the same plot using `seaborn` instead. See if you can set colors based on species.
+
+e. Finally, try it out using `plotnine`. To save the plot you will need to import and use the function `ggsave`. (A good practice is to always import any packages or functions at the top of your script.)
+
+##
+Create a histogram to show the distribution of the bill lengths in the data. Use the function you like best.
+
+##
+Use the `pandas` library to group the penguins data by body mass and island and calculate the mean value of body mass per island. Save the results to a new variable. Create a bar plot where each bar represents the average body mass of one island. 
+
+##
+Optional:
+
+Create two (or more) plots of your own choosing to visualize the penguins data. Use seaborn and try to subplot them together. Create a palette or use one of seaborne’s pre-existing palettes to separate the data by any factor you think is appropriate. (island, sex, species, etc.. )
+
 

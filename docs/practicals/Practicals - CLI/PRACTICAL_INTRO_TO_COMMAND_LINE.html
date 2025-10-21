@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Tor Kling, Stuti Jain">
-<meta name="dcterms.date" content="2025-10-06">
+<meta name="dcterms.date" content="2025-10-13">
 
 <title>Practical 1: Introduction to Command Line Interface – BIO511 Genomics - Practical Repository</title>
 <style>
@@ -69,14 +69,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../../">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-8e049031f30567c4281a40dcf0e5e98c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-b08f96deee0b642f6814feffc40ccbab.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -116,6 +117,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">BIO511 Genomics - Practical Repository</span>
     </a>
@@ -127,7 +130,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -220,6 +223,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_FILES.html">
  <span class="dropdown-text">Practical 5: Files</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_PLOTTING.html">
+ <span class="dropdown-text">Practical 5: Plotting</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
@@ -243,6 +250,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
@@ -365,7 +376,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 6, 2025</p>
+      <p class="date">October 13, 2025</p>
     </div>
   </div>
   
@@ -381,13 +392,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
 <p>Doing bioinformatics often necessitates the handling of very large files, with complex structure and dense matrices. This makes them often unwieldy to pretty much impossible to handle in traditional GUI-based analysis tools (such as Excel), and as such we rely on original and lightweight file handling systems such as bash-based command line enviroments that allow us to interact with our computer on a more fundamental level.</p>
 <p>Typically the first thing you encounter on opening a new terminal instance is:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">user@computer:~$</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">user@computer:~$</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This is the terminal prompt where you’ll be able to issue commands to the computer, with the <em>syntax</em> (“grammar” of the code) of your command prompts often using the following structure:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">user@computer:-$</span> command <span class="at">-option</span> my_object</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">user@computer:-$</span> command <span class="at">-option</span> my_object</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># or you may have more advanced command prompts</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">user@computer:-$</span> command <span class="at">-threads</span> 2 <span class="at">-output</span> <span class="va">$My_Directory_Variable</span>/ <span class="at">-prefix</span> New_file_ <span class="at">-accessoryfile</span> Additional_file my_object <span class="kw">|</span> <span class="ex">nextcommand</span> <span class="at">-cvfz</span> New_file_my_object.tar.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">user@computer:-$</span> command <span class="at">-threads</span> 2 <span class="at">-output</span> <span class="va">$My_Directory_Variable</span>/ <span class="at">-prefix</span> New_file_ <span class="at">-accessoryfile</span> Additional_file my_object <span class="kw">|</span> <span class="ex">nextcommand</span> <span class="at">-cvfz</span> New_file_my_object.tar.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Imagination (and resources, time complexity, optimization…) sets the limit of what you can do in the CLI</p>
 <p>If you’re further curious on the <a href="https://www.freecodecamp.org/news/the-command-line-1fdbc692b3bf/">history</a> of shell and the command line.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -396,7 +407,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Learning Objectives
+<span class="screen-reader-only">Note</span>Learning Objectives
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -425,7 +436,7 @@ Learning Objectives
 <li><code>ls</code>: List contents of directories</li>
 </ul>
 <p><strong>Find your current location and explore the directory</strong></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run pwd</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run pwd</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run ls</span></span>
@@ -436,7 +447,7 @@ Learning Objectives
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">--help</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Then run that command</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="making-and-changing-directories-mkdir-and-cd" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="making-and-changing-directories-mkdir-and-cd"><span class="header-section-number">2.2</span> Making and Changing Directories (<code>mkdir</code> and <code>cd</code>)</h2>
@@ -447,7 +458,7 @@ Learning Objectives
 <li>Special directories: <code>.</code> (current), <code>..</code> (parent), <code>~</code> (home), <code>/</code> (root)</li>
 </ul>
 <p><strong>Create and navigate a genomics project structure</strong></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a main directory</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a main directory</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> CLI_intro</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Navigate into it</span></span>
@@ -465,7 +476,7 @@ Learning Objectives
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Navigate around and try the special directory short-hands</span></span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~        <span class="co"># Go home</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..        <span class="co"># Go back to previous directory</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..        <span class="co"># Go back to previous directory</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 </section>
@@ -480,7 +491,7 @@ Learning Objectives
 <li><code>echo</code>: Print text provided in the prompts</li>
 </ul>
 <p><strong>Handling text in CLI</strong></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, lets use echo in the ye olde intro to programming way</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, lets use echo in the ye olde intro to programming way</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Hello World!"</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Not the most exciting, but we can use it to add text to files via &gt; </span></span>
@@ -495,7 +506,7 @@ Learning Objectives
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Some_more_text"</span> <span class="op">&gt;&gt;</span> test_file</span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Now lastly, try to wipe the file with some new text </span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"New_text"</span> <span class="op">&gt;</span> test_file</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"New_text"</span> <span class="op">&gt;</span> test_file</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="file-manipulation-cp-mv-rm" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="file-manipulation-cp-mv-rm"><span class="header-section-number">3.2</span> File Manipulation (<code>cp</code>, <code>mv</code>, <code>rm</code>)</h2>
@@ -506,7 +517,7 @@ Learning Objectives
 <li><code>rm</code>: Remove a file (Irreversible, be careful!!)</li>
 </ul>
 <p><strong>Create sample files and practice file operations</strong></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create some more directories to store everything in </span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create some more directories to store everything in </span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> raw_data backups</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create some empty mock files for different data types that we'll use later </span></span>
@@ -558,7 +569,7 @@ Learning Objectives
 <span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Lastly lets sort a bit in your directories</span></span>
 <span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy the entire raw_data directory with contents (find the right flag!)</span></span>
-<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> raw_data/ Escherichia/coli/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> raw_data/ Escherichia/coli/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Note: After this section is done, remember that you renamed the data files to include the species name (E.coli), rename them back for the subsequent sections if you want. Otherwise, make sure the change doesnt confuse you</strong></p>
 <hr>
 </section>
@@ -575,7 +586,7 @@ Learning Objectives
 </ul>
 <p>Now let’s work with file contents using some mock genomics data.</p>
 <p><strong>Create sample genomics files and explore them</strong></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># View entire files</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> sequences.fasta</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -600,7 +611,7 @@ Learning Objectives
 <span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Find all lines that DON'T contain "lacZ", which rows are they on? </span></span>
 <span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># (which flag inverts the match? How do you combine flags?)</span></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">"lacZ"</span> expression_data.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">"lacZ"</span> expression_data.csv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="sed-stream-editor-for-quick-text-edits" class="level1" data-number="5">
@@ -610,7 +621,7 @@ Learning Objectives
 <li><code>sed</code> (stream editor): Allows for edits of existing text and replacing/modifying it with new text</li>
 </ul>
 <p><strong>Use sed for find-and-replace operations</strong></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sed is most commonly used for find-and-replace operations</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sed is most commonly used for find-and-replace operations</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The syntax is 's/old-text/new-text/g' where 's' stands for substitute and 'g' for global (all instances)</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Now run sed to replace all instances of 'old-text' with 'new-text'</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"This is some old-text that needs to be replaced."</span> <span class="op">&gt;</span> input_sed.txt</span>
@@ -623,7 +634,7 @@ Learning Objectives
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># It can also be used to delete lines containing a specific pattern</span></span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">'/plasmid/d'</span> gene_annotations.csv <span class="op">&gt;</span> chromosomal_only.csv</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> chromosomal_only.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> chromosomal_only.csv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="putting-it-all-together-with-pipes" class="level1" data-number="6">
@@ -634,7 +645,7 @@ Learning Objectives
 </ul>
 <p>Chaining commands together will be key later in this course section, when we start working on scripts.</p>
 <p><strong>Create files and use pipes for complex operations</strong></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use pipes to filter and analyze data</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use pipes to filter and analyze data</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> gene_annotations.csv <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"beta-galactosidase"</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Skip the header and show only first 2 data rows</span></span>
@@ -645,7 +656,7 @@ Learning Objectives
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># We can combine commands to edit specific lines as well </span></span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Use it to remove all the underscores from the sequence headers in sequences.fasta</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">'^&gt;'</span> sequences.fasta <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/_//g'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">'^&gt;'</span> sequences.fasta <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/_//g'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -653,7 +664,7 @@ Learning Objectives
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Key Takeaways
+<span class="screen-reader-only">Note</span>Key Takeaways
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -672,7 +683,7 @@ Key Takeaways
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Tips for Bioinformatics CLI Work
+<span class="screen-reader-only">Tip</span>Tips for Bioinformatics CLI Work
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -742,13 +753,14 @@ Tips for Bioinformatics CLI Work
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

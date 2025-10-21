@@ -1,0 +1,70 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "BIO511 Genomics - Practical Repository"
+  description: "Practical exercises for the BIO511 Genomics course practical sections"
+  navbar:
+    background: "light"
+    search: true
+    left:
+      - text: "Home"
+        href: index.qmd
+      - sidebar:cli
+      - sidebar:gwf
+      - sidebar:python
+
+
+  sidebar:
+    - id: cli
+      title: "Command Line Programming"
+      style: "docked"
+      background: "light"
+      contents:
+      - href: PRACTICAL_INTRO_TO_COMMAND_LINE.qmd
+        text: "Practical 1: CLI Basics"
+      - href: PRACTICAL_SETTING_UP_THE_HPC.qmd
+        text: "Practical 2: Setting up the HPC"
+      - href: PRACTICAL_WORKSPACE_MANAGEMENT.qmd
+        text: "Practical 3: Workspace Management and Data Management"
+      - href: PRACTICAL_SCRIPTS_AND_ADVANCED_TEXT_MANIPULATION.qmd
+        text: "Practical 4: Scripting and Advanced Text Manipulation"
+      - href: PRACTICAL_SOFTWARE_INSTALLATION_AND_CONTAINERS.qmd
+        text: "Practical 5: Software & Containers"
+
+    - id: gwf
+      title: "Genomics Workflows"
+      style: "docked"
+      background: "light"
+      contents:
+      - text: "Nothing here yet"
+
+    - id: python
+      title: "Python Programming"
+      style: "docked"
+      background: "light"
+      contents:
+      - href: PRACTICAL_SETUP.qmd
+        text: "Practical 0: Setup"
+      - href: PRACTICAL_DATA_TYPES_AND_IF_ELSE.qmd
+        text: "Practical 1: Data Types and If/Else"
+      - href: PRACTICAL_LOOPING.qmd
+        text: "Practical 2: Loops"
+      - href: PRACTICAL_FUNCTIONS.qmd
+        text: "Practical 3: Functions"
+      - href: PRACTICAL_MODULES.qmd
+        text: "Practical 4: Modules"
+      - href: PRACTICAL_FILES.qmd
+        text: "Practical 5: Files"
+      - href: PRACTICAL_PLOTTING.qmd
+        text: "Practiacl 6: Plotting"
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    link-external-newwindow: true

@@ -14,7 +14,7 @@ format:
 
 # Introduction
 
-Looping over different types of sequences is key in most programming languages and python is no different. Today the exercises will involve creating some simple loops followed by some more invluved loop constructs where you will combine looping with the if clauses we learned yesterday. 
+Looping over different types of sequences is key in most programming languages and python is no different. Today the exercises will involve creating some simple loops followed by some more involved loop constructs where you will combine looping with the if clauses we learned yesterday. 
 
 
 
@@ -43,7 +43,7 @@ prit(thislist[0])
 ```
 
 ## Simple loops 
-1. create a list of 7 items. Loop over the list printing each item of the list. 
+1. Create a list of 7 items. Loop over the list printing each item of the list. 
 2. For each iteration, print the loop number (index). E.g. on the third loop (iteration) its supposed to print a "3".
 3. Add an If-statement to make the loop stop after printing its 5th item. 
 

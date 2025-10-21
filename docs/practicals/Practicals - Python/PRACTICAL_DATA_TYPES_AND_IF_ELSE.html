@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alvar Almstedt, Emma Västerviga">
-<meta name="dcterms.date" content="2025-10-06">
+<meta name="dcterms.date" content="2025-10-13">
 
 <title>Practical 1: Python Data Types and If/Else Clauses – BIO511 Genomics - Practical Repository</title>
 <style>
@@ -69,14 +69,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../../">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-8e049031f30567c4281a40dcf0e5e98c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-b08f96deee0b642f6814feffc40ccbab.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -116,6 +117,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">BIO511 Genomics - Practical Repository</span>
     </a>
@@ -127,7 +130,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -220,6 +223,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_FILES.html">
  <span class="dropdown-text">Practical 5: Files</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../practicals/Practicals - Python/PRACTICAL_PLOTTING.html">
+ <span class="dropdown-text">Practical 5: Plotting</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
@@ -243,6 +250,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -281,6 +292,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Practical 5: Files</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicals/Practicals - Python/PRACTICAL_PLOTTING.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical 5: Plotting</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -300,8 +317,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#data-type-usage" id="toc-data-type-usage" class="nav-link" data-scroll-target="#data-type-usage"><span class="header-section-number">2.1</span> Data type usage</a></li>
   <li><a href="#if-elif-else-on-your-data-types" id="toc-if-elif-else-on-your-data-types" class="nav-link" data-scroll-target="#if-elif-else-on-your-data-types"><span class="header-section-number">2.2</span> If / Elif / Else on your data types</a>
   <ul class="collapse">
-  <li><a href="#multi-way-ifelifelse-clause" id="toc-multi-way-ifelifelse-clause" class="nav-link" data-scroll-target="#multi-way-ifelifelse-clause"><span class="header-section-number">2.2.1</span> Multi-way (If/elif/else clause)</a></li>
-  <li><a href="#type-gate-nested-classification-nested-ifelifelse" id="toc-type-gate-nested-classification-nested-ifelifelse" class="nav-link" data-scroll-target="#type-gate-nested-classification-nested-ifelifelse"><span class="header-section-number">2.2.2</span> Type gate + nested classification (Nested If/elif/else)</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">2.2.1</span> </a></li>
+  <li><a href="#multi-way-ifelifelse-clause" id="toc-multi-way-ifelifelse-clause" class="nav-link" data-scroll-target="#multi-way-ifelifelse-clause"><span class="header-section-number">2.2.2</span> Multi-way (If/elif/else clause)</a></li>
+  <li><a href="#type-gate-nested-classification-nested-ifelifelse" id="toc-type-gate-nested-classification-nested-ifelifelse" class="nav-link" data-scroll-target="#type-gate-nested-classification-nested-ifelifelse"><span class="header-section-number">2.2.3</span> Type gate + nested classification (Nested If/elif/else)</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -330,7 +348,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 6, 2025</p>
+      <p class="date">October 13, 2025</p>
     </div>
   </div>
   
@@ -344,8 +362,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
-<p>Now we are finally getting into the bread and butter python syntax! Today you will do some very simple exercises with some of the most commonly used python data types as well as starting with boolean logic using if/else clauses.</p>
-<p>You can copy the code blocks containing comments below and work on the tasks from within your IDE (Integrated Developer Environment)/text editor or a jupyter notebook. Remember comments are the lines that start with <code>#</code> and will be ignored when you run your code</p>
+<p>Now we are finally getting into the bread and butter of python syntax! Today you will do some very simple exercises with some of the most commonly used python data types as well as starting with boolean logic using if/else clauses.</p>
+<p>You can copy the code blocks containing comments below and work on the tasks from within your IDE (Integrated Developer Environment)/text editor or a jupyter notebook. Remember, comments are the lines that start with <code>#</code> and will be ignored when you run your code</p>
 <p>Remember to refer back to todays presentations for help or ask the teachers - It’s what we are here for :)</p>
 <section id="some-links-that-you-may-find-helpful" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="some-links-that-you-may-find-helpful"><span class="header-section-number">1.1</span> Some links that you may find helpful</h2>
@@ -360,62 +378,74 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1 data-number="2"><span class="header-section-number">2</span> Exercises</h1>
 <section id="data-type-usage" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="data-type-usage"><span class="header-section-number">2.1</span> Data type usage</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a script (.py file) where you save one value of each data type to its own variable.</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Afterwards, print all the variables and their type using print() and type()</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Data types to include: integer, floating point, string, boolean, nonetype,</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># list, dictionary, tuple, set, range </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here’s some example code of how to save the number 4, which is interpreted as an integer by python, to a variable that we choose to call <code>my_int</code>. Then we print the variable.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>my_int <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(my_int)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Create a python script (<code>.py file</code>) where you save one value of each data type to its own variable. Afterwards, print all the variables and their type using the commands <code>print()</code> and <code>type()</code>.</p>
+<p>Data types to include: integer, floating point, string, boolean, nonetype, list, dictionary, tuple, set, range.</p>
 </section>
 <section id="if-elif-else-on-your-data-types" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="if-elif-else-on-your-data-types"><span class="header-section-number">2.2</span> If / Elif / Else on your data types</h2>
-<p>Reuse the variables you created in the previous task or recreate them with new values. Print something for each task.</p>
+<p>For this part you can reuse the variables you created in the previous task or recreate them with new values.</p>
+<p>The variables need to be created in the same script that you use to solve the following tasks. That way, python will still “remember” what the variables are supposed to be.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Hint
+<span class="screen-reader-only">Tip</span>Hint
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Check the variable’s type is with <code>type(variablename)</code> is to deremine which variable to use.</p>
+<p>Double check what type a variable is with <code>type(variablename)</code>, to deremine which variable to use.</p>
 </div>
 </div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A) Simple check (If/else clause)</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick a STRING you created. </span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># If it is empty print "empty", else print "non-empty".</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># (Hint: len(...) )</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code below</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="multi-way-ifelifelse-clause" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="multi-way-ifelifelse-clause"><span class="header-section-number">2.2.1</span> Multi-way (If/elif/else clause)</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># B) Multi-way (If/elif/else clause)</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick an INTEGER you created.</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print exactly one of: "negative", "zero", "positive".</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># (Hint: compare to 0)</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code below</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="section" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="section"><span class="header-section-number">2.2.1</span> </h3>
+<p>Let’s start with strings! Below is an example code block of how to determine the length of a string:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save a string to a variable</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>my_string <span class="op">=</span> <span class="st">"variablestuesday"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check how many letters are in my_string. It's the same thing as checking the length of a string.</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(my_string) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Pick a STRING you created. Then create an if/else-statement to determine if the string is empty or not. If the string is empty, the length should be zero.</p>
+<p>If it’s empty, print “empty”, else print “non-empty”.</p>
 </section>
-<section id="type-gate-nested-classification-nested-ifelifelse" class="level3" data-number="2.2.2">
-<h3 data-number="2.2.2" class="anchored" data-anchor-id="type-gate-nested-classification-nested-ifelifelse"><span class="header-section-number">2.2.2</span> Type gate + nested classification (Nested If/elif/else)</h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># C) Type gate + nested classification (Nested If/elif/else)</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick a SEQUENCE you created (list OR tuple OR range).</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># If the type of the variable matches your choice, check:</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   - if length == 0 print "empty"</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   - elif length == 1 print "single item"</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   - else print "multiple items"</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Else print "wrong type for this task".</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># (Hint: type(x) is list/tuple/range; len(...) )</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code below</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="multi-way-ifelifelse-clause" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="multi-way-ifelifelse-clause"><span class="header-section-number">2.2.2</span> Multi-way (If/elif/else clause)</h3>
+<p>Pick an INTEGER you created. Write an if-statement with 3 scenarios:</p>
+<ul>
+<li><p>The integer could be positive</p></li>
+<li><p>The integer could be zero</p></li>
+<li><p>The integer could be negative</p></li>
+</ul>
+<p>For every scenario, some informative text should be printed. E. g. tell the user if the integer is positive, equal to zero or negative.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Hint
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Compare the integer to zero.</p>
+</div>
+</div>
+</section>
+<section id="type-gate-nested-classification-nested-ifelifelse" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="type-gate-nested-classification-nested-ifelifelse"><span class="header-section-number">2.2.3</span> Type gate + nested classification (Nested If/elif/else)</h3>
+<p>Pick a SEQUENCE you created (list, tuple or range). Here, we want you to cerate a nested loop.</p>
+<p>In the outer if-statement, check if your choice of variable matches any of the data types list <strong>or</strong> tuple <strong>or</strong> range. Use <code>or</code> to allow the variable to match any of them. If the variable is not a match, print “wrong type for this task”.</p>
+<p>The inner if-statement should be used IF the variable was a match. Here, you need to check for 3 different scenarios:</p>
+<ul>
+<li><p>if its length is zero, print “empty”</p></li>
+<li><p>if the length == 1, print “single item”</p></li>
+<li><p>Should the length be &gt; 1, print “multiple items”</p></li>
+</ul>
 
 
 </section>
@@ -474,13 +504,14 @@ Hint
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
