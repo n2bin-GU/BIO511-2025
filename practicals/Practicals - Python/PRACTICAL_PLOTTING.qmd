@@ -48,4 +48,34 @@ Optional:
 
 Create two (or more) plots of your own choosing to visualize the penguins data. Use seaborn and try to subplot them together. Create a palette or use one of seaborne’s pre-existing palettes to separate the data by any factor you think is appropriate. (island, sex, species, etc.. )
 
+# Additional plotting assignment (optional)
+For those who are asked to: hand in via github and send teachers a link.
+
+##
+Load the `penguins` dataset using the `seaborn` module. Remove any rows with missing values. Hint: Check out how to use the dropna() function. 
+
+##
+Create a scatterplot. The plot should show flipper length on the x-axis and body mass on the y-axis. Add an informative title, xlabel and ylabel. Save the plot.
+
+##
+Plot a distribution plot of the penguin flipper length using a histogram.
+
+a. What does this plot show? What are some conclusions you can draw from it? 
+
+b. What happens if you vary the amount of bins in the plot? Why?
+
+c. Add appropriate y and x-labels, as well as a title.
+
+d. Save the plot.
+
+## 
+Read the data `CNV_log2_skin_melanoma.csv` from the practice dugga using pandas. 
+
+a. Create a violinplot (the `seaborn` package is useful for this) with chromosome on the x-axis and cnv_log2 on the y-axis. Add informative titles and save the plot.
+
+b. What do you see? Which chromosome(s) has the largest CNV interval? Which chromosome(s) has the smallest interval? Do the intervals add up with the numbers in the dataframe you used for the plot? 
+
+c. Check the axes and labels. Is there something that could be changed to improve the plot?
+
+
 
