@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alvar Almstedt, Emma Västerviga">
-<meta name="dcterms.date" content="2025-10-21">
+<meta name="dcterms.date" content="2025-10-28">
 
 <title>Practical 6: Python Plotting – BIO511 Genomics - Practical Repository</title>
 <style>
@@ -34,14 +34,15 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="../../">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-8e049031f30567c4281a40dcf0e5e98c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-b08f96deee0b642f6814feffc40ccbab.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -81,6 +82,8 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">BIO511 Genomics - Practical Repository</span>
     </a>
@@ -92,7 +95,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -219,6 +222,10 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -282,6 +289,13 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"><span class="header-section-number">3.3</span> </a></li>
   <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3"><span class="header-section-number">3.4</span> </a></li>
   </ul></li>
+  <li><a href="#additional-plotting-assignment-optional" id="toc-additional-plotting-assignment-optional" class="nav-link" data-scroll-target="#additional-plotting-assignment-optional"><span class="header-section-number">4</span> Additional plotting assignment (optional)</a>
+  <ul class="collapse">
+  <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4"><span class="header-section-number">4.1</span> </a></li>
+  <li><a href="#section-5" id="toc-section-5" class="nav-link" data-scroll-target="#section-5"><span class="header-section-number">4.2</span> </a></li>
+  <li><a href="#section-6" id="toc-section-6" class="nav-link" data-scroll-target="#section-6"><span class="header-section-number">4.3</span> </a></li>
+  <li><a href="#section-7" id="toc-section-7" class="nav-link" data-scroll-target="#section-7"><span class="header-section-number">4.4</span> </a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -308,7 +322,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 21, 2025</p>
+      <p class="date">October 28, 2025</p>
     </div>
   </div>
   
@@ -358,6 +372,37 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="3.4" class="anchored" data-anchor-id="section-3"><span class="header-section-number">3.4</span> </h2>
 <p>Optional:</p>
 <p>Create two (or more) plots of your own choosing to visualize the penguins data. Use seaborn and try to subplot them together. Create a palette or use one of seaborne’s pre-existing palettes to separate the data by any factor you think is appropriate. (island, sex, species, etc.. )</p>
+</section>
+</section>
+<section id="additional-plotting-assignment-optional" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Additional plotting assignment (optional)</h1>
+<p>For those who are asked to: hand in via github and send teachers a link.</p>
+<section id="section-4" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="section-4"><span class="header-section-number">4.1</span> </h2>
+<p>Load the <code>penguins</code> dataset using the <code>seaborn</code> module. Remove any rows with missing values. Hint: Check out how to use the dropna() function.</p>
+</section>
+<section id="section-5" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="section-5"><span class="header-section-number">4.2</span> </h2>
+<p>Create a scatterplot. The plot should show flipper length on the x-axis and body mass on the y-axis. Add an informative title, xlabel and ylabel. Save the plot.</p>
+</section>
+<section id="section-6" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="section-6"><span class="header-section-number">4.3</span> </h2>
+<p>Plot a distribution plot of the penguin flipper length using a histogram.</p>
+<ol type="a">
+<li><p>What does this plot show? What are some conclusions you can draw from it?</p></li>
+<li><p>What happens if you vary the amount of bins in the plot? Why?</p></li>
+<li><p>Add appropriate y and x-labels, as well as a title.</p></li>
+<li><p>Save the plot.</p></li>
+</ol>
+</section>
+<section id="section-7" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="section-7"><span class="header-section-number">4.4</span> </h2>
+<p>Read the data <code>CNV_log2_skin_melanoma.csv</code> from the practice dugga using pandas.</p>
+<ol type="a">
+<li><p>Create a violinplot (the <code>seaborn</code> package is useful for this) with chromosome on the x-axis and cnv_log2 on the y-axis. Add informative titles and save the plot.</p></li>
+<li><p>What do you see? Which chromosome(s) has the largest CNV interval? Which chromosome(s) has the smallest interval? Do the intervals add up with the numbers in the dataframe you used for the plot?</p></li>
+<li><p>Check the axes and labels. Is there something that could be changed to improve the plot?</p></li>
+</ol>
 
 
 </section>
@@ -415,13 +460,14 @@ ul.task-list li input[type="checkbox"] {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
