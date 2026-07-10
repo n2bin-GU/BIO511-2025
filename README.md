@@ -1,2 +1,2 @@
-# BIO511-2025
-This is the branch used for staging updates to the github Pages website 
+# BIO511-2026
+Main repo for instructions to practicals in the BIO511 course 
