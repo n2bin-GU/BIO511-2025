@@ -38,6 +38,7 @@ Here are the pracical exercises related to python programming
 - **[Practical 4: modules](PRACTICAL_MODULES.qmd)**
 - **[Practical 5: files](PRACTICAL_FILES.qmd)**
 - **[Practical 6: plots](PRACTICALS_PLOTTING.qmd)**
+- **[Practical 7: Algorithmic Thinking in Genomics](PRACTICAL_ALGORITHMIC_THINKING.qmd)**
 
 
 

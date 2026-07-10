@@ -59,6 +59,8 @@ website:
         text: "Practical 5: Files"
       - href: PRACTICAL_PLOTTING.qmd
         text: "Practiacl 6: Plotting"
+      - href: PRACTICAL_ALGORITHMIC_THINKING.qmd
+        text: "Practical 7: Algorithmic Thinking in Genomics"
 
 format:
   html:
